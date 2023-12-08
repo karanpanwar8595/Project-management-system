@@ -1,0 +1,38 @@
+.side-navbar {
+    border-radius: 10px;
+    /* Adjust the value to control the roundness of the corners */
+    box-shadow: 0px 2px 4px  rgba(0, 0, 0, 0.2);
+    /* Customize the box shadow as per your preference */
+    padding: 20px;
+    /* Adjust the padding according to your content */
+    margin: 20px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 80vh;
+    /* Use 100% viewport height */
+    width: 180px;
+    background-color: #f0f0f0;
+    /* z-index: 400; */
+    /* Ensure the side navbar appears above the content */
+    margin-top: 80px;
+  }
+  
+  .side-navbar ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  .side-navbar li {
+    margin-bottom: 10px;
+  }
+  
+  .side-navbar a {
+    text-decoration: none;
+    color: #333;
+  }
+  
+  .side-navbar a:hover {
+    color: #555;
+  }
