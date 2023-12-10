@@ -2,7 +2,7 @@
   margin-left: 230px; /* Adjust the margin to create space next to the sidebar */
   padding: 20px; /* Adjust the padding to create spacing inside the container */
   display:flex;
-  overflow: hidden;  
+  /* overflow: hidden;   */
   flex-direction: column;
 }
 

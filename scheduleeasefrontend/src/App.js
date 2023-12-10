@@ -3,7 +3,7 @@ import Navbar from './components/navbar/Navbar';
 import SideNavbar from './components/sideNavbar/sideNavbar';
 import Footer from './components/Footer/footer/Footer';
 import Testcontainer from './components/testcontainer/testcontainer';
-
+import DisscussionBox from './components/Disscussion/Disscussion'
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 function App() {
@@ -19,19 +19,37 @@ function App() {
            <Routes>
             {/* first route goes to test container */}
               <Route exact path='tasks' element=
-                {<div className='maincomponentcontainer'> 
+                {
+                  <>
+                  
+                <div className='maincomponentcontainer'> 
                 <Testcontainer />
                 
                 </div>
+                <Footer/>
+                
+                </>
+                }>
+              </Route>
+
+
+              <Route exact path='disscussion' element={
+              <>
+              
+                {/* // {<div className='maincomponentcontainer'>  */}
+                < DisscussionBox/>
+                
+                {/* </div> */}
+                </>
                 }>
               </Route>
 
 
 
 
-
             </Routes>
-            <Footer /> {/*footer for all the routes*/}
+
+             {/*footer for all the routes*/}
           </div>
 
         </div>

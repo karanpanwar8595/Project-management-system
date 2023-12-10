@@ -7,7 +7,7 @@ const SideNavbar = () => {
     <div className="side-navbar">
       <ul>
         <li>
-          <Link to="/" >Dashboard</Link>
+        <Link to="/" >Dashboard</Link>
         </li>
         <li>
         <Link to="/">Project</Link>
@@ -19,7 +19,7 @@ const SideNavbar = () => {
         <Link to="/">Calender</Link>
         </li>
         <li>
-        <Link to="/">Disccussion</Link>
+        <Link to="/disscussion">Disccussion</Link>
         </li>
         <li>
         <Link to="/">History</Link>
