@@ -13,7 +13,7 @@ const SideNavbar = () => {
         <Link to="/">Project</Link>
         </li>
         <li>
-        <Link to="/">Manage Team</Link>
+        <Link to="/manage_team">Manage Team</Link>
         </li>
         <li>
         <Link to="/">Calender</Link>
