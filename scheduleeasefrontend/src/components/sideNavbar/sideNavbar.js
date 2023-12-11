@@ -10,7 +10,7 @@ const SideNavbar = () => {
           <Link to="/" >Dashboard</Link>
         </li>
         <li>
-        <Link to="/">Project</Link>
+        <Link to="/project">Project</Link>
         </li>
         <li>
         <Link to="/manage_team">Manage Team</Link>

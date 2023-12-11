@@ -4,9 +4,11 @@ import SideNavbar from './components/sideNavbar/sideNavbar';
 import Footer from './components/Footer/footer/Footer';
 import Testcontainer from './components/testcontainer/testcontainer';
 import Manage_team from './components/manage_team/Manage_team'
+import Project from './components/Projects/Projects'
 
 
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import Projects from './components/Projects/Projects';
 
 function App() {
   return (
@@ -37,6 +39,13 @@ function App() {
               }>
             </Route>
 
+            <Route exact path='project' element=
+              {
+                <div className="maincomponentcontainer">
+                  <Project/>
+                </div>
+              }>
+            </Route>
 
             </Routes>
             <Footer /> {/*footer for all the routes*/}
