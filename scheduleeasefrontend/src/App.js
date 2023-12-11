@@ -31,7 +31,7 @@ function App() {
               {/*Manage team component route */}  
               <Route exact path='manage_team' element=
               {
-                <div className="container">
+                <div className="maincomponentcontainer">
                   <Manage_team/>
                 </div>
               }>

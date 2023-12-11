@@ -6,13 +6,13 @@ const Manage_team = () => {
     
     <div>
         {/* <h5>Select your project</h5> */}
-        <select style={{ height: '40px', width: '150px', fontSize: '18px',borderRadius:'10px', marginTop:'20px'}}>
+
+        <select className='select-project'>
           <option disabled selected value="">Select a Project</option>
           <option>Project 1</option>
           <option>Project 2</option>
           <option>Project 3</option>
         </select>
-
         <div class="profile-grid">
     <div>
     <div class="profile-picture">
