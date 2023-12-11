@@ -1,7 +1,7 @@
 import './App.css';
 import Navbar from './components/navbar/Navbar';
 import SideNavbar from './components/sideNavbar/sideNavbar';
-import Footer from './components/Footer/footer/Footer';
+import Footer from './components/Footer/Footer';
 import Testcontainer from './components/testcontainer/testcontainer';
 import Manage_team from './components/manage_team/Manage_team'
 import Project from './components/Projects/Projects'
