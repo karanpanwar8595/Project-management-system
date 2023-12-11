@@ -7,6 +7,7 @@ import Manage_team from './components/manage_team/Manage_team'
 import Project from './components/Projects/Projects'
 
 
+import DisscussionBox from './components/Disscussion/Disscussion'
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Projects from './components/Projects/Projects';
 
@@ -23,10 +24,28 @@ function App() {
            <Routes>
             {/* first route goes to test container */}
               <Route exact path='tasks' element=
-                {<div className='maincomponentcontainer'> 
+                {
+                  <>
+                  
+                <div className='maincomponentcontainer'> 
                 <Testcontainer />
                 
                 </div>
+                <Footer/>
+                
+                </>
+                }>
+              </Route>
+
+
+              <Route exact path='disscussion' element={
+              <>
+              
+                {/* // {<div className='maincomponentcontainer'>  */}
+                < DisscussionBox/>
+                
+                {/* </div> */}
+                </>
                 }>
               </Route>
 
@@ -47,8 +66,10 @@ function App() {
               }>
             </Route>
 
+
             </Routes>
-            <Footer /> {/*footer for all the routes*/}
+
+         
           </div>
 
         </div>

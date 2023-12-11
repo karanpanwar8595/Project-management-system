@@ -1,0 +1,106 @@
+/* Style for the message container */
+.allmessage {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid #ccc;
+    padding: 10px;
+    /* margin-bottom: 10px; */
+
+
+    background-color: #9ed68d;
+height: 70vh;
+
+Overflow: auto;
+Overflow-x: hidden;
+Overflow-y: auto;
+
+  }
+  
+  /* Style for received messages */
+  .Recivedmessages {
+    background-color: #c72626;
+    padding: 5px;
+    margin-bottom: 5px;
+    max-width: 60%;
+    
+  }
+  
+  /* Style for sent messages */
+  .sendedmessages {
+    background-color: #4caf50;
+  color: white;
+  padding: 5px;
+  margin-bottom: 5px;
+  margin-left: auto;
+  max-width: 60%;
+  
+  }
+  
+  /* Style for the message sender area */
+  .messagesender {
+    border: 1px solid #ccc;
+    padding: 10px;
+    height: 5vh;
+    display: flex;
+    flex-wrap: nowrap;
+  }
+
+  .roundedcorner{
+    border-radius: 20px;
+  }
+
+  .disscussionbox{
+    background-color:gray;
+    display: flex;
+    overflow: hidden;
+    min-height: 80vh;
+
+
+    border-radius: 10px;
+    /* Adjust the value to control the roundness of the corners */
+    box-shadow: 0px 2px 4px  rgba(0, 0, 0, 0.2);
+    /* Customize the box shadow as per your preference */
+    padding: 20px;
+    /* Adjust the padding according to your content */
+    /* margin: 20px; */
+    /* position: fixed; */
+    /* top: 0; */
+    /* right: 0; */
+    height: 80vh;
+    /* Use 100% viewport height */
+
+    
+  max-width: max-content;
+    background-color: #f0f0f0;
+    /* z-index: 400; */
+    /* Ensure the side navbar appears above the content */
+    /* margin-top: 80px; */
+
+
+
+  }
+.writingandviewingarea{
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  overflow: hidden;
+
+}
+  .sendernamedisplay{
+display: flex;
+width: 20vw;
+background-color: #ccc;
+margin-right: 10px;
+
+Overflow: auto;
+Overflow-x: hidden;
+Overflow-y: auto;
+
+
+  }
+
+  .textboxtoinput{
+    width: 70vw;
+  }
+
+  
