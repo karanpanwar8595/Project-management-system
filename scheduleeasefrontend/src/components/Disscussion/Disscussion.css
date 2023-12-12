@@ -2,13 +2,13 @@
 .allmessage {
     display: flex;
     flex-direction: column;
-    border: 1px solid #ccc;
+    /* border: 1px solid #ccc; */
     padding: 10px;
     /* margin-bottom: 10px; */
 
 
-    background-color: #9ed68d;
-height: 70vh;
+    /* background-color: #9ed68d; */
+height: 75vh;
 
 Overflow: auto;
 Overflow-x: hidden;
@@ -38,7 +38,7 @@ Overflow-y: auto;
   
   /* Style for the message sender area */
   .messagesender {
-    border: 1px solid #ccc;
+    /* border: 1px solid #ccc; */
     padding: 10px;
     height: 5vh;
     display: flex;
@@ -60,13 +60,13 @@ Overflow-y: auto;
     /* Adjust the value to control the roundness of the corners */
     box-shadow: 0px 2px 4px  rgba(0, 0, 0, 0.2);
     /* Customize the box shadow as per your preference */
-    padding: 20px;
+    /* padding: 20px; */
     /* Adjust the padding according to your content */
     /* margin: 20px; */
     /* position: fixed; */
     /* top: 0; */
     /* right: 0; */
-    height: 80vh;
+    height: 85vh;
     /* Use 100% viewport height */
 
     
@@ -84,17 +84,18 @@ Overflow-y: auto;
   flex-direction: column;
   width: 100%;
   overflow: hidden;
+  border-left: 1px solid black ;
 
 }
   .sendernamedisplay{
 display: flex;
 width: 20vw;
-background-color: #ccc;
+/* background-color: #ccc; */
 margin-right: 10px;
+display: flex;
+flex-direction: column;
 
-Overflow: auto;
-Overflow-x: hidden;
-Overflow-y: auto;
+border-right: 1px solid black ;
 
 
   }
@@ -103,4 +104,19 @@ Overflow-y: auto;
     width: 70vw;
   }
 
+  .chatword{
+    padding-left: 1vw;
+  }
+
+  .senderbox{
+
+    Overflow: auto;
+    Overflow-x: hidden;
+    Overflow-y: auto;
+  }
   
+
+
+  .activeuser{
+    min-height: 10vh;
+  }

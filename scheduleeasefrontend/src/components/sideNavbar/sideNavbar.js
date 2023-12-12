@@ -25,7 +25,7 @@ const SideNavbar = () => {
         <Link to="/">History</Link>
         </li>
         <li>
-        <Link to="/">Membership</Link>
+        <Link to="/">Payment</Link>
         </li>
         <li>
         <Link to="/">Notification</Link>

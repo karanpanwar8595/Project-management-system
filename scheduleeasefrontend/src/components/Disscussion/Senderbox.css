@@ -1,0 +1,88 @@
+.senderlistcontainer{
+    Overflow: auto;
+    Overflow-x: hidden;
+    Overflow-y: auto;
+
+}
+.listcontainer{
+    list-style: none;
+    padding: 0;
+    max-width: 20vw;
+}
+.listelement{
+    display: flex;
+    
+    align-items: start;
+    padding: 8px;
+    margin-bottom: 1px;
+    background-color: #fff;
+    border: 1px solid #dee2e6;
+}
+
+.nametext{
+    font-size: 15px;
+}
+.emailtext{
+font-size: 10px;
+
+}
+
+
+
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f8f9fa;
+
+  }
+
+ 
+  /* .list-group {
+    list-style: none;
+    padding: 0;
+    max-width: 15vw;
+  } */
+
+  /* .list-group-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: start;
+    padding: 1rem;
+    margin-bottom: 1px;
+    background-color: #fff;
+    border: 1px solid #dee2e6;
+  } */
+
+  .list-group-item .ms-2 {
+    margin-left: 0.5rem;
+  }
+
+  .list-group-item .me-auto {
+    margin-right: auto;
+  }
+
+  .badge {
+    display: inline-block;
+    padding: 0.25em 0.4em;
+    font-size: 75%;
+    font-weight: bold;
+    line-height: 1;
+    color: #fff;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: baseline;
+    border-radius: 0.2rem;
+  }
+
+  .bg-primary {
+    background-color: #007bff;
+  }
+
+  .rounded-pill {
+    border-radius: 50rem;
+  }
+
+  .fw-bold {
+    font-weight: bold;
+    font-size: 0.8vw;
+  }
