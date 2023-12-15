@@ -7,11 +7,11 @@
 }
 
 .bodycontainer{
-   min-height: 120vh; 
+   /* min-height: 120vh;  */
    position: relative;
 }
 .maincomponentcontainer{
-  min-height: 100vh; /* Set a minimum height for the body to ensure the footer stays at the bottom */
+  /* min-height: 100vh; Set a minimum height for the body to ensure the footer stays at the bottom */
   min-width: 100%;
   border-color: black;
   padding-top: 2%;
