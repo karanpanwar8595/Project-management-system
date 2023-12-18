@@ -5,6 +5,7 @@ import Footer from './components/Footer/Footer';
 import Testcontainer from './components/testcontainer/testcontainer';
 import Manage_team from './components/manage_team/Manage_team'
 import Project from './components/Projects/Projects'
+import Modal from './components/modal_form/Modal'
 // import Chatbox from './components/chatmessage/Chatmessage'
 
 import DisscussionBox from './components/Disscussion/Disscussion'
@@ -54,6 +55,7 @@ function App() {
               {
                 <div className="maincomponentcontainer">
                   <Manage_team/>
+                  <Modal/>
                 </div>
               }>
             </Route>
@@ -62,6 +64,14 @@ function App() {
               {
                 <div className="maincomponentcontainer">
                   <Project/>
+                </div>
+              }>
+            </Route>
+
+            <Route exact path='modal' element=
+              {
+                <div className="maincomponentcontainer">
+                  <Modal/>
                 </div>
               }>
             </Route>
