@@ -1,0 +1,105 @@
+.accordion-status {
+    width: 17%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+}
+
+.accordion-duedate {
+    width: 17%;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.accordion-progress {
+    width: 17%;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: transparent;
+}
+
+.accordion-owner {
+    width: 17%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: transparent;
+
+}
+
+.accordion-header-element {
+    width: 30%;
+    padding: 10px 2.5%;
+    /* margin-left: 20px; */
+    /* display:flex; */
+    /* justify-content: center; */
+    align-items: center;
+
+}
+
+.accordion-button {
+    /* display: block; */
+    width: 35%;
+    padding: 15px 2.5%;
+
+    border: none;
+    text-align: left;
+    /* font-weight: bold; */
+    cursor: pointer;
+    outline: none;
+    transition: background-color 0.3s ease;
+    background-color: transparent;
+    
+}
+
+.task-item:hover {
+    background-color: #e1e1e1;
+}
+
+.task-item.active {
+    background-color: #d1d1d1;
+}
+
+.accordion-content {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease-in-out;
+    
+}
+
+.accordion-content.open {
+    max-height: 500px;
+    /* Set this value to a large enough height to show all content */
+}
+
+.accordion-body {
+    padding: 15px 20px;
+    line-height: 1.6;
+
+}
+
+.accordion {
+    border-radius: 4px;
+
+    /* margin: 20px 0; */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    Overflow: auto;
+    Overflow-x: hidden;
+    Overflow-y: auto;
+}
+
+.accordion-item {
+    border-bottom: 1px solid #ccc;
+    background-color: #f7f7f7;
+}
+
+
+.task-item{
+    display: flex;
+    background-color: transparent;
+}

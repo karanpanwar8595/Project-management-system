@@ -1,0 +1,48 @@
+/* Accordion styles */
+.onetask {
+    display: flex;
+    background-color: transparent;
+
+}
+.onetask img {
+    max-height: 40px;
+    background-color: transparent;
+
+}
+.logo-button {
+    background-color: transparent;
+    /* Set the background of the button as transparent */
+    border: none;
+    padding: 0px;
+    margin: 0px;
+    cursor: pointer;
+    /* box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); Optional: Add a shadow effect */
+}
+
+.taskinput {
+    /* border: 1px solid #ccc; */
+    padding: 10px;
+    height: 5vh;
+    display: flex;
+    flex-wrap: nowrap;
+  }
+.taskconcontainer {
+    background-color: #ffffff;
+    /* Replace with your desired background color */
+    border-radius: 10px;
+    /* Adjust the value to control the roundness of the corners */
+    /* padding: 20px; */
+    /* Adjust the padding according to your content */
+    /* margin-top: 0px; */
+    /* flex-basis: 250px; */
+    overflow-y: hidden;
+    height: 85vh;
+}
+
+.tasklist{
+min-height: 75vh;
+
+}
+.task-row{
+    overflow: auto;
+}
