@@ -6,6 +6,7 @@ import Testcontainer from './components/testcontainer/testcontainer';
 import Manage_team from './components/manage_team/Manage_team'
 import Project from './components/Projects/Projects'
 import Modal from './components/modal_form/Modal'
+import Cal from './components/calendar/Cal'
 // import Chatbox from './components/chatmessage/Chatmessage'
 
 import DisscussionBox from './components/Disscussion/Disscussion'
@@ -68,10 +69,10 @@ function App() {
               }>
             </Route>
 
-            <Route exact path='modal' element=
+            <Route exact path='calendar' element=
               {
                 <div className="maincomponentcontainer">
-                  <Modal/>
+                  <Cal/>
                 </div>
               }>
             </Route>
