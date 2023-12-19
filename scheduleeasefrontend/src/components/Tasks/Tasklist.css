@@ -22,9 +22,10 @@
 .taskinput {
     /* border: 1px solid #ccc; */
     padding: 10px;
-    height: 5vh;
+    height: 10vh;
     display: flex;
     flex-wrap: nowrap;
+    flex-direction: column;
   }
 .taskconcontainer {
     background-color: #ffffff;
@@ -40,9 +41,13 @@
 }
 
 .tasklist{
-min-height: 75vh;
+min-height: 70vh;
 
 }
 .task-row{
     overflow: auto;
+}
+.textboxtoinputtilte{
+    min-width: 75vw;
+    max-height: fit-content;
 }

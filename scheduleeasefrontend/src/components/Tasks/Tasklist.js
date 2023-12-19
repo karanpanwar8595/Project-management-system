@@ -1,14 +1,19 @@
 import React, { useState, useEffect } from 'react';
 import './Tasklist.css'; // Import your custom CSS
 import './Accordion.css';
-const AccordionItem = ({ title, content, status, duedate, owner, progress }) => {
+const AccordionItem = ({ task_key, title, content, status, duedate, owner, progress, done_key }) => {
     const [isOpen, setIsOpen] = useState(false);
+    // const [addButtonintask, setAddButtonInTask] = useState(false);
     const handleToggle = () => {
         setIsOpen(!isOpen);
     };
+    const addButtonHandle = () => {
+        // if 
+        console.log("add button click")
 
+    };
     return (
-        <div className="accordion-item">
+        <div className="accordion-item" key={task_key}>
             <div className={`task-item ${isOpen ? 'active' : ''}`} onClick={handleToggle}>
                 <button className="accordion-button" >
                     {title}
@@ -17,6 +22,11 @@ const AccordionItem = ({ title, content, status, duedate, owner, progress }) => 
                 <div className='accordion-duedate'>{duedate}</div>
                 <div className='accordion-progress'>{progress}</div>
                 <div className='accordion-owner'>{owner}</div>
+                <div
+                    className='accordion-add-button ${done_key}' key={done_key}
+                    onClick={(event) => { event.stopPropagation(); addButtonHandle(); }}
+                > Add
+                </div>
             </div>
             <div className={`accordion-content ${isOpen ? 'open' : ''}`}>
                 <div className="accordion-body">{content}</div>
@@ -72,19 +82,26 @@ const Tasklist = () => {
             </div>
 
             <div className='taskinput'>
-                <input type="text" className="textboxtoinput" id="tasktextbox" >
-                    {/* <input type="text" className="textboxtoinput" id="messagetextbox" value={inputValueMessageTextBox} onChange={handleChangeInputTask}> */}
+                <div className='tasktitleandbutton'>
+                    <input type="text" className="textboxtoinputtilte" id="tasktextbox" >
 
-                </input>
 
-                <button >
-                    send
-                </button>
+                    </input>
+
+
+                    <button >
+                        send
+                    </button>
+
+                </div>
+                <textarea className='taskdescription'>
+
+                </textarea>
+
             </div>
-        </div>
 
 
-        // </div>
+       </div>
     );
 };
 
