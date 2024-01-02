@@ -64,9 +64,9 @@ function App() {
 
             <Route exact path='project' element=
               {
-                <div className="maincomponentcontainer">
+                // <div className="maincomponentcontainer">
                   <Project/>
-                </div>
+           
               }>
             </Route>
 
