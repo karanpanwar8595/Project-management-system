@@ -1,6 +1,6 @@
 import "./Disscussion.css"
 import "./Senderbox.css"
-
+import "./test.css"
 
 import axios from 'axios';
 
@@ -9,42 +9,64 @@ import React, { useState, useEffect } from 'react'
 
 
 const Disscussion = () => {
-  const [listitem, setListItem] = useState([{ firstname: "mudit", email: 'mudit@gmail.com' }]);
-  const [activeuser, setActiveUser] = useState([{ firstname: "mudit", email: 'mudit1@gmail.com' }]);
+  const [listitem, setListItem] = useState([]);
+  const [activereciveruser, setactivereciveruser] = useState([]);
+  const [inputValueMessageTextBox, setInputMessageTextBox] = useState('');
 
-
+  const [messagelist, setMessageList] = useState([]);
 
   useEffect(() => {
     axios.get('http://127.0.0.1:8000/api/listofreciver/').then((response) => {
-
-
       setListItem(response.data);
       console.log(response);
     }, (error) => {
-      console.log("error");
+      console.log(error);
     });
-
-
   }, []);
 
 
 
-  const onListElementClick = (event) => {
-    var email_id=event.target.closest('li').id;
-    console.log(email_id);
-
-    axios.post('http://127.0.0.1:8000/api/activeuser/',{ email : email_id}).then((response) => {
-
-
-    setActiveUser(response.data[0]);
-      // console.log();
-      // console.log(activeuser[0].firstname);
-      // console.log("activeuser");
+  const onClickSendButton = (event) => {
+    event.preventDefault();
+    // ... do something with inputValue
+    // var inputValueMessageTextBoxStatic = inputValueMessageTextBox
+    axios.post('http://127.0.0.1:8000/api/messagesendertoreciver/', { sender: 'mudit', reciver: activereciveruser.email, textmessage: inputValueMessageTextBox }).then((response) => {
+      if (response) {
+        console.log(response);
+        setMessageList(messagelist)
+        var newMessage=[{'sendertype':1,'messagetxt': inputValueMessageTextBox,'timestamp':"10:20"}]
+        setMessageList(messagelist => messagelist.concat(newMessage));
+        setInputMessageTextBox("");
+      }
     }, (error) => {
-      console.log("error");
+      console.log(error);
+    });
+  }
+
+
+  const handleChangeInputMessageTextBox = (event) => {
+    setInputMessageTextBox(event.target.value);
+  }
+
+
+  const onListElementClick = (event) => {
+    var email_id = event.target.closest('li').id;
+    console.log(email_id);
+    axios.post('http://127.0.0.1:8000/api/activereciveruser/', { email: email_id }).then((response) => {
+      setactivereciveruser(response.data[0]);
+    }, (error) => {
+      console.log(error);
     });
 
-
+    
+     axios.post('http://127.0.0.1:8000/api/messagesofauser/', { email: email_id }).then((response) => {
+      setMessageList(response.data);
+      console.log(response)
+      console.log(messagelist);
+    }, (error) => {
+      console.log(error);
+    });
+    // console.log(messagelist);
   };
 
 
@@ -68,6 +90,7 @@ const Disscussion = () => {
                   </div>
                 </li>
               ))}
+
             </ol></div>
 
         </div>
@@ -77,19 +100,37 @@ const Disscussion = () => {
 
 
       <div className="writingandviewingarea ">
-        <div className="activeuser">
-          <div className="nametext">{activeuser.firstname}</div>
-          <div className='emailtext'>{activeuser.email}</div>
+        <div className="activereciveruser">
+          <div className="nametext">{activereciveruser.firstname}</div>
+          <div className='emailtext'>{activereciveruser.email}</div>
         </div>
 
         <div className="allmessage ">
 
-          <div className="Recivedmessages roundedcorner">
-            "hii how are you what are you doow are you what are you doow are you what are you doing"
-          </div>
-          <div className="sendedmessages roundedcorner">
-            "hii how are yow are you what are you doow are you what are you doow are you what are you doou what are you doing"
-          </div>
+
+         
+
+
+{messagelist.map((message) => (
+  <div key={message.id}>
+    {message.sendertype === 0 ? (
+      <div className="Recivedmessages roundedcorner">
+        {/* Content for receiver's message */}
+        <div className="messageContent">{message.messagetxt}</div>
+        <div className="messageTime">{(message.timestamp)}</div>
+      </div>
+    ) : message.sendertype === 1 ? (
+      <div className="sendedmessages roundedcorner">
+        {/* Content for sender's message */}
+        <div className="messageContent">{message.messagetxt}</div>
+        <div className="messageTime">{(message.timestamp)}</div>
+      </div>
+    ) : null}
+  </div>
+))}
+
+
+
 
 
 
@@ -98,10 +139,11 @@ const Disscussion = () => {
 
           <div className="messagesender">
 
-            <input type="text" className="textboxtoinput">
+            <input type="text" className="textboxtoinput" id="messagetextbox" value={inputValueMessageTextBox} onChange={handleChangeInputMessageTextBox} placeholder="Type Here">
 
             </input>
-            <button>
+
+            <button id="sendbuttonformessage"onClick={onClickSendButton}>
               send
             </button>
 

@@ -3,8 +3,9 @@ from . import views
 
 urlpatterns = [
     path('listofreciver/', views.listofreciver, name='hello'),
-    path('activeuser/', views.activeuser, name='activeuser'),
-
+    path('activereciveruser/', views.activereciveruser, name='activereciveruser'),
+    path('messagesendertoreciver/', views.messagesendertoreciver, name='messagesendertoreciver'),
+    path('messagesofauser/', views.messagesofauser, name='messagesofauser'),
 
     
 ]

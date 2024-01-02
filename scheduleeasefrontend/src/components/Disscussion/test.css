@@ -1,0 +1,148 @@
+.messagesender {
+    display: flex;
+    align-items: center;
+  }
+  
+  .textboxtoinput {
+    border: 1px solid #ccc;
+    border-radius: 5px; /* Adjust the border-radius as needed for your desired roundness */
+    padding: 8px;
+    margin-right: 8px;
+  }
+  
+  #sendbuttonformessage {
+    background-color: #4CAF50; /* Green color, you can change it */
+    color: white;
+    border: none;
+    border-radius: 5px; /* Adjust the border-radius to match the input */
+    padding: 10px 20px;
+    cursor: pointer;
+  }
+  
+  #sendbuttonformessage:hover {
+    background-color: #45a049; /* Darker green color for hover effect */
+  }
+
+
+
+
+
+
+
+
+
+
+  .writingandviewingarea {
+    background-color: #f9f9f9; /* Set your desired background color */
+    padding: 10px;
+    
+   }
+
+
+   .activereciveruser {
+   
+   padding-left: 20px;
+    /* Adjust the border-radius for rounded corners */
+   
+  }
+   
+  .nametext {
+    font-size: 1em;
+    font-weight: bold;
+    color: #333; /* Set the text color for the name */
+    margin-bottom: 3px;
+  }
+  
+  .emailtext {
+    font-size: 0.8em;
+    color: #555; /* Set the text color for the email */
+  }
+  
+  .allmessage {
+    border-top: 2px solid #ccc; /* Add an upper border with the desired color */
+    padding-top: 10px; /* Optional: Adjust padding if needed */
+  }
+  
+
+
+
+  .listelement {
+    list-style-type: none;
+    cursor: pointer;
+    padding: 10px;
+    border-bottom: 1px solid #eee; /* Add a bottom border between list items */
+    margin: 2px;
+    border-radius: 5px;
+  }
+  
+  .nameandemail {
+    display: flex;
+    flex-direction: column; /* Display name and email elements in a column */
+  }
+  
+  .nametext {
+    font-size: 1em;
+    font-weight: bold;
+    color: #333; /* Set the text color for the name */
+    margin-bottom: 5px; /* Add some space between name and email */
+  }
+  
+  .emailtext {
+    font-size: 0.7em;
+    color: #555; /* Set the text color for the email */
+  }
+  
+ 
+
+
+
+
+
+
+  .Recivedmessages {
+    background-color: #2196F3;
+    padding: 5px;
+    margin-bottom: 5px;
+    max-width: 60%;
+
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .sendedmessages {
+    background-color:#81c784;
+  color: white;
+  padding: 5px;
+  margin-bottom: 5px;
+  margin-left: auto;
+  max-width: 60%;
+
+
+  display: flex;
+    flex-direction: column;
+  
+  }
+
+
+
+
+
+.messageContent {
+  /* Styles for message content */
+  color: #333;
+}
+
+.messageTime {
+  /* Styles for message time */
+
+  font-size: 0.5em;
+  color: #000000;
+  align-self: flex-end;
+}
+
+
+
+.roundedcorner{
+    border-radius: 5px;
+    
+  }
