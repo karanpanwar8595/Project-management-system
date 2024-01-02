@@ -69,6 +69,13 @@ function App() {
                 </div>
               }>
             </Route>
+            <Route exact path='calendar' element=
+              {
+                <div className="maincomponentcontainer">
+                  <Cal/>
+                </div>
+              }>
+            </Route>
 
 
             </Routes>
