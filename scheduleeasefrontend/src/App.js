@@ -69,6 +69,15 @@ function App() {
                 </div>
               }>
             </Route>
+
+            <Route exact path='Notification' element=
+              {
+                <div className="maincomponentcontainer">
+                  <Notification/>
+                </div>
+              }>
+            </Route>
+
             <Route exact path='calendar' element=
               {
                 <div className="maincomponentcontainer">
