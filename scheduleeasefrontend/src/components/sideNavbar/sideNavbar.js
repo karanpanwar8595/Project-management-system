@@ -28,7 +28,7 @@ const SideNavbar = () => {
         <Link to="/">Payment</Link>
         </li>
         <li>
-        <Link to="/">Notification</Link>
+        <Link to="/Notification">Notification</Link>
         </li>
         <li>
           <Link to="/tasks">Tasks</Link>

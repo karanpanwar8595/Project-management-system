@@ -7,9 +7,10 @@
   color: #fff;
   position: sticky;
   top: 0;
-  /* z-index: 999; */
+  /* z-index: 999;  */
   max-height: 40px;
 }
+
 
 .navbar-logo img {
   height: 30px;

@@ -1,5 +1,5 @@
 .container {
-  margin-left: 230px; /* Adjust the margin to create space next to the sidebar */
+  margin-left: 240px; /* Adjust the margin to create space next to the sidebar */
   padding: 20px; /* Adjust the padding to create spacing inside the container */
   display:flex;
   /* overflow: hidden;   */
@@ -10,14 +10,15 @@
    min-height: 120vh; 
    position: relative;
 }
+
 .maincomponentcontainer{
-  min-height: 100vh; /* Set a minimum height for the body to ensure the footer stays at the bottom */
+  /* min-height: 100vh; Set a minimum height for the body to ensure the footer stays at the bottom  */
   min-width: 100%;
   border-color: black;
-  padding-top: 2%;
-  padding-bottom: 3%;
+  /* padding-top: 2%; */
+  padding-bottom: 2%;
 }
+
 /* .footer{
   position: relative;
-
 } */
