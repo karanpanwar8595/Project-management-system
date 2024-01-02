@@ -174,11 +174,12 @@ const Projects = () => {
                         <form onSubmit={handleFormSubmit}>
                             <div className="form-row">
                                 <label htmlFor="projectName">Project Name:</label>
-                                <input type="text" id="projectName" name="projectName" required />
+                                <input className="in-txtarea" type="text" id="projectName" name="projectName" required />
                             </div>
                             <div className="form-row">
                                 <label htmlFor="startDate">Start Date:</label>
                                 <input
+                                    className="in-txtarea"
                                     type="date"
                                     id="startDate"
                                     name="startDate"
@@ -190,6 +191,7 @@ const Projects = () => {
                             <div className="form-row">
                                 <label htmlFor="dueDate">Due Date:</label>
                                 <input
+                                    className="in-txtarea"
                                     type="date"
                                     id="dueDate"
                                     name="dueDate"
@@ -200,19 +202,20 @@ const Projects = () => {
                             </div>
                             <div className="form-row">
                                 <label htmlFor="projectDescription">Project Description:</label>
-                                <textarea id="projectDescription" name="projectDescription" />
+                                <textarea className="in-txtarea" id="projectDescription" name="projectDescription" />
                             </div>
                             <div className="form-row">
                                 <label htmlFor="budget">Budget:</label>
-                                <input type="number" id="budget" name="budget" required />
+                                <input className="in-txtarea" type="number" id="budget" name="budget" required />
                             </div>
                             <div className="form-row">
                                 <label htmlFor="companyName">Company Name:</label>
-                                <input type="text" id="companyName" name="companyName" required />
+                                <input className="in-txtarea" type="text" id="companyName" name="companyName" required />
                             </div>
                             <div className="form-row">
                                 <label htmlFor="attachment">Attachment:</label>
                                 <input
+                                    className="in-txtarea"
                                     type="file"
                                     id="attachment"
                                     name="attachment"
@@ -228,6 +231,7 @@ const Projects = () => {
                             <div className="form-row">
                                 <label htmlFor="document">Document:</label>
                                 <input
+                                    className="in-txtarea"
                                     type="file"
                                     id="document"
                                     name="document"
@@ -242,6 +246,7 @@ const Projects = () => {
                             <div className="form-row client-search-row">
                                 <label htmlFor="Add client">Add Client:</label>
                                 <input
+                                    className="in-txtarea"
                                     type="text"
                                     id="clientSearch"
                                     value={clientSearch}
@@ -263,7 +268,7 @@ const Projects = () => {
                                 </div>
                             )}
                             <div className="form-row">
-                                <button type="submit">Submit</button>
+                                <button className="add-form-btn" type="submit">Submit</button>
                             </div>
                         </form>
                     </div>
