@@ -9,7 +9,10 @@ import Tasklist from './components/Tasks/Tasklist';
 
 import Manage_team from './components/manage_team/Manage_team';
 import Project from './components/Projects/Projects';
-import Notification from './components/Notification/Notification';// import Chatbox from './components/chatmessage/Chatmessage'
+import Notification from './components/Notification/Notification';import Modal from './components/modal_form/Modal'
+import Cal from './components/calendar/Cal'
+import FileUpload from './components/file_upload/FileUpload';
+// import Chatbox from './components/chatmessage/Chatmessage'
 
 import DisscussionBox from './components/Disscussion/Disscussion'
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
@@ -54,6 +57,7 @@ function App() {
               {
                 <div className="maincomponentcontainer">
                   <Manage_team/>
+                  <Modal/>
                 </div>
               }>
             </Route>
@@ -62,6 +66,14 @@ function App() {
               {
                 <div className="maincomponentcontainer">
                   <Project/>
+                </div>
+              }>
+            </Route>
+
+            <Route exact path='calendar' element=
+              {
+                <div className="maincomponentcontainer">
+                  <Cal/>
                 </div>
               }>
             </Route>

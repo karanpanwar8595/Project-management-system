@@ -16,7 +16,7 @@ const SideNavbar = () => {
         <Link to="/manage_team">Manage Team</Link>
         </li>
         <li>
-        <Link to="/">Calender</Link>
+        <Link to="/calendar">Calender</Link>
         </li>
         <li>
         <Link to="/disscussion">Disccussion</Link>
