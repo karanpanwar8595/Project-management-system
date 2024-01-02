@@ -186,16 +186,16 @@
    margin-bottom: 5px;
  }
 
- input,
+ /* input,
  textarea {
    width: 100%;
    padding: 8px;
    border: 1px solid #ccc;
    border-radius: 5px;
    box-sizing: border-box;
- }
+ } */
 
- button {
+ /* button {
    background-color: #007bff;
    color: #fff;
    border: none;
@@ -203,10 +203,10 @@
    padding: 10px;
    cursor: pointer;
    display: block;
-   /* take the full width of display*/
+  
    margin: auto;
-   /* center me rakhega */
- }
+   
+ } */
 
  /* -------------------------------------------CSS for client search--------------------------------------------- */
 
