@@ -1,0 +1,30 @@
+.notification-container {
+    padding: 10px;
+    background-color: #d3d3d4;
+    border-radius: 10px;
+}
+
+.notification {
+    font-size: 18px;
+    font-weight: 500;
+    background-color: white;
+    padding: 25px;
+    margin-top: 8px;
+    margin-bottom: 8px;
+    border-radius: 10px;
+    transition: background-color 0.3s ease;
+}
+
+.notification:hover {
+    background-color: rgb(245, 244, 244);
+}
+
+.notification .fa-bell {
+    margin-right: 10px;
+    color: #f0ad4e;
+}
+
+.header {
+    margin: auto;
+    padding: 13px;
+}

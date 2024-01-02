@@ -19,16 +19,17 @@
 .footer {
     /* Footer styling */
     width: 100%;
-    background-color: #100f0f;
+    background-color: #060f73;
     padding: 20px;
     text-align: center;
+    /* z-index: -120; */
     /* position: fixed; Use fixed position to make it sticky at the bottom */
     /* bottom: 0; */
 }
 
 .footer-content {
     /* Style for the content inside the footer */
-    color: #555;
+    color: #f2f4f4;
     font-size: 14px;
     margin: 0 auto; /* Center the content horizontally */
     max-width: 1200px; /* Set a maximum width for the content, adjust as needed */

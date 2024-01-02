@@ -1,14 +1,13 @@
 import './App.css';
 import Navbar from './components/navbar/Navbar';
 import SideNavbar from './components/sideNavbar/sideNavbar';
-import Footer from './components/Footer/footer/Footer';
+// import Footer from './components/Footer/footer/Footer';
 import Testcontainer from './components/testcontainer/testcontainer';
-import Manage_team from './components/manage_team/Manage_team'
-import Project from './components/Projects/Projects'
-
+import Manage_team from './components/manage_team/Manage_team';
+import Project from './components/Projects/Projects';
+import Notification from './components/Notification/Notification';
 
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import Projects from './components/Projects/Projects';
 
 function App() {
   return (
@@ -47,8 +46,16 @@ function App() {
               }>
             </Route>
 
+            <Route exact path='Notification' element=
+              {
+                <div className="maincomponentcontainer">
+                  <Notification/>
+                </div>
+              }>
+            </Route>
+
             </Routes>
-            <Footer /> {/*footer for all the routes*/}
+            {/* <Footer /> footer for all the routes */}
           </div>
 
         </div>
