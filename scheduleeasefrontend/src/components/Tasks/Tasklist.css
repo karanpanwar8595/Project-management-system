@@ -21,8 +21,9 @@
 
 .taskinput {
     /* border: 1px solid #ccc; */
-    padding: 10px;
-    height: 10vh;
+    padding-top: 10px;
+    padding-left: 10px;
+    height: 12vh;
     display: flex;
     flex-wrap: nowrap;
     flex-direction: column;

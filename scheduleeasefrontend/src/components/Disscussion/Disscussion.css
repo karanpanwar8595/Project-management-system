@@ -16,25 +16,20 @@ Overflow-y: auto;
 
   }
   
-  /* Style for received messages */
-  .Recivedmessages {
-    background-color: #c72626;
-    padding: 5px;
-    margin-bottom: 5px;
-    max-width: 60%;
-    
+  .allmessage::-webkit-scrollbar {
+    width: 5px;
+    /* Width of the scrollbar */
   }
+  
+  .allmessage::-webkit-scrollbar-thumb {
+    background-color: transparent;
+    /* Color of the thumb */
+  }
+  /* Style for received messages */
+
   
   /* Style for sent messages */
-  .sendedmessages {
-    background-color: #4caf50;
-  color: white;
-  padding: 5px;
-  margin-bottom: 5px;
-  margin-left: auto;
-  max-width: 60%;
-  
-  }
+
   
   /* Style for the message sender area */
   .messagesender {
@@ -45,9 +40,7 @@ Overflow-y: auto;
     flex-wrap: nowrap;
   }
 
-  .roundedcorner{
-    border-radius: 20px;
-  }
+  
 
   .disscussionbox{
     background-color:gray;
@@ -118,5 +111,5 @@ border-right: 1px solid black ;
 
 
   .activereciveruser{
-    min-height: 10vh;
+    min-height: 8vh;
   }

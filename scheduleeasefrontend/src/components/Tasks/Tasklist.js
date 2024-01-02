@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import './Tasklist.css'; // Import your custom CSS
 import './Accordion.css';
+
 const AccordionItem = ({ task_key, title, content, status, duedate, owner, progress, done_key }) => {
     const [isOpen, setIsOpen] = useState(false);
     // const [addButtonintask, setAddButtonInTask] = useState(false);
@@ -20,7 +21,7 @@ const AccordionItem = ({ task_key, title, content, status, duedate, owner, progr
                 </button>
                 <div className='accordion-status'>{status}</div>
                 <div className='accordion-duedate'>{duedate}</div>
-                <div className='accordion-progress'>{progress}</div>
+
                 <div className='accordion-owner'>{owner}</div>
                 <div
                     className='accordion-add-button ${done_key}' key={done_key}
@@ -37,7 +38,7 @@ const AccordionItem = ({ task_key, title, content, status, duedate, owner, progr
 
 const Tasklist = () => {
 
-    const [taskList, setTasklist] = useState([{ title: "firsttask", content: "This is thehhis is the second item's accordion body. It is hidden by default, until the collapse pis is the second item's accordion body. It is hidden by default, until the collapse phis is the second item's accordion body. ", status: "Active", duedate: "", progress: "20%", owner: "Ujjwal" }]);
+    const [taskList, setTasklist] = useState([{ title: "firsttask", content: "This is thehhis is the second item's accordion body. It is hidden by default, until the collapse pis is the second item's accordion body. It is hidden by default, until the collapse phis is the second item's accordion body. ", status: "Active", duedate: "12/10/2023", progress: "20%", owner: "Ujjwal" }]);
     useEffect(() => {
         async function fetchData() {
             try {
@@ -92,6 +93,7 @@ const Tasklist = () => {
                     <button >
                         send
                     </button>
+        
 
                 </div>
                 <textarea className='taskdescription'>
@@ -101,7 +103,7 @@ const Tasklist = () => {
             </div>
 
 
-       </div>
+        </div>
     );
 };
 

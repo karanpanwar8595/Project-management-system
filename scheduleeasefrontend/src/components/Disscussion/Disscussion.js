@@ -1,6 +1,6 @@
 import "./Disscussion.css"
 import "./Senderbox.css"
-
+import "./test.css"
 
 import axios from 'axios';
 
@@ -34,7 +34,7 @@ const Disscussion = () => {
       if (response) {
         console.log(response);
         setMessageList(messagelist)
-        var newMessage=[{'sendertype':1,'messagetxt': inputValueMessageTextBox}]
+        var newMessage=[{'sendertype':1,'messagetxt': inputValueMessageTextBox,'timestamp':"10:20"}]
         setMessageList(messagelist => messagelist.concat(newMessage));
         setInputMessageTextBox("");
       }
@@ -108,21 +108,26 @@ const Disscussion = () => {
         <div className="allmessage ">
 
 
-          {messagelist.map((message) => (
-            message.sendertype === 0 ? (
-              <div className="Recivedmessages roundedcorner" >
-                {/* Content for receiver's message */}
-                {message.messagetxt}
-              </div>
-            ) : (
-              message.sendertype === 1 ? (
-                <div className="sendedmessages roundedcorner" >
-                  {/* Content for sender's message */}
-                  {message.messagetxt}
-                </div>
-              ) : null
-            )
-          ))}
+         
+
+
+{messagelist.map((message) => (
+  <div key={message.id}>
+    {message.sendertype === 0 ? (
+      <div className="Recivedmessages roundedcorner">
+        {/* Content for receiver's message */}
+        <div className="messageContent">{message.messagetxt}</div>
+        <div className="messageTime">{(message.timestamp)}</div>
+      </div>
+    ) : message.sendertype === 1 ? (
+      <div className="sendedmessages roundedcorner">
+        {/* Content for sender's message */}
+        <div className="messageContent">{message.messagetxt}</div>
+        <div className="messageTime">{(message.timestamp)}</div>
+      </div>
+    ) : null}
+  </div>
+))}
 
 
 
@@ -134,11 +139,11 @@ const Disscussion = () => {
 
           <div className="messagesender">
 
-            <input type="text" className="textboxtoinput" id="messagetextbox" value={inputValueMessageTextBox} onChange={handleChangeInputMessageTextBox}>
+            <input type="text" className="textboxtoinput" id="messagetextbox" value={inputValueMessageTextBox} onChange={handleChangeInputMessageTextBox} placeholder="Type Here">
 
             </input>
 
-            <button onClick={onClickSendButton}>
+            <button id="sendbuttonformessage"onClick={onClickSendButton}>
               send
             </button>
 
