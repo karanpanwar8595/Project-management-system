@@ -70,22 +70,6 @@ function App() {
               }>
             </Route>
 
-            <Route exact path='calendar' element=
-              {
-                <div className="maincomponentcontainer">
-                  <Cal/>
-                </div>
-              }>
-            </Route>
-
-            <Route exact path='Notification' element=
-              {
-                <div className="maincomponentcontainer">
-                  <Notification/>
-                </div>
-              }>
-            </Route>
-
 
             </Routes>
             <Footer /> {/*footer for all the routes*/}
