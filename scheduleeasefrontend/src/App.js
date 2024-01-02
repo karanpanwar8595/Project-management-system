@@ -7,9 +7,10 @@ import Manage_team from './components/manage_team/Manage_team'
 import Project from './components/Projects/Projects';
 import Tasklist from './components/Tasks/Tasklist';
 
-import Manage_team from './components/manage_team/Manage_team';
-import Project from './components/Projects/Projects';
-import Notification from './components/Notification/Notification';import Modal from './components/modal_form/Modal'
+// import Manage_team from './components/manage_team/Manage_team';
+// import Project from './components/Projects/Projects';
+import Notification from './components/Notification/Notification';
+import Modal from './components/modal_form/Modal'
 import Cal from './components/calendar/Cal'
 import FileUpload from './components/file_upload/FileUpload';
 // import Chatbox from './components/chatmessage/Chatmessage'
