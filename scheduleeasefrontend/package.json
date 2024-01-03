@@ -10,6 +10,7 @@
     "@testing-library/user-event": "^13.5.0",
     "axios": "^1.6.3",
     "date-fns": "^2.30.0",
+    "http": "^0.0.1-security",
     "react": "^18.2.0",
     "react-big-calendar": "^1.8.5",
     "react-datepicker": "^4.25.0",
@@ -17,7 +18,9 @@
     "react-native": "^0.73.1",
     "react-router-dom": "^6.20.1",
     "react-scripts": "^5.0.1",
-    "web-vitals": "^2.1.4"
+    "stream": "^0.0.2",
+    "web-vitals": "^2.1.4",
+    "webpack-dev-server": "^4.15.1"
   },
   "scripts": {
     "start": "react-scripts start",
