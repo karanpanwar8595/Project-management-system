@@ -1,0 +1,41 @@
+/* MyCalendar.css */
+
+/* Style for the overall calendar container */
+.react-big-calendar {
+    border: 1px solid #ddd;
+  }
+  
+  /* Style for the header containing the date navigation */
+  .rbc-header {
+    background-color: #f0f0f0;
+  }
+  
+  /* Style for each day cell */
+  .rbc-date-cell {
+    border: 1px solid #ddd;
+  }
+  
+  /* Style for events */
+  .rbc-event {
+    background-color: #3174ad;
+    color: #fff;
+    border: 1px solid #255c91;
+  }
+  
+  /* Style for buttons in the header */
+  .rbc-btn-group button {
+    background-color: #4caf50;
+    color: #fff;
+    border: 1px solid #4caf50;
+    /* border-radius: 4px; */
+    padding: 5px 10px;
+    margin: 0 2px;
+    cursor: pointer;
+  }
+  
+  /* Hover effect for buttons */
+  .rbc-btn-group button:hover {
+    background-color: #45a049;
+  }
+  
+  
