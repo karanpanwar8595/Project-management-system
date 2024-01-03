@@ -1,6 +1,40 @@
 import React, { useState, useEffect } from 'react';
 import './Tasklist.css'; // Import your custom CSS
 import './Accordion.css';
+// import { DateRangePicker } from 'react-datepicker';
+
+
+
+
+
+// const DateRangePickerComponent = () => {
+//     const [startDate, setStartDate] = useState(null);
+//     const [endDate, setEndDate] = useState(null);
+
+//     return (
+//         <div>
+//             <h2>Date Range Picker Example</h2>
+//             <DateRangePicker
+//                 startDate={startDate}
+//                 endDate={endDate}
+//                 onChange={(start, end) => {
+//                     setStartDate(start);
+//                     setEndDate(end);
+//                 }}
+//                 selectsRange
+//                 inline
+//             />
+//             <div>
+//                 Selected Date Range:{' '}
+//                 {startDate && endDate
+//                     ? `${startDate.toLocaleDateString()} to ${endDate.toLocaleDateString()}`
+//                     : 'Please select dates'}
+//             </div>
+//         </div>
+//     );
+// };
+
+
 
 const AccordionItem = ({ task_key, title, content, status, duedate, owner, progress, done_key }) => {
     const [isOpen, setIsOpen] = useState(false);
@@ -35,6 +69,8 @@ const AccordionItem = ({ task_key, title, content, status, duedate, owner, progr
         </div>
     );
 };
+
+
 
 const Tasklist = () => {
 
@@ -84,21 +120,38 @@ const Tasklist = () => {
 
             <div className='taskinput'>
                 <div className='tasktitleandbutton'>
-                    <input type="text" className="textboxtoinputtilte" id="tasktextbox" >
+                    <label>
 
+                        <input
+                            type="text"
+                            name="message"
+                            placeholder='Title'
+                        />
+                    </label>
+                    <label>
+                        <textarea className='taskdescription'
+                            name="description"
+                            placeholder='Description'
+                        />
+                    </label>
+                    
+                    <label>
+                        Dropdown:
+                        <select
+                            name="selectedOption"
 
-                    </input>
+                        >
+                            <option value="Option 1">Option 1</option>
+                            <option value="Option 2">Option 2</option>
+                            <option value="Option 3">Option 3</option>
+                        </select>
+                    </label>
+                    <button >Send</button>
 
-
-                    <button >
-                        send
-                    </button>
-        
 
                 </div>
-                <textarea className='taskdescription'>
 
-                </textarea>
+
 
             </div>
 
@@ -108,3 +161,17 @@ const Tasklist = () => {
 };
 
 export default Tasklist;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
