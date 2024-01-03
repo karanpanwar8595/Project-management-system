@@ -1,38 +1,38 @@
 import React, { useState, useEffect } from 'react';
 import './Tasklist.css'; // Import your custom CSS
 import './Accordion.css';
-import { DateRangePicker } from 'react-datepicker';
+// import { DateRangePicker } from 'react-datepicker';
 
 
 
 
 
-const DateRangePickerComponent = () => {
-    const [startDate, setStartDate] = useState(null);
-    const [endDate, setEndDate] = useState(null);
+// const DateRangePickerComponent = () => {
+//     const [startDate, setStartDate] = useState(null);
+//     const [endDate, setEndDate] = useState(null);
 
-    return (
-        <div>
-            <h2>Date Range Picker Example</h2>
-            <DateRangePicker
-                startDate={startDate}
-                endDate={endDate}
-                onChange={(start, end) => {
-                    setStartDate(start);
-                    setEndDate(end);
-                }}
-                selectsRange
-                inline
-            />
-            <div>
-                Selected Date Range:{' '}
-                {startDate && endDate
-                    ? `${startDate.toLocaleDateString()} to ${endDate.toLocaleDateString()}`
-                    : 'Please select dates'}
-            </div>
-        </div>
-    );
-};
+//     return (
+//         <div>
+//             <h2>Date Range Picker Example</h2>
+//             <DateRangePicker
+//                 startDate={startDate}
+//                 endDate={endDate}
+//                 onChange={(start, end) => {
+//                     setStartDate(start);
+//                     setEndDate(end);
+//                 }}
+//                 selectsRange
+//                 inline
+//             />
+//             <div>
+//                 Selected Date Range:{' '}
+//                 {startDate && endDate
+//                     ? `${startDate.toLocaleDateString()} to ${endDate.toLocaleDateString()}`
+//                     : 'Please select dates'}
+//             </div>
+//         </div>
+//     );
+// };
 
 
 
@@ -134,17 +134,7 @@ const Tasklist = () => {
                             placeholder='Description'
                         />
                     </label>
-                    {/* <DateRangePickerComponent /> */}
-                    <DateRangePicker
-                        // startDate={startDate}
-                        // endDate={endDate}
-                        // onChange={(start, end) => {
-                        //     setStartDate(start);
-                        //     setEndDate(end);
-                        // }}
-                        selectsRange
-                        inline
-                    />
+                  
                     <label>
                         Dropdown:
                         <select
