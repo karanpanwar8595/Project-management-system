@@ -22,7 +22,7 @@ const SideNavbar = () => {
         <Link to="/disscussion">Disccussion</Link>
         </li>
         <li>
-        <Link to="/">Registration</Link>
+        <Link to="/registration">Registration</Link>
         </li>
         <li>
         <Link to="/">Payment</Link>

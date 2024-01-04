@@ -5,7 +5,17 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 
 
+# Login Process
+@api_view(['post'])
+def login(request):
+    return Response(True)
 
+
+
+
+
+
+# Disscussion process
 @api_view(['GET'])
 def listofreciver(request):
     return Response([{'firstname' :'Ujjwal', 'email':'jujjwa@gmail.com'},{'firstname' :'Rohit', 'email':'rohit@gmail.com'},{'firstname' :'Ramesh', 'email':'ramesh@gmail.com'},{'firstname' :'Suresh', 'email':'suresh@gmail.com'},])

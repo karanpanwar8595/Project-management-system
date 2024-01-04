@@ -1,5 +1,4 @@
 // ForgotPassword.js
-
 import React, { useState } from 'react';
 import styles from './ForgotPassword.module.css';
 
@@ -10,22 +9,22 @@ const ForgotPassword = () => {
     event.preventDefault();
 
     // Send a request to your backend to handle the password reset
-    fetch('/forgot-password', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        email,
-      }),
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        alert(data.message);
-      })
-      .catch((error) => {
-        console.error('Error:', error);
-      });
+    // fetch('/forgot-password', {
+    //   method: 'POST',
+    //   headers: {
+    //     'Content-Type': 'application/json',
+    //   },
+    //   body: JSON.stringify({
+    //     email,
+    //   }),
+    // })
+    //   .then((response) => response.json())
+    //   .then((data) => {
+    //     alert(data.message);
+    //   })
+    //   .catch((error) => {
+    //     console.error('Error:', error);
+    //   });
   };
 
   return (
