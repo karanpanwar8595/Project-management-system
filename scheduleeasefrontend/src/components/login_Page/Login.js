@@ -5,11 +5,10 @@ import axios from 'axios';
 
 
 const Login = ({ onDataFromChild }) => {
-  const [username, setUsername] = useState('');
+  const [email, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
-
 
   const sendLoginDataToParent = (authenticationcode) => {
     onDataFromChild(authenticationcode);
@@ -19,13 +18,22 @@ const Login = ({ onDataFromChild }) => {
     try {
       setLoading(true);
       setError(null);
-
-      axios.post('http://127.0.0.1:8000/api/login/').then((response) => {
-        console.log(response.data)
-        sendLoginDataToParent(response.data)
-
+      const logincretentials = { loginemail: email, loginpassword: password }
+      axios.post('http://127.0.0.1:8000/api/login/', logincretentials).then((response) => {
+        console.log(response)
+        if (response.data['value']) {
+          sendLoginDataToParent(response.data)
+          console.log('true')
+        }
+        else{
+          sendLoginDataToParent({value : false})
+          setUsername('')
+          setPassword('')
+          console.log('false')
+        }
       }, (error) => {
-        sendLoginDataToParent(false)
+        console.log(error)
+        sendLoginDataToParent({value : false})
       });
 
     } catch (error) {
@@ -47,7 +55,7 @@ const Login = ({ onDataFromChild }) => {
             placeholder="Username"
             className={styles.inputText}
             autoComplete="off"
-            value={username}
+            value={email}
             onChange={(e) => setUsername(e.target.value)}
           />
         </div>
@@ -69,7 +77,7 @@ const Login = ({ onDataFromChild }) => {
         </div>
         {error && <div className={styles.error}>{error}</div>}
         <div className={styles.footer}>
-        <Link to="/forgotpassword">Forgot Password?</Link>
+          <Link to="/forgotpassword">Forgot Password?</Link>
         </div>
       </div>
     </div>

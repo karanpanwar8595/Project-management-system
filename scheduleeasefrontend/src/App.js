@@ -16,21 +16,29 @@ import ForgotPassword from './components/login_Page/forgot password/ForgotPasswo
 import Registration from './components/registration/SignupForm'
 
 function App() {
-  const [authenticated, setAuthenticated] = useState('false');
-  const handleLoginDataFromChild = (data) => {
+  const [authenticateddata, setAuthenticateddata] = useState({'value': false});
 
-    setAuthenticated(data);
+  const handleLoginDataFromChild = (userLoginData) => {
+    const userLoginDataToJson =JSON.stringify(userLoginData)
+    // console.log(userLoginDataToJson)
+    setAuthenticateddata(JSON.parse(userLoginDataToJson));
+    sessionStorage.setItem('loginData',userLoginDataToJson);
+    sessionStorage.setItem('profileData',userLoginDataToJson.profile_data);
+
   };
-  useEffect(() => {//this help in seting authentication to false when we relode
-    try {
-      setAuthenticated(localStorage.getItem('mySessionVariable'))
-    } catch (error) {
-      setAuthenticated('false')
-    }
-  }, []);
 
 
-  if (!authenticated) {
+  // useEffect(() => {//this help in seting authentication to false when we relode
+  //   try {
+  //     setAuthenticateddata(JSON.parse(sessionStorage.getItem('loginData')))
+  //   } catch (error) {
+  //     setAuthenticateddata({'value': false})
+  //     // console.log("hello")
+  //   }
+  // }, []);
+  
+  console.log(authenticateddata?.value);
+  if (!(authenticateddata?.value)) {
     return (
       <>
         <Router>
