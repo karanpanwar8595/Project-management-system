@@ -257,50 +257,33 @@ label {
 
 /* -------------------------------PROGRESS BAR CSS-------------------------------- */
 .progress-container {
+  position: relative;
   height: 17px;
   width: 300px;
   background-color: #e0e0de;
   border-radius: 50px;
-  margin: 10px 35px;
+  margin: 1px 35px;
   box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.3);
 }
 
 .progress-filler {
   height: 100%;
   background-color: #4caf50;
-  /* default color, will be overridden */
   border-radius: inherit;
-  text-align: right;
   transition: width 1s ease-in-out;
   display: flex;
   align-items: center;
-  justify-content: flex-end;
-  padding-right: 5px;
+  min-width: 30px; /* 0% - visible */
 }
 
 .progress-label {
-  padding: 5px;
+  margin-left: auto;
   color: white;
   font-weight: bold;
+  padding-right: 5px;
 }
 
-/* Specific colors for different progress percentages */
-.progress-filler.low {
-  /* Less than 25% */
-  background-color: #ff4b4b;
-}
-
-.progress-filler.medium {
-  /* 25% to 50% */
-  background-color: #ff9636;
-}
-
-.progress-filler.high {
-  /* 50% to 75% */
-  background-color: #f9d71c;
-}
-
-.progress-filler.very-high {
-  /* Above 75% */
-  background-color: #4caf50;
-}
+.progress-filler.low { background-color: #ff4b4b; }
+.progress-filler.medium { background-color: #ff9636; }
+.progress-filler.high { background-color: #f9d71c; }
+.progress-filler.very-high { background-color: #4caf50; }
