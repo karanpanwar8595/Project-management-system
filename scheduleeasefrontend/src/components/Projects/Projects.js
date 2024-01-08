@@ -1,13 +1,38 @@
 import React, { useState } from 'react'
 import './Projects.css'
 import plus from './plus.png'
+import ProjectDetails from './ProjectDetails.js'
 
 const Projects = () => {
     const ongoingProjects = [
-        { id: 1, name: 'InnovateHub', dueDate: '2024-08-18', completion: 72 },
-        { id: 2, name: 'TechMinds Initiative', dueDate: '2024-05-12', completion: 45 },
+        {
+            id: 1,
+            name: 'InnovateHub',
+            dueDate: '2024-08-18',
+            startDate: '2024-01-12',
+            completion: 72,
+            projectDescription: 'InnovateHub is focused on developing innovative solutions...',
+            budget: '80000',
+            companyName: 'Innovate Inc.',
+            clientName: 'karan Panwar',
+            attachments: ['/project-plan.pdf'],
+            documents: ['/Aadhar.jpg', '/4th sem result.pdf']
+        },
+        {
+            id: 2,
+            name: 'TechMinds Initiative',
+            dueDate: '2024-05-12',
+            startDate: '2024-01-12',
+            completion: 45,
+            projectDescription: 'TechMinds Initiative is developed for technical solutions...',
+            budget: '120000',
+            companyName: 'TechMind Pvt. Ltd.',
+            clientName: 'Ujjwal bhansali',
+            attachments: ['/project-plan.pdf'],
+            documents: ['/Aadhar.jpg', '/4th sem result.pdf']
+        },
         { id: 3, name: 'GreenScape Solutions', dueDate: '2025-01-28', completion: 23 },
-        { id: 4, name: 'DataCrafters Project', dueDate: '2024-12-20', completion: 93 },
+        { id: 4, name: 'DataCrafters Project', dueDate: '2024-12-20', completion: 100 },
     ];
 
     const assignedProjects = [
@@ -41,6 +66,9 @@ const Projects = () => {
     // Multiple attachment and document
     const [selectedAttachments, setSelectedAttachments] = useState([]);
     const [selectedDocuments, setSelectedDocuments] = useState([]);
+
+    // For projects detailed view
+    const [selectedProject, setSelectedProject] = useState(null);
     //------------------------------------------------------------------------------------------------------------------------
 
     const toggleForm = () => {
@@ -93,6 +121,14 @@ const Projects = () => {
         return 'very-high';
     };
 
+    const openProjectDetails = (project) => {
+        setSelectedProject(project);
+    };
+
+    const closeProjectDetails = () => {
+        setSelectedProject(null);
+    };
+
     const handleFormSubmit = (event) => {
         event.preventDefault();
         const projectName = event.target.projectName.value;
@@ -108,7 +144,8 @@ const Projects = () => {
         const newProject = {
             id: newProjects.length + 1, // Simple id assignment, consider using a more robust method
             name: projectName,
-            dueDate: dueDate
+            dueDate: dueDate,
+            completion: 0
         };
 
         // Add the new project to the newProjects state
@@ -130,7 +167,7 @@ const Projects = () => {
                 <div className="header-item">Progress</div>
             </div>
             {[...ongoingProjects, ...newProjects].map((project) => (
-                <div key={project.id} className="project-card">
+                <div key={project.id} className="project-card" onClick={() => openProjectDetails(project)}>
                     <div className="project-details">
                         <div className="detail-item">{project.name}</div>
                         <div className="detail-item">{project.dueDate}</div>
@@ -146,6 +183,12 @@ const Projects = () => {
                     </div>
                 </div>
             ))}
+
+            {/* Project Details View */}
+            {selectedProject &&
+                <ProjectDetails project={selectedProject} onClose={closeProjectDetails} progressBar={getProgressClass} />
+            }
+
             <h3 style={{ textAlign: 'left' }}>Assigned to me</h3>
             <div className="project-header">
                 <div className="header-item">Project Name</div>
@@ -257,14 +300,14 @@ const Projects = () => {
                                 {clientResults.map(client => (
                                     <div key={client.email} className="client-result">
                                         {client.name} ({client.email})
-                                        <button type="button" onClick={() => handleAddClient(client)}>Add</button>
+                                        <button className="add-form-btn" type="button" onClick={() => handleAddClient(client)}>Add</button>
                                     </div>
                                 ))}
                             </div>
                             {selectedClient && (
                                 <div className="selected-client">
                                     {selectedClient.name} ({selectedClient.email})
-                                    <button type="button" onClick={handleRemoveClient}>Remove</button>
+                                    <button className="add-form-btn" type="button" onClick={handleRemoveClient}>Remove</button>
                                 </div>
                             )}
                             <div className="form-row">
