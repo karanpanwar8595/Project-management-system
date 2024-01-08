@@ -10,13 +10,37 @@ class Profile(models.Model):
     role = models.SmallIntegerField()
     gender = models.SmallIntegerField(null=True)
     dob = models.DateField()
-    city = models.ForeignKey('City', on_delete=models.CASCADE)
+    city = models.ForeignKey('City', on_delete=models.CASCADE,null=True)
     user_status = models.SmallIntegerField()
     profile_status = models.SmallIntegerField()
     gst_no = models.ForeignKey('CompanyDetails', on_delete=models.CASCADE, null=True)
 
     def _str_(self):
         return self.email
+    
+    def login_to_dict(self):
+        return {
+            'email': self.email,
+            'role': self.role,
+            'user_status': self.user_status,
+        }
+    
+    def to_dict(self):
+        return {
+            'email': self.email,
+            'password': self.password,
+            'photo': self.photo,
+            'fname': self.fname,
+            'mname': self.mname,
+            'lname': self.lname,
+            'role': self.role,
+            'gender': self.gender,
+            'dob': str(self.dob),  # Convert DateField to string representation
+            'city': self.city.to_dict() if self.city else None,  # Assuming City model has a to_dict method
+            'user_status': self.user_status,
+            'profile_status': self.profile_status,
+            'gst_no': self.gst_no.to_dict() if self.gst_no else None,  # Assuming CompanyDetails model has a to_dict method
+        }
 
 class Project(models.Model):
     project_id = models.IntegerField(primary_key=True)

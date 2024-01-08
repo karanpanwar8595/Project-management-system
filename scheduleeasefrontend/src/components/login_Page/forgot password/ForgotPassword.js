@@ -1,31 +1,25 @@
 // ForgotPassword.js
-
 import React, { useState } from 'react';
 import styles from './ForgotPassword.module.css';
+import axios from 'axios';
 
 const ForgotPassword = () => {
-  const [email, setEmail] = useState('');
+  const [inputemail, setEmail] = useState('');
 
   const handleSubmit = (event) => {
-    event.preventDefault();
 
-    // Send a request to your backend to handle the password reset
-    fetch('/forgot-password', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        email,
-      }),
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        alert(data.message);
-      })
-      .catch((error) => {
-        console.error('Error:', error);
-      });
+    event.preventDefault();
+    const forgotpasswordemailcretentials = { forgotpasswordemail : inputemail }
+    axios.post('http://127.0.0.1:8000/api/forgetpassword/', forgotpasswordemailcretentials).then((response) => {
+      console.log(response)
+
+    }, (error) => {
+      console.log(error)
+    });
+
+
+
+
   };
 
   return (
@@ -36,7 +30,7 @@ const ForgotPassword = () => {
         <input
           type="email"
           id="email"
-          value={email}
+          value={inputemail}
           onChange={(e) => setEmail(e.target.value)}
           required
         />

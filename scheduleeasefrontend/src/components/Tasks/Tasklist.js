@@ -1,39 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import './Tasklist.css'; // Import your custom CSS
 import './Accordion.css';
-// import { DateRangePicker } from 'react-datepicker';
-
-
-
-
-
-// const DateRangePickerComponent = () => {
-//     const [startDate, setStartDate] = useState(null);
-//     const [endDate, setEndDate] = useState(null);
-
-//     return (
-//         <div>
-//             <h2>Date Range Picker Example</h2>
-//             <DateRangePicker
-//                 startDate={startDate}
-//                 endDate={endDate}
-//                 onChange={(start, end) => {
-//                     setStartDate(start);
-//                     setEndDate(end);
-//                 }}
-//                 selectsRange
-//                 inline
-//             />
-//             <div>
-//                 Selected Date Range:{' '}
-//                 {startDate && endDate
-//                     ? `${startDate.toLocaleDateString()} to ${endDate.toLocaleDateString()}`
-//                     : 'Please select dates'}
-//             </div>
-//         </div>
-//     );
-// };
-
+import DateRangePickerComp from './DateRangePickerComp';
 
 
 const AccordionItem = ({ task_key, title, content, status, duedate, owner, progress, done_key }) => {
@@ -134,13 +102,10 @@ const Tasklist = () => {
                             placeholder='Description'
                         />
                     </label>
-                  
+                    <DateRangePickerComp/>
                     <label>
                         Dropdown:
-                        <select
-                            name="selectedOption"
-
-                        >
+                        <select name="selectedOption" >
                             <option value="Option 1">Option 1</option>
                             <option value="Option 2">Option 2</option>
                             <option value="Option 3">Option 3</option>
