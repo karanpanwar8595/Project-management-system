@@ -13,10 +13,10 @@ import DisscussionBox from './components/Disscussion/Disscussion'
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Login from './components/login_Page/Login'
 import ForgotPassword from './components/login_Page/forgot password/ForgotPassword';
-import Registration from './components/registration/SignupForm'
-
+import Registration from './components/registration/SignupForm';
+import Addtask from './components/addtask/Addtask';
 function App() {
-  const [authenticateddata, setAuthenticateddata] = useState({'value': false});
+  const [authenticateddata, setAuthenticateddata] = useState({'value': true});
 
   const handleLoginDataFromChild = (userLoginData) => {
     const userLoginDataToJson =JSON.stringify(userLoginData)
@@ -101,6 +101,14 @@ function App() {
                   </>
                 }>
                 </Route>
+
+                <Route exact path='addtask' element={
+                  <>
+                    < Addtask />
+                  </>
+                }>
+                </Route>
+
                 {/*Manage team component route */}
                 <Route exact path='manage_team' element=
                   {

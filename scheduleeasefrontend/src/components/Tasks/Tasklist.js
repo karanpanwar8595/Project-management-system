@@ -2,7 +2,8 @@ import React, { useState, useEffect } from 'react';
 import './Tasklist.css'; // Import your custom CSS
 import './Accordion.css';
 import DateRangePickerComp from './DateRangePickerComp';
-
+import plus from '../Projects/plus.png'
+import { Link } from 'react-router-dom';
 
 const AccordionItem = ({ task_key, title, content, status, duedate, owner, progress, done_key }) => {
     const [isOpen, setIsOpen] = useState(false);
@@ -85,8 +86,9 @@ const Tasklist = () => {
                     ))}
                 </div>
             </div>
-
-            <div className='taskinput'>
+            <Link to="/addtask"><img src={plus} class='plus-symbol' alt='not found'  /></Link>
+            
+            {/* <div className='taskinput'>
                 <div className='tasktitleandbutton'>
                     <label>
 
@@ -118,7 +120,7 @@ const Tasklist = () => {
 
 
 
-            </div>
+            </div> */}
 
 
         </div>
