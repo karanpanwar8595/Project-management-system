@@ -9,7 +9,11 @@ import Notification from './components/Notification/Notification';
 import Modal from './components/modal_form/Modal';
 import Cal from './components/calendar/Cal';
 import FileUpload from './components/file_upload/FileUpload';
-import DisscussionBox from './components/Disscussion/Disscussion'
+import Home from './components/home/Home';
+import Registration from './components/registration/SignupForm';
+import Profile from './components/profile/Profile';
+import UpdateProfile from './components/updateprofile/UpdateProfile';
+import DisscussionBox from './components/Disscussion/Disscussion';
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Login from './components/login_Page/Login'
 import ForgotPassword from './components/login_Page/forgot password/ForgotPassword';
@@ -126,6 +130,30 @@ function App() {
 
                   }>
                 </Route>
+              {/* Registration page */}
+              <Route exact path='/registration' element={
+                <>
+                  < Registration />
+                </>
+              }>
+        </Route>
+        <Route exact path='/profile' element={
+                <>
+                  < Profile />
+                </>
+              }>
+        </Route>
+        <Route exact path='/UpdateProfile' element={
+          <>
+            < UpdateProfile />
+          </>
+        }>
+  </Route>
+ 
+              <Route exact path='/project' element={
+                <Project />
+              }>
+              </Route>
 
                 <Route exact path='Notification' element=
                   {
@@ -154,4 +182,3 @@ function App() {
 }
 
 export default App;
-

@@ -1,9 +1,9 @@
- .sign-container {
+ .update-profile-container {
      display: flex;
      height: 100vh;
  }
  
- .sign-content {
+ .profile-content {
      background-color: #f4f4f4;
      padding: 50px;
      border-radius: 12px;
@@ -17,11 +17,6 @@
      text-align: center;
      color: #333;
      height: max-content;
- }
- 
- form {
-     display: flex;
-     flex-direction: column;
  }
  
  label {

@@ -43,7 +43,7 @@ const AccordionItem = ({ task_key, title, content, status, duedate, owner, progr
 
 const Tasklist = () => {
 
-    const [taskList, setTasklist] = useState([{ title: "firsttask", content: "This is thehhis is the second item's accordion body. It is hidden by default, until the collapse pis is the second item's accordion body. It is hidden by default, until the collapse phis is the second item's accordion body. ", status: "Active", duedate: "12/10/2023", progress: "20%", owner: "Ujjwal" }]);
+    const [taskList, setTasklist] = useState([{ title: "first task", content: "This  is the second item's accordion body. It is hidden by default, until the collapse pis is the second item's accordion body. It is hidden by default, until the collapse phis is the second item's accordion body. ", status: "Active", duedate: "12/10/2023", progress: "20%", owner: "moon" }]);
     useEffect(() => {
         async function fetchData() {
             try {
