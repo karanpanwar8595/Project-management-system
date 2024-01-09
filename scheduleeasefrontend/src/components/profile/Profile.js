@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
-import './pstyle.css'; // Import  CSS file
+import { Link } from 'react-router-dom'; 
+import './pstyle.css'; 
 
 const Profile = () => {
   const [uploadedImage, setUploadedImage] = useState('');
+  const [showIconButton, setShowIconButton] = useState(false);
 
   const displayImage = (input) => {
     const file = input.files[0];
@@ -18,11 +20,21 @@ const Profile = () => {
     }
   };
 
+  const handleEditClick = () => {
+    // Navigate to the registration page
+    window.location.href = '/UpdateProfile';
+  };
+
+  const handleIconClick = () => {
+    // For now, toggling the state to show/hide the icon button
+    setShowIconButton(!showIconButton);
+  };
+
   return (
-    <div>
+    <div className="profile">
       {/* Navbar top */}
-      <div className="navbar-top">
-        <div className="title">
+      <div className="profile-navbar-top">
+        <div className="profile-title">
           <h1>Profile</h1>
         </div>
 
@@ -33,40 +45,27 @@ const Profile = () => {
               <i className="fa fa-sign-out-alt fa-2x"></i>
             </a>
           </li>
+          <li>
+            <button onClick={handleEditClick}>Edit</button>
+          </li>
+          {showIconButton && (
+            <li>
+              {/* Link to the corresponding page for the icon button */}
+              <Link to="/icon-page">
+                <i className="fa fa-icon fa-2x"></i>
+              </Link>
+            </li>
+          )}
         </ul>
         {/* End */}
       </div>
       {/* End */}
 
-      <div className="sidenav">
-        <div className="profile">
-          <div className="photo-upload">
-            <input
-              type="file"
-              id="image"
-              style={{ display: 'none' }}
-              onChange={(e) => displayImage(e.target)}
-            />
-            <label htmlFor="image">
-              <i className="fa fa-camera fa-2x"></i>
-            </label>
-            {uploadedImage && (
-              <img
-                id="uploaded-image"
-                src={uploadedImage}
-                alt="Uploaded Photo"
-              />
-            )}
-          </div>
-        </div>
-        <div className="job"></div>
-      </div>
-
-      <div className="main">
-        <h2>IDENTITY</h2>
-        <div className="card">
-          <div className="card-body">
-            <i className="fa fa-pen fa-xs edit"></i>
+      <div className="profile-profile-main">
+        <h2>PERSONAL INFORMATION</h2>
+        <div className="profile-card">
+          <div className="profile-car-body">
+            <i className="fa fa-pen fa-xs profile-edit"></i>
             <table>
               <tbody>
                 <tr>
@@ -90,24 +89,24 @@ const Profile = () => {
                   <td>23-11-2002</td>
                 </tr>
                 <tr>
-                  <td>City id</td>
+                  <td>Address</td>
                   <td>:</td>
-                  <td>12345</td>
+                  <td>401,abc motera</td>
                 </tr>
                 <tr>
-                  <td>User status</td>
+                  <td>City</td>
                   <td>:</td>
-                  <td>Y</td>
+                  <td>ahemdabad</td>
                 </tr>
                 <tr>
-                  <td>Profile status</td>
+                  <td>State</td>
                   <td>:</td>
-                  <td>Unblocked</td>
+                  <td>gujarat</td>
                 </tr>
                 <tr>
-                  <td>Gst number</td>
+                  <td>Country</td>
                   <td>:</td>
-                  <td>Kar1australia</td>
+                  <td>india</td>
                 </tr>
               </tbody>
             </table>
