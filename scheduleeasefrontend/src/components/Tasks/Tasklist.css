@@ -1,4 +1,13 @@
 /* Accordion styles */
+.task-title-bar{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 10px 0px;
+    margin: 0px 11px;
+    border-bottom: 3px solid #ccc;
+}
+
 .onetask {
     display: flex;
     background-color: transparent;
@@ -44,8 +53,8 @@
 
 .tasklist{
 min-height: 70vh;
-
 }
+
 .task-row{
     overflow: auto;
 }
@@ -53,7 +62,6 @@ min-height: 70vh;
     min-width: 75vw;
     max-height: fit-content;
 }
-
 
 
 

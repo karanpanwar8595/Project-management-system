@@ -3,15 +3,18 @@
   align-items: center;
   justify-content: space-between;
   padding: 10px;
-  background-color: #060f73;
+  background-color:  #07056b;
   color: #fff;
   position: sticky;
   top: 0;
   /* z-index: 999;  */
   max-height: 40px;
+
 }
 
-
+.navbar-logo{
+  min-width: 80%;
+}
 .navbar-logo img {
   height: 30px;
   width: auto;
@@ -43,4 +46,32 @@
 .profile-email {
   font-size: 14px;
   color: #f1f1f1;
+}
+
+
+
+#logoutbutton {
+  display: flex;
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  overflow: hidden;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  justify-self: center;
+  align-items: center;
+  align-content: center;
+  justify-content: center;
+  max-width: 5%;
+}
+
+#logoutbutton img {
+  width: 50%;
+  height: 50%;
+  object-fit: cover;
+  align-items: center;
+}
+
+#logoutbutton:hover {
+  background-color: #08a91e; /* Change to your desired hover background color */
 }

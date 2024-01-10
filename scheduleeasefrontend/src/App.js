@@ -20,7 +20,7 @@ import ForgotPassword from './components/login_Page/forgot password/ForgotPasswo
 // import Registration from './components/registration/SignupForm';
 import Addtask from './components/addtask/Addtask';
 function App() {
-  const [authenticateddata, setAuthenticateddata] = useState({'value': true});
+  const [authenticateddata, setAuthenticateddata] = useState({'value': false});
 
   const handleLoginDataFromChild = (userLoginData) => {
     const userLoginDataToJson =JSON.stringify(userLoginData)
@@ -32,14 +32,14 @@ function App() {
   };
 
 
-  // useEffect(() => {//this help in seting authentication to false when we relode
-  //   try {
-  //     setAuthenticateddata(JSON.parse(sessionStorage.getItem('loginData')))
-  //   } catch (error) {
-  //     setAuthenticateddata({'value': false})
-  //     // console.log("hello")
-  //   }
-  // }, []);
+  useEffect(() => {//this help in seting authentication to false when we relode
+    try {
+      setAuthenticateddata(JSON.parse(sessionStorage.getItem('loginData')))
+    } catch (error) {
+      setAuthenticateddata({'value': false})
+      // console.log("hello")
+    }
+  }, []);
   
   console.log(authenticateddata?.value);
   if (!(authenticateddata?.value)) {

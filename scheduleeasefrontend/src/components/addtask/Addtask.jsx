@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import './Addtask.css';
 
 const YourFormComponent = () => {
     const [title, setTitle] = useState('');
@@ -12,8 +13,8 @@ const YourFormComponent = () => {
     const teamMemberListItemsConst = ['Apple', 'Banana', 'Orange'];
     const [teamMemberListItems, setTeamMemberListItems] = useState(['Apple', 'Banana', 'Orange']);
     const [isListVisible, setListVisible] = useState(false);
-
-
+    const [selectedAttachments, setSelectedAttachments] = useState([]);
+    const [selectedDocuments, setSelectedDocuments] = useState([]);
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -34,66 +35,87 @@ const YourFormComponent = () => {
     const handleTeamMemberItemClick = (itemName) => {
         setteamMemberValue(itemName);
     };
-const handleTeamMemberInputFocus = () => {
-    setListVisible(true);
-  };
+    const handleTeamMemberInputFocus = () => {
+        setListVisible(true);
+    };
 
-  const handleTeamMemberInputBlur = () => {
-    // Adding a slight delay to prevent the list from disappearing before the click on list item is registered
-    setTimeout(() => setListVisible(false), 200);
-  };
+    const handleTeamMemberInputBlur = () => {
+        // Adding a slight delay to prevent the list from disappearing before the click on list item is registered
+        setTimeout(() => setListVisible(false), 200);
+    };
+    const handleFileChange = (e, type) => {
+        const newFiles = Array.from(e.target.files);
+        if (type === 'attachment') {
+            setSelectedAttachments(old => [...old, ...newFiles]);
+        } else {
+            setSelectedDocuments(old => [...old, ...newFiles]);
+        }
+    };
     return (
-        <div>
+        <div id="addtask-form-container">
             <form onSubmit={handleSubmit}>
-                <div>
-                    <label>Title:</label>
-                    <input type="text" value={title} onChange={(e) => setTitle(e.target.value)} />
+                <div className='task-title'>
+                    <label className='form-label'>Title:</label>
+                    <input type="text" className='form-input' value={title} onChange={(e) => setTitle(e.target.value)} />
                 </div>
-                <div>
-                    <label>Description:</label>
-                    <textarea value={description} onChange={(e) => setDescription(e.target.value)} />
+                <div className='task-description'>
+                    <label className='form-label'>Description:</label>
+                    <textarea className='form-input' value={description} onChange={(e) => setDescription(e.target.value)} />
                 </div>
-                <div>
-                    <label>Start Date:</label>
-                    <input type="date" value={startDate} onChange={(e) => setStartDate(e.target.value)} />
+                <div className='task-startdate'>
+                    <label className='form-label'>Start Date:</label>
+                    <input type="date" className='form-input' value={startDate} onChange={(e) => setStartDate(e.target.value)} />
                 </div>
-                <div>
-                    <label>End Date:</label>
-                    <input type="date" value={endDate} onChange={(e) => setEndDate(e.target.value)} />
+                <div className='task-enddate'>
+                    <label className='form-label'>End Date:</label>
+                    <input type="date" className='form-input' value={endDate} onChange={(e) => setEndDate(e.target.value)} />
                 </div>
-                <div>
-                    {/* <label>Dropdown:</label>
-                    <select value={dropdownValue} onChange={(e) => setDropdownValue(e.target.value)}>
-                        <option value="option1">Option 1</option>
-                        <option value="option2">Option 2</option>
-                    </select> */}
+
+                <div className="attach-container">
+                    <label htmlFor="taskattachment" className='form-label'>Attachment:</label>
+                    <input
+                        className="in-txtarea"
+                        type="file"
+                        id="taskattachment"
+                        name="taskattachment"
+                        onChange={(e) => handleFileChange(e, 'taskattachment')}
+                    />
                     <div>
-                        <input type="text" value={teamMemberValue}
-                            onChange={handleteammemberChange}
-                            onFocus={handleTeamMemberInputFocus}
-                            onBlur={handleTeamMemberInputBlur}
-                            placeholder="Enter team member" />
-
-                        {isListVisible && (
-                            <ul>
-                                {teamMemberListItems.map((item, index) => (
-                                    <li key={index} onClick={() => handleTeamMemberItemClick(item)}>
-                                        {item}
-                                    </li>
-                                ))}
-                            </ul>
-                        )}
-
-                        {/* <ul>
-                            {teamMemberListItems.map((item, index) => (
-                                <li key={index} onClick={() => handleTeamMemberItemClick(item)}>{item}</li>
-                            ))}
-                        </ul> */}
+                        {selectedAttachments.map((file, index) => (
+                            <div key={index}>{file.name}</div>
+                        ))}
                     </div>
                 </div>
-                <button type="submit">Submit</button>
+
+                <div className='listofteammember'>
+                    <input
+                        type="text"
+                        value={teamMemberValue}
+                        onChange={handleteammemberChange}
+                        onFocus={handleTeamMemberInputFocus}
+                        onBlur={handleTeamMemberInputBlur}
+                        placeholder="Enter team member"
+                        className='form-input'
+                    />
+
+                    {isListVisible && (
+                        <div className='teammemberlist'>
+                            {teamMemberListItems.map((item, index) => (
+                                <div
+                                    className="teammemberlistitem"
+                                    key={index}
+                                    onClick={() => handleTeamMemberItemClick(item)}
+                                >
+                                    {item}
+                                </div>
+                            ))}
+                        </div>
+                    )}
+                </div>
+
+                <button className='submit-button' type="submit">Submit</button>
             </form>
-            {submissionMessage && <div>{submissionMessage}</div>}
+            {submissionMessage && <div className='submission-message'>{submissionMessage}</div>}
         </div>
     );
 };

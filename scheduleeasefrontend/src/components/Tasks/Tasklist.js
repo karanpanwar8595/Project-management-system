@@ -4,11 +4,12 @@ import './Accordion.css';
 import DateRangePickerComp from './DateRangePickerComp';
 import plus from '../Projects/plus.png'
 import { Link } from 'react-router-dom';
+import editicon from './editicon.png';
 
 const AccordionItem = ({ task_key, title, content, status, duedate, owner, progress, done_key }) => {
     const [isOpen, setIsOpen] = useState(false);
     // const [addButtonintask, setAddButtonInTask] = useState(false);
-    const handleToggle = () => {
+    const handleTaskboxToggle = () => {
         setIsOpen(!isOpen);
     };
     const addButtonHandle = () => {
@@ -18,10 +19,11 @@ const AccordionItem = ({ task_key, title, content, status, duedate, owner, progr
     };
     return (
         <div className="accordion-item" key={task_key}>
-            <div className={`task-item ${isOpen ? 'active' : ''}`} onClick={handleToggle}>
-                <button className="accordion-button" >
+            <div className={`task-item ${isOpen ? 'active' : ''}`} >
+                <div className="accordion-button" onClick={handleTaskboxToggle}>
                     {title}
-                </button>
+                </div>
+<div className="accordion-edit-button" onClick={(event) => event.stopPropagation()}><img src={editicon}></img></div>
                 <div className='accordion-status'>{status}</div>
                 <div className='accordion-duedate'>{duedate}</div>
 
@@ -29,7 +31,7 @@ const AccordionItem = ({ task_key, title, content, status, duedate, owner, progr
                 <div
                     className='accordion-add-button ${done_key}' key={done_key}
                     onClick={(event) => { event.stopPropagation(); addButtonHandle(); }}
-                > Add
+                > Complete
                 </div>
             </div>
             <div className={`accordion-content ${isOpen ? 'open' : ''}`}>
@@ -43,7 +45,7 @@ const AccordionItem = ({ task_key, title, content, status, duedate, owner, progr
 
 const Tasklist = () => {
 
-    const [taskList, setTasklist] = useState([{ title: "first task", content: "This  is the second item's accordion body. It is hidden by default, until the collapse pis is the second item's accordion body. It is hidden by default, until the collapse phis is the second item's accordion body. ", status: "Active", duedate: "12/10/2023", progress: "20%", owner: "moon" }]);
+    const [taskList, setTasklist] = useState([{ title: "first task", content: "This  is the second item's accordion body. It is hidden by default, until the collapse pis is the second item's accordion body. It is hidden by default, until the collapse phis is the second item's accordion body. ", status: "Active", duedate: "12/10/2023", progress: "20%", owner: "Suresh" },{ title: "first task", content: "This  is the second item's accordion body. It is hidden by default, until the collapse pis is the second item's accordion body. It is hidden by default, until the collapse phis is the second item's accordion body. ", status: "Active", duedate: "12/10/2023", progress: "20%", owner: "Ramesh" }]);
     useEffect(() => {
         async function fetchData() {
             try {
@@ -66,12 +68,12 @@ const Tasklist = () => {
             <div className='tasklist'>
 
 
-                <div className="onetask">
+                <div className="task-title-bar">
                     <div className='accordion-header-element'>Task</div>
                     <div className='accordion-status'>Active</div>
                     <div className='accordion-duedate'>Due Date</div>
-                    <div className='accordion-progress'>Progress</div>
-                    <div className='accordion-owner'>Owner</div>
+                    <div className='accordion-progress'>Manage By</div>
+                    <div className='accordion-owner'>Action</div>
                 </div>
                 <div className='task-row'>
                     {taskList.map(task => (
