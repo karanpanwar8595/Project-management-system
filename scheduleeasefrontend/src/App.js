@@ -17,7 +17,7 @@ import DisscussionBox from './components/Disscussion/Disscussion';
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Login from './components/login_Page/Login'
 import ForgotPassword from './components/login_Page/forgot password/ForgotPassword';
-import Registration from './components/registration/SignupForm';
+// import Registration from './components/registration/SignupForm';
 import Addtask from './components/addtask/Addtask';
 function App() {
   const [authenticateddata, setAuthenticateddata] = useState({'value': true});
