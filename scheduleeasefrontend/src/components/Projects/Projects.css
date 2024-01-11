@@ -1,73 +1,74 @@
 .projects-container {
-  position: relative;
-  max-width: auto;
-  margin-top: auto auto;
-  padding: 5px 25px;
-  border: 3px solid #060709;
-  border-radius: 5px;
-  overflow: auto;
-  max-height: 83vh;
+    position: relative;
+    max-width: auto;
+    margin-top: auto auto;
+    padding: 5px 25px;
+    border: 3px solid #060709;
+    border-radius: 5px;
+    overflow: auto;
+    max-height: 83vh;
 }
 
 .projects-container::-webkit-scrollbar {
-  width: 5px;
-  /* Width of the scrollbar */
+    width: 5px;
+    /* Width of the scrollbar */
 }
 
 .progress-container::-webkit-scrollbar-thumb {
-  background-color: transparent;
-  /* Color of the thumb */
+    background-color: transparent;
+    /* Color of the thumb */
 }
 
 .project-header {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  padding: 10px 0;
-  border-bottom: 3px solid #ccc;
-  /* font-weight: bold; */
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 10px 0;
+    border-bottom: 3px solid #ccc;
+    /* font-weight: bold; */
 }
 
 .header-item {
-  flex: 1;
-  text-align: center;
+    flex: 1;
+    text-align: center;
 }
 
 .project-card {
-  flex: 0 0 300px;
-  margin: 10px;
-  padding: 15px;
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
-  transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
-  cursor: pointer;
+    flex: 0 0 300px;
+    margin: 10px;
+    padding: 15px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+    cursor: pointer;
 }
 
 .project-card:hover {
-  transform: scale(1.05);
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    transform: scale(1.05);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
 }
 
 .project-details {
-  position: relative;
-  display: flex;
-  /* flex se vo uske child item ko flex kar skata he */
-  flex-direction: row;
-  justify-content: space-between;
-  padding: 10px 0;
-  font-weight: bold;
+    position: relative;
+    display: flex;
+    /* flex se vo uske child item ko flex kar skata he */
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 10px 0;
+    font-weight: bold;
 }
 
 .detail-item {
-  flex: 1;
-  text-align: center;
+    flex: 1;
+    text-align: center;
 }
 
 .add-team-link {
-  color: #007bff;
-  text-decoration: none;
+    color: #007bff;
+    text-decoration: none;
 }
+
 
 /* .add-project-button {
     position: fixed;
@@ -82,7 +83,10 @@
     cursor: pointer;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.3); 
   }   */
+
+
 /* use it to put button on right bottom */
+
 
 /* .add-project-button {
     background-color: #29bf2e;
@@ -96,26 +100,31 @@
     margin-top: 20px; 
   } */
 
+
 /* .add-project-button:hover {
     background-color: #188f1e; 
   } */
 
 .plus-symbol {
-  position: fixed;
-  bottom: 30px;
-  right: 30px;
-  width: 65px;
-  height: 65px;
-  background-color: #f08000;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    width: 65px;
+    height: 65px;
+    background-color: #f08000;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
 }
 
+
 /* ---------------------------- FORM CSS ------------------------------ */
+
+
 /* -------------------------------------------------------------------- */
+
 
 /* .form-container {
   position: absolute;
@@ -133,174 +142,172 @@
 } */
 
 .modal-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.5);
-  display: flex;
-  /* flex container
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    /* flex container
   its children becomes the flex items */
-  align-items: center;
-  justify-content: center;
+    align-items: center;
+    justify-content: center;
 }
 
 .modal {
-  background: white;
-  padding: 20px;
-  width: 1000px;
-  max-height: 80vh;
-  /* viewport height */
-  border-radius: 8px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
-  /* position: relative; */
-  overflow: auto;
-  /* Add both horizontal and vertical scrollbars when content exceeds the height or width */
-  /* scrollbar-width: thin; */
-  /* For Firefox */
-  /* scrollbar-color: transparent transparent; */
-  /* For Firefox */
-  /* -ms-overflow-style: none; */
-  /* For IE and Edge */
+    background: white;
+    padding: 20px;
+    width: 1000px;
+    max-height: 80vh;
+    /* viewport height */
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+    /* position: relative; */
+    overflow: auto;
+    /* Add both horizontal and vertical scrollbars when content exceeds the height or width */
+    /* scrollbar-width: thin; */
+    /* For Firefox */
+    /* scrollbar-color: transparent transparent; */
+    /* For Firefox */
+    /* -ms-overflow-style: none; */
+    /* For IE and Edge */
 }
 
 .modal::-webkit-scrollbar {
-  width: 5px;
-  /* Width of the scrollbar */
+    width: 5px;
+    /* Width of the scrollbar */
 }
 
 .modal::-webkit-scrollbar-thumb {
-  background-color: transparent;
-  /* Color of the thumb */
+    background-color: transparent;
+    /* Color of the thumb */
 }
 
 .form-header {
-  display: flex;
-  justify-content: flex-end;
-  margin-bottom: 15px;
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 15px;
 }
 
 .form-header span {
-  cursor: pointer;
-  color: #3a3aeb;
+    cursor: pointer;
+    color: #3a3aeb;
 }
 
 .form-row {
-  margin-bottom: 15px;
-  font-weight: 500;
+    margin-bottom: 15px;
+    font-weight: 500;
 }
 
 label {
-  display: block;
-  margin-bottom: 5px;
+    display: block;
+    margin-bottom: 5px;
 }
 
 .in-txtarea {
-  width: 100%;
-  padding: 8px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  box-sizing: border-box;
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
 }
 
 .add-form-btn {
-  background-color: #007bff;
-  color: #fff;
-  border: none;
-  border-radius: 5px;
-  padding: 10px;
-  cursor: pointer;
-  display: block;
-  margin: auto;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    padding: 10px;
+    cursor: pointer;
+    display: block;
+    margin: auto;
 }
+
 
 /* -------------------------------------------CSS for client search--------------------------------------------- */
 
 .client-search-row input[type="text"] {
-  width: 100%;
-  padding: 8px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
 }
 
 .client-search-row input[type="text"]:focus+.client-search-results,
 .client-search-row input[type="text"]:active+.client-search-results {
-  display: block;
-  /* Show when input is focused */
+    display: block;
+    /* Show when input is focused */
 }
 
 .client-result {
-  padding: 2px;
-  cursor: pointer;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+    padding: 2px;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
 .client-result:hover {
-  background-color: #c4c2c2;
+    background-color: #c4c2c2;
 }
 
 .selected-client {
-  margin-top: 3px;
-  margin-bottom: 30px;
-  padding: 10px;
-  background-color: #f9f9f9;
-  border: 2px solid #686666;
-  border-radius: 4px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+    margin-top: 3px;
+    margin-bottom: 30px;
+    padding: 10px;
+    background-color: #f9f9f9;
+    border: 2px solid #686666;
+    border-radius: 4px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
+
 /* -------------------------------PROGRESS BAR CSS-------------------------------- */
+
 .progress-container {
-  height: 17px;
-  width: 300px;
-  background-color: #e0e0de;
-  border-radius: 50px;
-  margin: 10px 35px;
-  box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.3);
+    position: relative;
+    height: 17px;
+    width: 300px;
+    background-color: #e0e0de;
+    border-radius: 50px;
+    margin: 1px 35px;
+    box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.3);
 }
 
 .progress-filler {
-  height: 100%;
-  background-color: #4caf50;
-  /* default color, will be overridden */
-  border-radius: inherit;
-  text-align: right;
-  transition: width 1s ease-in-out;
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
-  padding-right: 5px;
+    height: 100%;
+    background-color: #4caf50;
+    border-radius: inherit;
+    transition: width 1s ease-in-out;
+    display: flex;
+    align-items: center;
+    min-width: 30px;
+    /* 0% - visible */
 }
 
 .progress-label {
-  padding: 5px;
-  color: white;
-  font-weight: bold;
+    margin-left: auto;
+    color: white;
+    font-weight: bold;
+    padding-right: 5px;
 }
 
-/* Specific colors for different progress percentages */
 .progress-filler.low {
-  /* Less than 25% */
-  background-color: #ff4b4b;
+    background-color: #ff4b4b;
 }
 
 .progress-filler.medium {
-  /* 25% to 50% */
-  background-color: #ff9636;
+    background-color: #ff9636;
 }
 
 .progress-filler.high {
-  /* 50% to 75% */
-  background-color: #f9d71c;
+    background-color: #f9d71c;
 }
 
 .progress-filler.very-high {
-  /* Above 75% */
-  background-color: #4caf50;
+    background-color: #4caf50;
 }
