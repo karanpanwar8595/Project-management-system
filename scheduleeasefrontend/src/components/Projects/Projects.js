@@ -1,7 +1,8 @@
 import React, { useState } from 'react'
 import './Projects.css'
 import plus from './plus.png'
-import ProjectDetails from './ProjectDetails.js'
+// import ProjectDetails from './ProjectDetails.js'
+import { Link } from 'react-router-dom';
 
 const Projects = () => {
     const ongoingProjects = [
@@ -11,7 +12,7 @@ const Projects = () => {
             dueDate: '2024-08-18',
             startDate: '2024-01-12',
             completion: 72,
-            projectDescription: 'InnovateHub is focused on developing innovative solutions...',
+            projectDescription: 'InnovateHub is focused on developing innovative solutions.',
             budget: '80000',
             companyName: 'Innovate Inc.',
             clientName: 'karan Panwar',
@@ -24,15 +25,39 @@ const Projects = () => {
             dueDate: '2024-05-12',
             startDate: '2024-01-12',
             completion: 45,
-            projectDescription: 'TechMinds Initiative is developed for technical solutions...',
+            projectDescription: 'TechMinds Initiative is developed for technical solutions.',
             budget: '120000',
             companyName: 'TechMind Pvt. Ltd.',
             clientName: 'Ujjwal bhansali',
             attachments: ['/project-plan.pdf'],
             documents: ['/Aadhar.jpg', '/4th sem result.pdf']
         },
-        { id: 3, name: 'GreenScape Solutions', dueDate: '2025-01-28', completion: 23 },
-        { id: 4, name: 'DataCrafters Project', dueDate: '2024-12-20', completion: 100 },
+        {
+            id: 3,
+            name: 'GreenScape Solutions',
+            dueDate: '2025-01-28',
+            startDate: '2024-01-05',
+            completion: 23,
+            projectDescription: 'GreenScape Solutions IT Project focuses on developing innovative and eco-friendly technology solutions.',
+            budget: '70000',
+            companyName: 'GreenScape Services',
+            clientName: 'Malhar Prajapati',
+            attachments: ['/project-plan.pdf'],
+            documents: ['/Aadhar.jpg', '/4th sem result.pdf']
+        },
+        {
+            id: 4,
+            name: 'DataCrafters Project',
+            dueDate: '2024-04-15',
+            startDate: '2024-01-01',
+            completion: 100,
+            projectDescription: 'This project involves creating advanced data-driven solutions, combining analytics and technology expertise to optimize information processing and decision-making in various domains.',
+            budget: '70000',
+            companyName: 'Bloomberg Inc.',
+            clientName: 'Mitul Pipaliya',
+            attachments: ['/project-plan.pdf'],
+            documents: ['/Aadhar.jpg', '/4th sem result.pdf']
+        },
     ];
 
     const assignedProjects = [
@@ -67,8 +92,10 @@ const Projects = () => {
     const [selectedAttachments, setSelectedAttachments] = useState([]);
     const [selectedDocuments, setSelectedDocuments] = useState([]);
 
-    // For projects detailed view
-    const [selectedProject, setSelectedProject] = useState(null);
+    // For projects detailed view component
+    // const [selectedProject, setSelectedProject] = useState(null);
+    // const [projectDetailsVisible, setProjectDetailsVisible] = useState(false);
+
     //------------------------------------------------------------------------------------------------------------------------
 
     const toggleForm = () => {
@@ -121,13 +148,15 @@ const Projects = () => {
         return 'very-high';
     };
 
-    const openProjectDetails = (project) => {
-        setSelectedProject(project);
-    };
+    // const openProjectDetails = (project) => {
+    //     setSelectedProject(project);
+    //     setProjectDetailsVisible(true);
+    // };
 
-    const closeProjectDetails = () => {
-        setSelectedProject(null);
-    };
+    // const closeProjectDetails = () => {
+    //     setSelectedProject(null);
+    //     setProjectDetailsVisible(false);
+    // };
 
     const handleFormSubmit = (event) => {
         event.preventDefault();
@@ -159,165 +188,176 @@ const Projects = () => {
     //------------------------------------------------------------------------------------------------------------------------
 
     return (
-        <div className="projects-container">
-            <h3 style={{ textAlign: 'left' }}>Managed by me</h3>
-            <div className="project-header">
-                <div className="header-item">Project Name</div>
-                <div className="header-item">Due Date</div>
-                <div className="header-item">Progress</div>
-            </div>
-            {[...ongoingProjects, ...newProjects].map((project) => (
-                <div key={project.id} className="project-card" onClick={() => openProjectDetails(project)}>
-                    <div className="project-details">
-                        <div className="detail-item">{project.name}</div>
-                        <div className="detail-item">{project.dueDate}</div>
-                        <div className="detail-item">
-                            <div className="progress-container">
-                                <div
-                                    className={`progress-filler ${getProgressClass(project.completion)}`}
-                                    style={{ width: `${project.completion}%` }}>
-                                    <span className="progress-label">{`${project.completion}%`}</span>
-                                </div>
-                            </div>
+        // <div>
+        //     {
+        //         projectDetailsVisible ? (
+        //             <ProjectDetails project={selectedProject} onClose={closeProjectDetails} progressBar={getProgressClass} />
+        //         ) : (
+                    <div className="projects-container">
+                        <h3 style={{ textAlign: 'left' }}>Managed by me</h3>
+                        <div className="project-header">
+                            <div className="header-item">Project Name</div>
+                            <div className="header-item">Due Date</div>
+                            <div className="header-item">Progress</div>
                         </div>
-                    </div>
-                </div>
-            ))}
-
-            {/* Project Details View */}
-            {selectedProject &&
-                <ProjectDetails project={selectedProject} onClose={closeProjectDetails} progressBar={getProgressClass} />
-            }
-
-            <h3 style={{ textAlign: 'left' }}>Assigned to me</h3>
-            <div className="project-header">
-                <div className="header-item">Project Name</div>
-                <div className="header-item">Due Date</div>
-                <div className="header-item">Project Manager</div>
-            </div>
-            {assignedProjects.map((project) => (
-                <div key={project.id} className="project-card">
-                    <div className="project-details">
-                        <div className="detail-item">{project.name}</div>
-                        <div className="detail-item">{project.dueDate}</div>
-                        <div className="detail-item">{project.man}</div>
-                    </div>
-                </div>
-            ))}
-            {/* <button className="add-project-button">Add New Project</button> */}
-            <img src={plus} class='plus-symbol' alt='not found' onClick={toggleForm} />
-
-            {/* ---------------------------------------------Add New Project Form------------------------------------------------ */}
-            {showForm && (
-                <div className="modal-overlay">
-                    <div className="modal">
-                        <div className="form-header">
-                            <span onClick={toggleForm}>Close</span>
-                        </div>
-                        <form onSubmit={handleFormSubmit}>
-                            <div className="form-row">
-                                <label htmlFor="projectName">Project Name:</label>
-                                <input className="in-txtarea" type="text" id="projectName" name="projectName" required />
-                            </div>
-                            <div className="form-row">
-                                <label htmlFor="startDate">Start Date:</label>
-                                <input
-                                    className="in-txtarea"
-                                    type="date"
-                                    id="startDate"
-                                    name="startDate"
-                                    value={startDate}
-                                    onChange={(e) => setStartDate(e.target.value)}
-                                    required
-                                />
-                            </div>
-                            <div className="form-row">
-                                <label htmlFor="dueDate">Due Date:</label>
-                                <input
-                                    className="in-txtarea"
-                                    type="date"
-                                    id="dueDate"
-                                    name="dueDate"
-                                    value={dueDate}
-                                    onChange={(e) => setDueDate(e.target.value)}
-                                    required
-                                />
-                            </div>
-                            <div className="form-row">
-                                <label htmlFor="projectDescription">Project Description:</label>
-                                <textarea className="in-txtarea" id="projectDescription" name="projectDescription" />
-                            </div>
-                            <div className="form-row">
-                                <label htmlFor="budget">Budget:</label>
-                                <input className="in-txtarea" type="number" id="budget" name="budget" required />
-                            </div>
-                            <div className="form-row">
-                                <label htmlFor="companyName">Company Name:</label>
-                                <input className="in-txtarea" type="text" id="companyName" name="companyName" required />
-                            </div>
-                            <div className="form-row">
-                                <label htmlFor="attachment">Attachment:</label>
-                                <input
-                                    className="in-txtarea"
-                                    type="file"
-                                    id="attachment"
-                                    name="attachment"
-                                    onChange={(e) => handleFileChange(e, 'attachment')}
-                                />
-                                <div>
-                                    {selectedAttachments.map((file, index) => (
-                                        <div key={index}>{file.name}</div>
-                                    ))}
-                                </div>
-                            </div>
-
-                            <div className="form-row">
-                                <label htmlFor="document">Document:</label>
-                                <input
-                                    className="in-txtarea"
-                                    type="file"
-                                    id="document"
-                                    name="document"
-                                    onChange={(e) => handleFileChange(e, 'document')}
-                                />
-                                <div>
-                                    {selectedDocuments.map((file, index) => (
-                                        <div key={index}>{file.name}</div>
-                                    ))}
-                                </div>
-                            </div>
-                            <div className="form-row client-search-row">
-                                <label htmlFor="Add client">Add Client:</label>
-                                <input
-                                    className="in-txtarea"
-                                    type="text"
-                                    id="clientSearch"
-                                    value={clientSearch}
-                                    placeholder='Search Here...'
-                                    onChange={handleClientSearchChange}
-                                    required={!selectedClient}
-                                />
-                                {clientResults.map(client => (
-                                    <div key={client.email} className="client-result">
-                                        {client.name} ({client.email})
-                                        <button className="add-form-btn" type="button" onClick={() => handleAddClient(client)}>Add</button>
+                        {[...ongoingProjects, ...newProjects].map((project) => (
+                            <Link style={{ textDecoration: 'none', color: 'black' }} to='/ProjectDetails' state={{project1:{project}}}>
+                            <div key={project.id} className="project-card">
+                            {/* onClick={() => openProjectDetails(project)} */}
+                                <div className="project-details">
+                                    <div className="detail-item">{project.name}</div>
+                                    <div className="detail-item">{project.dueDate}</div>
+                                    <div className="detail-item">
+                                        <div className="progress-container">
+                                            <div
+                                                className={`progress-filler ${getProgressClass(project.completion)}`}
+                                                style={{ width: `${project.completion}%` }}>
+                                                <span className="progress-label">{`${project.completion}%`}</span>
+                                            </div>
+                                        </div>
                                     </div>
-                                ))}
-                            </div>
-                            {selectedClient && (
-                                <div className="selected-client">
-                                    {selectedClient.name} ({selectedClient.email})
-                                    <button className="add-form-btn" type="button" onClick={handleRemoveClient}>Remove</button>
                                 </div>
-                            )}
-                            <div className="form-row">
-                                <button className="add-form-btn" type="submit">Submit</button>
                             </div>
-                        </form>
-                    </div>
-                </div >
-            )}
-        </div >
+                            </Link>
+                        ))}
+
+                        {/* Project Details View */}
+                        {/* {selectedProject && (
+                                <ProjectDetails project={selectedProject} onClose={closeProjectDetails} progressBar={getProgressClass} />
+                        )} */}
+
+                        <h3 style={{ textAlign: 'left' }}>Assigned to me</h3>
+                        <div className="project-header">
+                            <div className="header-item">Project Name</div>
+                            <div className="header-item">Due Date</div>
+                            <div className="header-item">Project Manager</div>
+                        </div>
+                        {assignedProjects.map((project) => (
+                            <div key={project.id} className="project-card">
+                                <div className="project-details">
+                                    <div className="detail-item">{project.name}</div>
+                                    <div className="detail-item">{project.dueDate}</div>
+                                    <div className="detail-item">{project.man}</div>
+                                </div>
+                            </div>
+                        ))}
+
+                        <img src={plus} class='plus-symbol' alt='not found' onClick={toggleForm} />
+
+                        {/* ---------------------------------------------Add New Project Form------------------------------------------------ */}
+                        {showForm && (
+                            <div className="modal-overlay">
+                                <div className="modal">
+                                    <div className="form-header">
+                                        <span onClick={toggleForm}>Close</span>
+                                    </div>
+                                    <form onSubmit={handleFormSubmit}>
+                                        <div className="form-row">
+                                            <label htmlFor="projectName">Project Name:</label>
+                                            <input className="in-txtarea" type="text" id="projectName" name="projectName" required />
+                                        </div>
+                                        <div className="form-row">
+                                            <label htmlFor="startDate">Start Date:</label>
+                                            <input
+                                                className="in-txtarea"
+                                                type="date"
+                                                id="startDate"
+                                                name="startDate"
+                                                value={startDate}
+                                                onChange={(e) => setStartDate(e.target.value)}
+                                                required
+                                            />
+                                        </div>
+                                        <div className="form-row">
+                                            <label htmlFor="dueDate">Due Date:</label>
+                                            <input
+                                                className="in-txtarea"
+                                                type="date"
+                                                id="dueDate"
+                                                name="dueDate"
+                                                value={dueDate}
+                                                onChange={(e) => setDueDate(e.target.value)}
+                                                required
+                                            />
+                                        </div>
+                                        <div className="form-row">
+                                            <label htmlFor="projectDescription">Project Description:</label>
+                                            <textarea className="in-txtarea" id="projectDescription" name="projectDescription" />
+                                        </div>
+                                        <div className="form-row">
+                                            <label htmlFor="budget">Budget:</label>
+                                            <input className="in-txtarea" type="number" id="budget" name="budget" required />
+                                        </div>
+                                        <div className="form-row">
+                                            <label htmlFor="companyName">Company Name:</label>
+                                            <input className="in-txtarea" type="text" id="companyName" name="companyName" required />
+                                        </div>
+                                        <div className="form-row">
+                                            <label htmlFor="attachment">Attachment:</label>
+                                            <input
+                                                className="in-txtarea"
+                                                type="file"
+                                                id="attachment"
+                                                name="attachment"
+                                                onChange={(e) => handleFileChange(e, 'attachment')}
+                                            />
+                                            <div>
+                                                {selectedAttachments.map((file, index) => (
+                                                    <div key={index}>{file.name}</div>
+                                                ))}
+                                            </div>
+                                        </div>
+
+                                        <div className="form-row">
+                                            <label htmlFor="document">Document:</label>
+                                            <input
+                                                className="in-txtarea"
+                                                type="file"
+                                                id="document"
+                                                name="document"
+                                                onChange={(e) => handleFileChange(e, 'document')}
+                                            />
+                                            <div>
+                                                {selectedDocuments.map((file, index) => (
+                                                    <div key={index}>{file.name}</div>
+                                                ))}
+                                            </div>
+                                        </div>
+                                        <div className="form-row client-search-row">
+                                            <label htmlFor="Add client">Add Client:</label>
+                                            <input
+                                                className="in-txtarea"
+                                                type="text"
+                                                id="clientSearch"
+                                                value={clientSearch}
+                                                placeholder='Search Here...'
+                                                onChange={handleClientSearchChange}
+                                                required={!selectedClient}
+                                            />
+                                            {clientResults.map(client => (
+                                                <div key={client.email} className="client-result">
+                                                    {client.name} ({client.email})
+                                                    <button className="add-form-btn" type="button" onClick={() => handleAddClient(client)}>Add</button>
+                                                </div>
+                                            ))}
+                                        </div>
+                                        {selectedClient && (
+                                            <div className="selected-client">
+                                                {selectedClient.name} ({selectedClient.email})
+                                                <button className="add-form-btn" type="button" onClick={handleRemoveClient}>Remove</button>
+                                            </div>
+                                        )}
+                                        <div className="form-row">
+                                            <button className="add-form-btn" type="submit">Submit</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div >
+                        )}
+                        </div>
+        //         )
+        //     }
+        // </div >
     );
 };
 

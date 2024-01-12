@@ -15,6 +15,7 @@ import FileUpload from './components/file_upload/FileUpload';
 
 
 import DisscussionBox from './components/Disscussion/Disscussion'
+import ProjectDetails from './components/Projects/ProjectDetails';
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 
@@ -70,6 +71,14 @@ function App() {
               }>
             </Route>
 
+            <Route exact path='ProjectDetails' element=
+              {
+                
+                  <ProjectDetails/>
+              
+              }>
+            </Route>
+        
             <Route exact path='Notification' element=
               {
                 <div className="maincomponentcontainer">
