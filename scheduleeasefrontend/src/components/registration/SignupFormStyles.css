@@ -1,66 +1,117 @@
- .sign-container {
-     display: flex;
-     height: 100vh;
- }
- 
- .sign-content {
-     background-color: #f4f4f4;
-     padding: 50px;
-     border-radius: 12px;
-     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-     max-width: 800px;
-     margin-right: 20%;
-     width: 100%;
- }
- 
- .form-title {
-     text-align: center;
-     color: #333;
-     height: max-content;
- }
- 
- /* form {
-     display: flex;
-     flex-direction: column;
- }
- 
- label {
-     margin-top: 10px;
-     color: #333;
- }
-  */
- /* input,
- select,
- button {
-     margin-top: 5px;
-     padding: 10px;
-     border: 1px solid #ccc;
-     border-radius: 4px;
-     width: 100%;
- }
- 
- input[type="checkbox"] {
-     margin-left: 5px;
- } */
- 
- .name-column {
-     display: flex;
-     gap: 10px;
- }
- 
- .beside {
-     display: flex;
-     justify-content: space-between;
-     gap: 10px;
- }
- 
- /* button {
-     background-color: #007bff;
-     color: #fff;
-     cursor: pointer;
-     font-size: 16px;
- } */
- 
- /* button:hover {
-     background-color: #0056b3;
- } */
+.signup-content {
+    background-color: #f4f4f4;
+    padding: 50px;
+    border-radius: 12px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    max-width: 1200px;
+    margin-right: 100%;
+    width: 93%;
+}
+
+.signup-title {
+    color: #333;
+    height: max-content;
+}
+
+.signup-form {
+    display: flex;
+    flex-direction: column;
+}
+
+.signup-label {
+    margin-top: 10px;
+    color: #333;
+}
+
+.signup-form input,
+.signup-form select,
+.signup-form button {
+    margin-top: 5px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    /*box ka color ander kai*/
+    border-radius: 4px;
+    width: 100%;
+}
+
+.signup-form input[type="checkbox"] {
+    margin-left: 5px;
+}
+
+.signup-name-column {
+    display: flex;
+    gap: 10px;
+}
+
+.signup-beside {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+}
+
+
+/*isme button ke  gadbad hai*/
+
+
+/* .buttonsignup {
+    margin-top: 5px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    width: 100%;
+} */
+
+
+/* .sign-content {
+    background-color: #f4f4f4;
+    padding: 50px;
+    border-radius: 12px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    max-width: 1200px;
+    margin-right: 100%;
+    width: 80%;
+}
+
+.form-title {
+    text-align: center;
+    color: #333;
+    height: max-content;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+}
+
+label {
+    margin-top: 10px;
+    color: #333;
+}
+
+
+/* input,
+select,
+button {
+    margin-top: 5px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    width: 100%;
+} */
+
+
+/*
+input[type="checkbox"] {
+    margin-left: 5px;
+}
+
+.name-column {
+    display: flex;
+    gap: 10px;
+}
+
+.beside {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+} */

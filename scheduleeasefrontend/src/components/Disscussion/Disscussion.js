@@ -30,7 +30,7 @@ const Disscussion = () => {
     event.preventDefault();
     // ... do something with inputValue
     // var inputValueMessageTextBoxStatic = inputValueMessageTextBox
-    axios.post('http://127.0.0.1:8000/api/messagesendertoreciver/', { sender: 'mudit', reciver: activereciveruser.email, textmessage: inputValueMessageTextBox }).then((response) => {
+    axios.post('http://127.0.0.1:8000/api/messagesendertoreciver/', { sender: 'karan', reciver: activereciveruser.email, textmessage: inputValueMessageTextBox }).then((response) => {
       if (response) {
         console.log(response);
         setMessageList(messagelist)
