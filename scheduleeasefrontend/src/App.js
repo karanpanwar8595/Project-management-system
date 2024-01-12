@@ -1,8 +1,8 @@
 import './App.css';
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect } from 'react';
 import Navbar from './components/navbar/Navbar';
 import SideNavbar from './components/sideNavbar/sideNavbar';
-import Manage_team from './components/manage_team/Manage_team'
+import Manage_team from './components/manage_team/Manage_team';
 import Project from './components/Projects/Projects';
 import Tasklist from './components/Tasks/Tasklist';
 import Notification from './components/Notification/Notification';
@@ -15,12 +15,12 @@ import Profile from './components/profile/Profile';
 import UpdateProfile from './components/updateprofile/UpdateProfile';
 import DisscussionBox from './components/Disscussion/Disscussion';
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import Login from './components/login_Page/Login'
+import Login from './components/login_Page/Login';
 import ForgotPassword from './components/login_Page/forgot password/ForgotPassword';
 // import Registration from './components/registration/SignupForm';
 import Addtask from './components/addtask/Addtask';
 function App() {
-  const [authenticateddata, setAuthenticateddata] = useState({'value': true});
+  const [authenticateddata, setAuthenticateddata] = useState({'value': false});
 
   const handleLoginDataFromChild = (userLoginData) => {
     const userLoginDataToJson =JSON.stringify(userLoginData)
