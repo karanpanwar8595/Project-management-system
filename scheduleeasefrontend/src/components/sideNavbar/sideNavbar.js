@@ -16,7 +16,7 @@ const SideNavbar = () => {
           </li>
           
           <li>
-            <Link to="/">Payments</Link>
+            <Link to="/payment">Payments</Link>
           </li>
           <hr></hr>
            <h4>Accounts</h4>
@@ -50,7 +50,7 @@ const SideNavbar = () => {
             <Link to="/disscussion">Disccussion</Link>
           </li>
           <li>
-            <Link to="/">Payment</Link>
+            <Link to="/payment">Payment</Link>
           </li>
           <li>
             <Link to="/Notification">Notification</Link>

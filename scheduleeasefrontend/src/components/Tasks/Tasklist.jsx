@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import './Tasklist.css'; // Import your custom CSS
 import './Accordion.css';
-import DateRangePickerComp from './DateRangePickerComp';
 import plus from '../Projects/plus.png'
 import { Link } from 'react-router-dom';
 import editicon from './editicon.png';
@@ -17,13 +16,20 @@ const AccordionItem = ({ task_key, title, content, status, duedate, owner, progr
         console.log("add button click")
 
     };
+    
     return (
         <div className="accordion-item" key={task_key}>
-            <div className={`task-item ${isOpen ? 'active' : ''}`} >
+            <div className={`task-item `} >
                 <div className="accordion-button" onClick={handleTaskboxToggle}>
                     {title}
                 </div>
-<div className="accordion-edit-button" onClick={(event) => event.stopPropagation()}><img src={editicon}></img></div>
+                
+                    <div className="accordion-edit-button" onClick={(event) => event.stopPropagation()}>
+                    <Link to="/modifytask" state={ { task_id: {task_key} }}>
+                        <img src={editicon} alt="Edit" />
+                        </Link>
+                    </div>
+                
                 <div className='accordion-status'>{status}</div>
                 <div className='accordion-duedate'>{duedate}</div>
 
@@ -45,7 +51,7 @@ const AccordionItem = ({ task_key, title, content, status, duedate, owner, progr
 
 const Tasklist = () => {
 
-    const [taskList, setTasklist] = useState([{ title: "first task", content: "This  is the second item's accordion body. It is hidden by default, until the collapse pis is the second item's accordion body. It is hidden by default, until the collapse phis is the second item's accordion body. ", status: "Active", duedate: "12/10/2023", progress: "20%", owner: "Suresh" },{ title: "first task", content: "This  is the second item's accordion body. It is hidden by default, until the collapse pis is the second item's accordion body. It is hidden by default, until the collapse phis is the second item's accordion body. ", status: "Active", duedate: "12/10/2023", progress: "20%", owner: "Ramesh" }]);
+    const [taskList, setTasklist] = useState([{ title: "first task", content: "This  is the second item's accordion body. It is hidden by default, until the collapse pis is the second item's accordion body. It is hidden by default, until the collapse phis is the second item's accordion body. ", status: "Active", duedate: "12/10/2023", progress: "20%", owner: "Suresh" }, { title: "first task", content: "This  is the second item's accordion body. It is hidden by default, until the collapse pis is the second item's accordion body. It is hidden by default, until the collapse phis is the second item's accordion body. ", status: "Active", duedate: "12/10/2023", progress: "20%", owner: "Ramesh" }]);
     useEffect(() => {
         async function fetchData() {
             try {
@@ -88,8 +94,8 @@ const Tasklist = () => {
                     ))}
                 </div>
             </div>
-            <Link to="/addtask"><img src={plus} class='plus-symbol' alt='not found'  /></Link>
-            
+            <Link to="/addtask"><img src={plus} class='plus-symbol' alt='not found' /></Link>
+
             {/* <div className='taskinput'>
                 <div className='tasktitleandbutton'>
                     <label>

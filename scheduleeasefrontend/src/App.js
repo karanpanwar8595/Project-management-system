@@ -19,15 +19,19 @@ import Login from './components/login_Page/Login'
 import ForgotPassword from './components/login_Page/forgot password/ForgotPassword';
 // import Registration from './components/registration/SignupForm';
 import Addtask from './components/addtask/Addtask';
+import ModifyTask from './components/modifytask/Modifytask';
+import Payment from './components/Payment/Payment';
+
+
 function App() {
-  const [authenticateddata, setAuthenticateddata] = useState({'value': false});
+  const [authenticateddata, setAuthenticateddata] = useState({ 'value': false });
 
   const handleLoginDataFromChild = (userLoginData) => {
-    const userLoginDataToJson =JSON.stringify(userLoginData)
+    const userLoginDataToJson = JSON.stringify(userLoginData)
     // console.log(userLoginDataToJson)
     setAuthenticateddata(JSON.parse(userLoginDataToJson));
-    sessionStorage.setItem('loginData',userLoginDataToJson);
-    sessionStorage.setItem('profileData',userLoginDataToJson.profile_data);
+    sessionStorage.setItem('loginData', userLoginDataToJson);
+    sessionStorage.setItem('profileData', userLoginDataToJson.profile_data);
 
   };
 
@@ -36,11 +40,11 @@ function App() {
     try {
       setAuthenticateddata(JSON.parse(sessionStorage.getItem('loginData')))
     } catch (error) {
-      setAuthenticateddata({'value': false})
+      setAuthenticateddata({ 'value': false })
       // console.log("hello")
     }
   }, []);
-  
+
   console.log(authenticateddata?.value);
   if (!(authenticateddata?.value)) {
     return (
@@ -99,6 +103,31 @@ function App() {
                   </>
                 }>
                 </Route>
+                <Route
+  exact
+  path='/modifytask'
+  element={<ModifyTask/>}
+/>
+                {/* <Route exact path='modifytask' element={
+                  <>
+                    < ModifyTask />
+
+
+                  </>
+                }>
+                </Route> */}
+                
+
+                <Route exact path='payment' element={
+                  <>
+
+                    < Payment />
+
+
+                  </>
+                }>
+                </Route>
+
                 <Route exact path='registration' element={
                   <>
                     < Registration />
@@ -130,30 +159,30 @@ function App() {
 
                   }>
                 </Route>
-              {/* Registration page */}
-              <Route exact path='/registration' element={
-                <>
-                  < Registration />
-                </>
-              }>
-        </Route>
-        <Route exact path='/profile' element={
-                <>
-                  < Profile />
-                </>
-              }>
-        </Route>
-        <Route exact path='/UpdateProfile' element={
-          <>
-            < UpdateProfile />
-          </>
-        }>
-  </Route>
- 
-              <Route exact path='/project' element={
-                <Project />
-              }>
-              </Route>
+                {/* Registration page */}
+                <Route exact path='/registration' element={
+                  <>
+                    < Registration />
+                  </>
+                }>
+                </Route>
+                <Route exact path='/profile' element={
+                  <>
+                    < Profile />
+                  </>
+                }>
+                </Route>
+                <Route exact path='/UpdateProfile' element={
+                  <>
+                    < UpdateProfile />
+                  </>
+                }>
+                </Route>
+
+                <Route exact path='/project' element={
+                  <Project />
+                }>
+                </Route>
 
                 <Route exact path='Notification' element=
                   {

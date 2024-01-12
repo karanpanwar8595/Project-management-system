@@ -1,6 +1,8 @@
 from django.db import models
 
 class Profile(models.Model):
+    class Meta:
+        db_table = 'Profile'
     email = models.CharField(max_length=50, primary_key=True)
     password = models.CharField(max_length=40)
     photo = models.CharField(max_length=60)
@@ -43,6 +45,8 @@ class Profile(models.Model):
         }
 
 class Project(models.Model):
+    class Meta:
+        db_table = 'Project'
     project_id = models.IntegerField(primary_key=True)
     project_name = models.CharField(max_length=20)
     start_date = models.DateField()
@@ -54,6 +58,8 @@ class Project(models.Model):
         return self.project_name
 
 class ProjectMember(models.Model):
+    class Meta:
+        db_table = 'ProjectMember'
     project = models.ForeignKey(Project, on_delete=models.CASCADE)
     email = models.ForeignKey(Profile, on_delete=models.CASCADE)
     role = models.SmallIntegerField()
@@ -61,6 +67,8 @@ class ProjectMember(models.Model):
     removed_on = models.DateField(null=True)
 
 class Task(models.Model):
+    class Meta:
+        db_table = 'Task'
     task_id = models.IntegerField(primary_key=True)
     task_title = models.CharField(max_length=20)
     task_desc = models.CharField(max_length=50)
@@ -75,17 +83,23 @@ class Task(models.Model):
         return self.task_title
 
 class MesgMaster(models.Model):
+    class Meta:
+        db_table = 'MesgMaster'
     message_id = models.IntegerField(primary_key=True)
     mesg_date = models.DateField()
     sender = models.ForeignKey(Profile, on_delete=models.CASCADE, related_name='sent_messages')
     receiver = models.ForeignKey(Profile, on_delete=models.CASCADE, related_name='received_messages')
 
 class MesgTran(models.Model):
+    class Meta:
+        db_table = 'MesgTran'
     message = models.ForeignKey(MesgMaster, on_delete=models.CASCADE)
     sender_mesg = models.CharField(max_length=500, null=True)
     receiver_mesg = models.CharField(max_length=500, null=True)
 
 class Payment(models.Model):
+    class Meta:
+        db_table = 'Payment'
     transaction_id = models.IntegerField(primary_key=True)
     amount = models.IntegerField()
     project = models.ForeignKey(Project, on_delete=models.CASCADE)
@@ -93,38 +107,54 @@ class Payment(models.Model):
     date_time = models.DateTimeField()
 
 class ProfileDocument(models.Model):
+    class Meta:
+        db_table = 'ProfileDocument'
     email_id = models.ForeignKey(Profile, on_delete=models.CASCADE)
     doc_path = models.CharField(max_length=500, unique=True)
     doc_type = models.ForeignKey('DocType', on_delete=models.CASCADE)
     
 class ProjectDocument(models.Model):
+    class Meta:
+        db_table = 'ProjectDocument'
     project = models.ForeignKey(Project, on_delete=models.CASCADE)
     doc_path = models.CharField(max_length=500, unique=True)
     doc_access = models.SmallIntegerField()
 
 class TaskDocument(models.Model):
+    class Meta:
+        db_table = 'TaskDocument'
     task = models.ForeignKey(Task, on_delete=models.CASCADE)
     doc_path = models.CharField(max_length=500, unique=True)
 
 class DocType(models.Model):
+    class Meta:
+        db_table = 'DocType'
     doc_type_id = models.SmallIntegerField(primary_key=True)
     doc_type_name = models.CharField(max_length=20)
 
 class Country(models.Model):
+    class Meta:
+        db_table = 'Country'
     country_id = models.IntegerField(primary_key=True)
     country_name = models.CharField(max_length=30)
 
 class State(models.Model):
+    class Meta:
+        db_table = 'State'
     state_id = models.IntegerField(primary_key=True)
     state_name = models.CharField(max_length=30)
     country = models.ForeignKey(Country, on_delete=models.CASCADE)
 
 class City(models.Model):
+    class Meta:
+        db_table = 'City'
     city_id = models.IntegerField(primary_key=True)
     city_name = models.CharField(max_length=30)
     state = models.ForeignKey(State, on_delete=models.CASCADE)
 
 class CompanyDetails(models.Model):
+    class Meta:
+        db_table = 'CompanyDetails'
     gst_no = models.IntegerField(primary_key=True)
     company_name = models.CharField(max_length=50)
     address = models.CharField(max_length=100)

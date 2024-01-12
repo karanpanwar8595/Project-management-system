@@ -1,0 +1,98 @@
+/* Basic styles for the form container */
+#addtask-form-container{
+    background-color: #f0f0f0;
+    border-radius: 10px;
+    overflow-y: hidden;
+    height: 82vh;
+    padding: 2% 5% ;
+    padding-bottom: 0%;
+}
+#form-container {
+    max-width: 500px;
+    margin: 0 auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+}
+
+/* Styles for form labels */
+.form-label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+/* Styles for form inputs and textarea */
+.form-input {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 10px;
+    box-sizing: border-box;
+}
+
+/* Style for file input */
+.in-txtarea {
+    margin-bottom: 10px;
+}
+
+/* Styles for attachments container */
+.attach-container {
+    margin-bottom: 10px;
+}
+
+/* Styles for selected attachments */
+.selected-attachment {
+    margin-top: 5px;
+}
+
+/* Styles for team member input and list */
+.listofteammember {
+    position: relative;
+    margin-bottom: 10px;
+}
+
+.teammemberlist {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    background-color: #fff;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+    border: 1px solid #ccc;
+    border-top: none;
+    border-radius: 0 0 8px 8px;
+    display: flex;
+    flex-direction: column;
+    max-height: 120px;
+    overflow-y: auto;
+}
+
+.teammemberlistitem {
+    padding: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.teammemberlistitem:hover {
+    background-color: #f0f0f0;
+}
+
+/* Style for the submit button */
+.submit-button {
+    background-color: #4caf50;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.submit-button:hover {
+    background-color: #45a049;
+}
+
+/* Style for the submission message */
+.submission-message {
+    margin-top: 10px;
+    color: #4caf50;
+    font-weight: bold;
+}
