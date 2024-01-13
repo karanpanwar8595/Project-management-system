@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import '.SignupFormStyles.js'; // Import your CSS file
+import './SignupFormStyles.css'; // Import your CSS file
 
 const SignupForm = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -9,7 +9,7 @@ const SignupForm = () => {
   };
 
   return (
-    <div className="container">
+    <div className="singup-container">
       <div className="content">
         <h1 className="form-title">Registration form</h1>
         <form>

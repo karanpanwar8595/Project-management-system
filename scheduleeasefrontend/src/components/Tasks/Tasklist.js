@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import './Tasklist.css'; // Import your custom CSS
 import './Accordion.css';
+// import DateRangePickerComp from './DateRangePickerComp';
 
 const AccordionItem = ({ task_key, title, content, status, duedate, owner, progress, done_key }) => {
     const [isOpen, setIsOpen] = useState(false);
@@ -35,6 +36,8 @@ const AccordionItem = ({ task_key, title, content, status, duedate, owner, progr
         </div>
     );
 };
+
+
 
 const Tasklist = () => {
 
@@ -84,21 +87,35 @@ const Tasklist = () => {
 
             <div className='taskinput'>
                 <div className='tasktitleandbutton'>
-                    <input type="text" className="textboxtoinputtilte" id="tasktextbox" >
+                    <label>
 
+                        <input
+                            type="text"
+                            name="message"
+                            placeholder='Title'
+                        />
+                    </label>
+                    <label>
+                        <textarea className='taskdescription'
+                            name="description"
+                            placeholder='Description'
+                        />
+                    </label>
+                    {/* <DateRangePickerComp/> */}
+                    <label>
+                        Dropdown:
+                        <select name="selectedOption" >
+                            <option value="Option 1">Option 1</option>
+                            <option value="Option 2">Option 2</option>
+                            <option value="Option 3">Option 3</option>
+                        </select>
+                    </label>
+                    <button >Send</button>
 
-                    </input>
-
-
-                    <button >
-                        send
-                    </button>
-        
 
                 </div>
-                <textarea className='taskdescription'>
 
-                </textarea>
+
 
             </div>
 
@@ -108,3 +125,17 @@ const Tasklist = () => {
 };
 
 export default Tasklist;
+
+
+
+
+
+
+
+
+
+
+
+
+
+

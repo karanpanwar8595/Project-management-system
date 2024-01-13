@@ -1,34 +1,41 @@
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import styles from './Login.module.css';
+import axios from 'axios';
 
-const Login = () => {
-  const [username, setUsername] = useState('');
+
+const Login = ({ onDataFromChild }) => {
+  const [email, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+
+  const sendLoginDataToParent = (authenticationcode) => {
+    onDataFromChild(authenticationcode);
+  };
 
   const handleLogin = async () => {
     try {
       setLoading(true);
       setError(null);
-
-      const response = await fetch('/api/login', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ username, password }),
+      const logincretentials = { loginemail: email, loginpassword: password }
+      axios.post('http://127.0.0.1:8000/api/login/', logincretentials).then((response) => {
+        console.log(response)
+        if (response.data['value']) {
+          sendLoginDataToParent(response.data)
+          console.log('true')
+        }
+        else{
+          sendLoginDataToParent({value : false})
+          setUsername('')
+          setPassword('')
+          console.log('false')
+        }
+      }, (error) => {
+        console.log(error)
+        sendLoginDataToParent({value : false})
       });
 
-      if (response.ok) {
-        // Authentication successful
-        console.log('Login successful');
-        // Redirect the user or update UI as needed
-      } else {
-        // Authentication failed
-        const data = await response.json();
-        setError(data.message || 'Login failed');
-      }
     } catch (error) {
       console.error('Error during login:', error);
       setError('An unexpected error occurred.');
@@ -48,7 +55,7 @@ const Login = () => {
             placeholder="Username"
             className={styles.inputText}
             autoComplete="off"
-            value={username}
+            value={email}
             onChange={(e) => setUsername(e.target.value)}
           />
         </div>
@@ -70,9 +77,8 @@ const Login = () => {
         </div>
         {error && <div className={styles.error}>{error}</div>}
         <div className={styles.footer}>
-          <a href="forgot-password">Forgot Password?</a>
-          <a href="signup">SignUp</a>
-                  </div>
+          <Link to="/forgotpassword">Forgot Password?</Link>
+        </div>
       </div>
     </div>
   );
