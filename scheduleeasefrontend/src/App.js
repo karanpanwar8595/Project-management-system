@@ -10,6 +10,7 @@ import Modal from './components/modal_form/Modal';
 import Cal from './components/calendar/Cal';
 import FileUpload from './components/file_upload/FileUpload';
 import DisscussionBox from './components/Disscussion/Disscussion'
+import ProjectDetails from './components/Projects/ProjectDetails';
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Login from './components/login_Page/Login'
 import ForgotPassword from './components/login_Page/forgot password/ForgotPassword';
@@ -27,15 +28,14 @@ function App() {
 
   };
 
-
-  // useEffect(() => {//this help in seting authentication to false when we relode
-  //   try {
-  //     setAuthenticateddata(JSON.parse(sessionStorage.getItem('loginData')))
-  //   } catch (error) {
-  //     setAuthenticateddata({'value': false})
-  //     // console.log("hello")
-  //   }
-  // }, []);
+  useEffect(() => {//this help in seting authentication to false when we relode
+    try {
+      setAuthenticateddata(JSON.parse(sessionStorage.getItem('loginData')))
+    } catch (error) {
+      setAuthenticateddata({'value': false})
+      // console.log("hello")
+    }
+  }, []);
   
   console.log(authenticateddata?.value);
   if (!(authenticateddata?.value)) {
@@ -115,6 +115,14 @@ function App() {
                   {
 
                     <Project />
+
+                  }>
+                </Route>
+
+                <Route exact path='ProjectDetails' element=
+                  {
+
+                    <ProjectDetails />
 
                   }>
                 </Route>

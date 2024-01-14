@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import './Tasklist.css'; // Import your custom CSS
 import './Accordion.css';
-import DateRangePickerComp from './DateRangePickerComp';
-
+// import DateRangePickerComp from './DateRangePickerComp';
 
 const AccordionItem = ({ task_key, title, content, status, duedate, owner, progress, done_key }) => {
     const [isOpen, setIsOpen] = useState(false);
@@ -102,7 +101,7 @@ const Tasklist = () => {
                             placeholder='Description'
                         />
                     </label>
-                    <DateRangePickerComp/>
+                    {/* <DateRangePickerComp/> */}
                     <label>
                         Dropdown:
                         <select name="selectedOption" >

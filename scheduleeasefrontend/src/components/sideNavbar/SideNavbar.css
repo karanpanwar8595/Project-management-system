@@ -12,7 +12,7 @@
     height: 80vh;
     /* Use 100% viewport height */
     width: 180px;
-    background-color: #f0f0f0;
+    background-color: #e8dcfa;
     /* z-index: 400; */
     /* Ensure the side navbar appears above the content */
     margin-top: 80px;
@@ -29,10 +29,14 @@
   }
   
   .side-navbar a {
+    font-weight: bold;
     text-decoration: none;
-    color: #333;
+    color: black;
+    /* color: #C5C6C7; */
+    /* color: #333; */
   }
   
   .side-navbar a:hover {
-    color: #555;
+    color: blue;
+    /* color: #555; */
   }

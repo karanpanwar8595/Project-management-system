@@ -3,8 +3,9 @@
   max-width: auto;
   margin-top: auto auto;
   padding: 5px 25px;
-  border: 3px solid #060709;
-  border-radius: 5px;
+  /* border: 3px solid #060709; */
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  border-radius: 8px;
   overflow: auto;
   max-height: 83vh;
 }
@@ -68,6 +69,8 @@
   color: #007bff;
   text-decoration: none;
 }
+
+
 
 /* .add-project-button {
     position: fixed;
