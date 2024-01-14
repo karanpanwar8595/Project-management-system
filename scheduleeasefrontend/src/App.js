@@ -14,6 +14,8 @@ import Registration from './components/registration/SignupForm';
 import Profile from './components/profile/Profile';
 import UpdateProfile from './components/updateprofile/UpdateProfile';
 import DisscussionBox from './components/Disscussion/Disscussion';
+import DisscussionBox from './components/Disscussion/Disscussion'
+import ProjectDetails from './components/Projects/ProjectDetails';
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Login from './components/login_Page/Login';
 import ForgotPassword from './components/login_Page/forgot password/ForgotPassword';
@@ -170,29 +172,13 @@ function App() {
 
                   }>
                 </Route>
-                {/* Registration page */}
-                <Route exact path='/registration' element={
-                  <>
-                    < Registration />
-                  </>
-                }>
-                </Route>
-                <Route exact path='/profile' element={
-                  <>
-                    < Profile />
-                  </>
-                }>
-                </Route>
-                <Route exact path='/UpdateProfile' element={
-                  <>
-                    < UpdateProfile />
-                  </>
-                }>
-                </Route>
 
-                <Route exact path='/project' element={
-                  <Project />
-                }>
+                <Route exact path='ProjectDetails' element=
+                  {
+
+                    <ProjectDetails />
+
+                  }>
                 </Route>
 
                 <Route exact path='Notification' element=

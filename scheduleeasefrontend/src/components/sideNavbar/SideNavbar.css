@@ -37,8 +37,11 @@
   }
   
   .side-navbar a {
+    font-weight: bold;
     text-decoration: none;
-    color: #333;
+    color: black;
+    /* color: #C5C6C7; */
+    /* color: #333; */
   }
   
  

@@ -1,22 +1,35 @@
 import React from 'react';
 import './ProjectDetails.css';
+import { useLocation } from 'react-router-dom';
 
-const ProjectDetails = ({ project, onClose, progressBar }) => {
+const ProjectDetails = () => {
+
+    const location = useLocation();
+    const project1 = JSON.stringify(location.state.project1);
+    const project = JSON.parse(project1).project
+    console.log(project)
 
     const handleDocumentClick = (path) => {
         window.open(path, '_blank');
+    };
+
+    const getProgressClass = (percentage) => {
+        if (percentage < 25) return 'low';
+        if (percentage < 50) return 'medium';
+        if (percentage < 75) return 'high';
+        return 'very-high';
     };
 
     if (!project) return null;
 
     return (
         <div className="project-details-container">
-            <div className="back-arrow" onClick={onClose}>&larr;</div>
+            {/* <div className="back-arrow" onClick={onClose}>&larr;</div> */}
             <h2>{project.name}</h2>
             <p className="project-description">{project.projectDescription}</p>
             <div className="progress-cont">
                 <div
-                    className={`progress-filler ${progressBar(project.completion)}`}
+                    className={`progress-filler ${getProgressClass(project.completion)}`}
                     style={{ width: `${project.completion}%` }}>
                     <span className="progress-label">{`${project.completion}%`}</span>
                 </div>
