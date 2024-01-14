@@ -1,7 +1,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import styles from './Login.module.css';
+import './Login.css';
 import axios from 'axios';
 
 
@@ -16,34 +16,6 @@ const Login = ({ onDataFromChild }) => {
   };
 
 
-
-
-  const buttonStyles = {
-    buttonGroup: { },
-    loginButton: {
-      
-      padding: '6px 100px',
-    fontSize: '16px',
-    position: 'absolute',
-    zIndex: 10,
-    cursor: 'pointer',
-    fontSize: '22px',
-    letterSpacing: '2px',
-    border: '2px solid black',
-    borderRadius: '50px',
-    backgroundColor: 'skyblue',
-    display: 'flex',
-    justifyContent: 'flex-end',  // Adjusted to move the button to the right
-    alignItems: 'center',
-      
-    
-      
-      ':disabled': {
-        opacity: '0.5',
-        cursor: 'not-allowed',
-      },
-    },
-  };
 
 
 
@@ -71,6 +43,7 @@ const Login = ({ onDataFromChild }) => {
         setUsername('');
         setPassword('');
         console.log('false');
+        setError('Email does not exists.');
       }
     } catch (error) {
       console.error('Error during login:', error);
@@ -81,38 +54,35 @@ const Login = ({ onDataFromChild }) => {
   };
 
   return (
-    <div className={styles.loginFOrmContainer}>
-      <div className={styles.loginFOrm}>
-        <h2 className={styles.loginName}>Login</h2>
-        <div className={styles.inputGroup}>
+    <div className='loginFOrmContainer'>
+      <div className="loginFOrm">
+        <h2 className="loginName">Login</h2>
+        <div className="inputGRoup">
           <i className="fa fa-user"></i>
           <input
             type="text"
             placeholder="Username"
-            className={styles.inputTExt}
+            className={"inputTExt"}
             autoComplete="off"
             value={email}
             onChange={(e) => setUsername(e.target.value)}
           />
         </div>
-        <div className={styles.inputGRoup}>
+        <div className="inputGRoup">
           <i className="fa fa-unlock-alt"></i>
           <input
             type="password"
             placeholder="Password"
-            className={styles.inputTExt}
+            className="inputTExt"
             autoComplete="off"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
         </div>
 <br />
-
-
-
-        <div style={buttonStyles.buttonGroup}>
+        <div className="buttonGroup">
       <button
-        style={buttonStyles.loginButton}
+        className="loginButton"
         onClick={handleLogin}
         disabled={loading}
       >
@@ -122,8 +92,8 @@ const Login = ({ onDataFromChild }) => {
     <br />
     <br />
       
-        {error && <div className={styles.error}>{error}</div>}
-        <div className={styles.footer}>
+        {error && <div className="error">{error}</div>}
+        <div className="footer">
           <Link to="/forgotpassword">Forgot Password?</Link>
         </div>
       </div>

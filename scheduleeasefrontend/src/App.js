@@ -21,10 +21,10 @@ import ForgotPassword from './components/login_Page/forgot password/ForgotPasswo
 import Addtask from './components/addtask/Addtask';
 import ModifyTask from './components/modifytask/Modifytask';
 import Payment from './components/Payment/Payment';
-
+import Dashboard from './components/Dashboard/Dashboard';
 
 function App() {
-  const [authenticateddata, setAuthenticateddata] = useState({'value': true});
+  const [authenticateddata, setAuthenticateddata] = useState({'value': false});
 
   const handleLoginDataFromChild = (userLoginData) => {
     const userLoginDataToJson = JSON.stringify(userLoginData)
@@ -55,8 +55,9 @@ function App() {
             <Route exact path='' element=
               {
                 <>
+                <div className='login-container'>
                   <Login onDataFromChild={handleLoginDataFromChild} />
-
+                  </div>
                 </>
               } />
 
@@ -86,7 +87,9 @@ function App() {
 
 
             <div className="container">
+            
               <Routes>
+              
                 {/* first route goes to test container */}
                 <Route exact path='tasks' element=
                   {
@@ -116,7 +119,15 @@ function App() {
                   </>
                 }>
                 </Route> */}
-                
+               <Route exact path='dashboard' element={
+                  <>
+
+                    < Dashboard />
+
+
+                  </>
+                }>
+                </Route>
 
                 <Route exact path='payment' element={
                   <>

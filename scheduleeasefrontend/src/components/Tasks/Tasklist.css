@@ -3,9 +3,13 @@
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    padding: 10px 0px;
+    padding-top: 10px;
     margin: 0px 11px;
     border-bottom: 3px solid #ccc;
+    font-size: large;
+    padding-left: 20px;
+    padding-right: 20px;
+
 }
 
 .onetask {
@@ -41,14 +45,14 @@
 .taskconcontainer {
     background-color: #ffffff;
     /* Replace with your desired background color */
-    border-radius: 10px;
+    border-radius: 8px;
     /* Adjust the value to control the roundness of the corners */
     /* padding: 20px; */
     /* Adjust the padding according to your content */
     /* margin-top: 0px; */
     /* flex-basis: 250px; */
     overflow-y: hidden;
-    height: 85vh;
+    height: 84vh;
 }
 
 .tasklist{
@@ -57,6 +61,7 @@ min-height: 70vh;
 
 .task-row{
     overflow: auto;
+    padding:0px 20px ;
 }
 .textboxtoinputtilte{
     min-width: 75vw;

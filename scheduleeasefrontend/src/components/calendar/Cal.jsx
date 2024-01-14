@@ -75,7 +75,7 @@ function Cal() {
     // }
 
     return (
-        <div className="App">
+        <div className="Cal-con">
             {/* <h1>Calendar</h1>
             <h2>Add New Event</h2>
             <div>
@@ -86,7 +86,7 @@ function Cal() {
                     Add Event
                 </button>
             </div> */}
-            <Calendar localizer={localizer} events={allEvents} startAccessor="start" endAccessor="end" style={{ height: 500, margin: "50px" }} 
+            <Calendar localizer={localizer} events={allEvents} startAccessor="start" endAccessor="end" style={{ height: "77vh" }} 
             
             />
         </div>

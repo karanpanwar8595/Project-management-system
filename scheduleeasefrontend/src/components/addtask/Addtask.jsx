@@ -25,7 +25,7 @@ const YourFormComponent = () => {
         const value = e.target.value;
         setteamMemberValue(value);
         // Filter the list based on the input value
-        const filteredItems = teamMemberListItemsConst.filter((item) =>
+        const filteredItems = teamMemberListItems.filter((item) =>
             item.toLowerCase().includes(value.toLowerCase())
         );
         // Update the list with the filtered items
@@ -97,7 +97,6 @@ const YourFormComponent = () => {
                         placeholder="Enter team member"
                         className='form-input'
                     />
-
                     {isListVisible && (
                         <div className='teammemberlist'>
                             {teamMemberListItems.map((item, index) => (

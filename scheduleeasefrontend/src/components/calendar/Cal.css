@@ -1,6 +1,15 @@
 /* MyCalendar.css */
+.Cal-con{
+  background-color: #ffffff;
+  overflow: hidden;
+  max-height: 84vh;
+  padding: 30px 30px;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
 
-/* Style for the overall calendar container */
+}
+/* Style 
+for the overall calendar container */
 .react-big-calendar {
     border: 1px solid #ddd;
   }

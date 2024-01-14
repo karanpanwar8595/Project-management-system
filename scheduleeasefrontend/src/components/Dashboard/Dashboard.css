@@ -1,0 +1,9 @@
+.Dashboard-container {
+    border-radius: 6px;
+    background-color: #ffffff;
+    position: fixed;
+    height: 83vh;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+    min-width: 82%;
+    /* margin-top: 80px; */
+  }

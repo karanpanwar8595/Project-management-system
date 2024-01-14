@@ -2,6 +2,11 @@ from django.urls import path
 from . import views
 
 urlpatterns = [
+
+    #registration process
+    path('country/', views.country, name='country'),
+    path('state/', views.state, name='state'),
+
     # Login process
     path('login/', views.login, name='loginauthentication'),
 

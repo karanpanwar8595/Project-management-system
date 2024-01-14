@@ -1,11 +1,15 @@
 .signup-content {
-    background-color: #f4f4f4;
-    padding: 50px;
+    background-color: #ffffff;
+    padding: 20px 50px;
     border-radius: 12px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     max-width: 1200px;
-    margin-right: 100%;
-    width: 93%;
+    /* margin-right: 100%; */
+    width: 74vw;
+    overflow: auto;
+    overflow-y: auto;
+    overflow-x: auto;
+    max-height: 78vh;
 }
 
 .signup-title {
@@ -49,7 +53,36 @@
     gap: 10px;
 }
 
+.addresslistitem {
+    padding: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
 
+.addresslistitem:hover {
+    background-color: #f0f0f0;
+}
+
+.listofaddress {
+    position: relative;
+    margin-bottom: 10px;
+}
+
+.addresslist {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    background-color: #fff;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+    border: 1px solid #ccc;
+    border-top: none;
+    border-radius: 0 0 8px 8px;
+    display: flex;
+    flex-direction: column;
+    max-height: 120px;
+    overflow-y: auto;
+}
 /*isme button ke  gadbad hai*/
 
 

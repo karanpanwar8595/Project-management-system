@@ -1,14 +1,20 @@
+Body{
+  background-color: #f5f5f5ff;
+}
 .container {
   margin-left: 240px; /* Adjust the margin to create space next to the sidebar */
   padding: 20px; /* Adjust the padding to create spacing inside the container */
   display:flex;
   /* overflow: hidden;   */
   flex-direction: column;
+  padding-bottom: 0px;
+
 }
 
 .bodycontainer{
    /* min-height: 120vh;  */
    position: relative;
+   font-family: 'Segoe UI',SegoeUI,"Helvetica Neue",Helvetica,Arial,sans-serif;
 }
 
 .maincomponentcontainer{
@@ -22,3 +28,8 @@
 /* .footer{
   position: relative;
 } */
+
+.login-container{
+  display:flex;
+
+}

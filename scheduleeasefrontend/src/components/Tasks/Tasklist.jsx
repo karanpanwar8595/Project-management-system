@@ -4,40 +4,53 @@ import './Accordion.css';
 import plus from '../Projects/plus.png'
 import { Link } from 'react-router-dom';
 import editicon from './editicon.png';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-const AccordionItem = ({ task_key, title, content, status, duedate, owner, progress, done_key }) => {
+import { faPencilAlt } from '@fortawesome/free-solid-svg-icons';
+
+const AccordionItem = ({ task_key, title, content, actstatus, duedate, owner, progress, done_key }) => {
     const [isOpen, setIsOpen] = useState(false);
+    const [isComplete, setIsComplete] = useState(false);
+    console.log("sta",actstatus)
+    const [status,setStatus]=useState(actstatus);
     // const [addButtonintask, setAddButtonInTask] = useState(false);
+    console.log("status",status)
+    useEffect(() => {
+        if (status == 'Completed') {
+            setIsComplete(true)
+        }
+    }, [])
     const handleTaskboxToggle = () => {
         setIsOpen(!isOpen);
     };
     const addButtonHandle = () => {
-        // if 
+        setStatus("Completed")
+        setIsComplete(true)
         console.log("add button click")
 
     };
-    
+
     return (
         <div className="accordion-item" key={task_key}>
             <div className={`task-item `} >
                 <div className="accordion-button" onClick={handleTaskboxToggle}>
                     {title}
                 </div>
-                
-                    <div className="accordion-edit-button" onClick={(event) => event.stopPropagation()}>
-                    <Link to="/modifytask" state={ { task_id: {task_key} }}>
-                        <img src={editicon} alt="Edit" />
-                        </Link>
-                    </div>
-                
-                <div className='accordion-status'>{status}</div>
+
+                <div className="accordion-edit-button" onClick={(event) => event.stopPropagation()}>
+                    <Link to="/modifytask" state={{ task_id: { task_key } }}>
+                        <FontAwesomeIcon icon={faPencilAlt} style={{ fontSize: '24px' }}/>
+                    </Link>
+                </div>
+
+                {/* <div className='accordion-status'>{status}</div> */}
                 <div className='accordion-duedate'>{duedate}</div>
 
                 <div className='accordion-owner'>{owner}</div>
                 <div
-                    className='accordion-add-button ${done_key}' key={done_key}
+                    className={`accordion-add-button ${done_key} ${isComplete ? 'complete' : 'notcomplete'}`} key={done_key}
                     onClick={(event) => { event.stopPropagation(); addButtonHandle(); }}
-                > Complete
+                > {status}
                 </div>
             </div>
             <div className={`accordion-content ${isOpen ? 'open' : ''}`}>
@@ -51,23 +64,11 @@ const AccordionItem = ({ task_key, title, content, status, duedate, owner, progr
 
 const Tasklist = () => {
 
-    const [taskList, setTasklist] = useState([{ title: "first task", content: "This  is the second item's accordion body. It is hidden by default, until the collapse pis is the second item's accordion body. It is hidden by default, until the collapse phis is the second item's accordion body. ", status: "Active", duedate: "12/10/2023", progress: "20%", owner: "Suresh" }, { title: "first task", content: "This  is the second item's accordion body. It is hidden by default, until the collapse pis is the second item's accordion body. It is hidden by default, until the collapse phis is the second item's accordion body. ", status: "Active", duedate: "12/10/2023", progress: "20%", owner: "Ramesh" }]);
-    useEffect(() => {
-        async function fetchData() {
-            try {
-                const res = await fetch("http://localhost:8000/");
-                const tasklist1 = await res.json();
-                setTasklist(tasklist1);
-            } catch (e) {
-                console.log(e);
-            }
-        }
-        fetchData();
-    }, []);
+    const [taskList, setTasklist] = useState([{ title: "First task", content: "This  is the second item's accordion body. It is hidden by default, until the collapse pis is the second item's accordion body. It is hidden by default, until the collapse phis is the second item's accordion body. ", status:"Completed", duedate: "12/10/2023", progress: "20%", owner: "Suresh" }, { title: "Second task", content: "This  is the second item's accordion body. It is hidden by default, until the collapse pis is the second item's accordion body. It is hidden by default, until the collapse phis is the second item's accordion body. ", status:"Complete", duedate: "12/10/2023", progress: "20%", owner: "Ramesh" }]);
 
 
     return (
-        // <div className="taskconcontainer">
+
 
 
         <div className="accordion taskconcontainer">
@@ -76,17 +77,17 @@ const Tasklist = () => {
 
                 <div className="task-title-bar">
                     <div className='accordion-header-element'>Task</div>
-                    <div className='accordion-status'>Active</div>
+                    <div className='accordion-status'></div>
                     <div className='accordion-duedate'>Due Date</div>
                     <div className='accordion-progress'>Manage By</div>
-                    <div className='accordion-owner'>Action</div>
+                    <div className='accordion-owner'>Status</div>
                 </div>
                 <div className='task-row'>
                     {taskList.map(task => (
                         <AccordionItem
                             title={task.title}
                             content={task.content}
-                            status={task.status}
+                            actstatus={task.status}
                             duedate={task.duedate}
                             progress={task.progress}
                             owner={task.owner}
@@ -95,42 +96,6 @@ const Tasklist = () => {
                 </div>
             </div>
             <Link to="/addtask"><img src={plus} class='plus-symbol' alt='not found' /></Link>
-
-            {/* <div className='taskinput'>
-                <div className='tasktitleandbutton'>
-                    <label>
-
-                        <input
-                            type="text"
-                            name="message"
-                            placeholder='Title'
-                        />
-                    </label>
-                    <label>
-                        <textarea className='taskdescription'
-                            name="description"
-                            placeholder='Description'
-                        />
-                    </label>
-                    <DateRangePickerComp/>
-                    <label>
-                        Dropdown:
-                        <select name="selectedOption" >
-                            <option value="Option 1">Option 1</option>
-                            <option value="Option 2">Option 2</option>
-                            <option value="Option 3">Option 3</option>
-                        </select>
-                    </label>
-                    <button >Send</button>
-
-
-                </div>
-
-
-
-            </div> */}
-
-
         </div>
     );
 };

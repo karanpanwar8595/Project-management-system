@@ -138,19 +138,33 @@ class Country(models.Model):
     country_id = models.IntegerField(primary_key=True)
     country_name = models.CharField(max_length=30)
 
+    def to_dict(self):
+        return{
+            'id':self.country_id,
+            'name':self.country_name,
+
+        }
+
+
 class State(models.Model):
     class Meta:
         db_table = 'State'
     state_id = models.IntegerField(primary_key=True)
     state_name = models.CharField(max_length=30)
-    country = models.ForeignKey(Country, on_delete=models.CASCADE)
+    country= models.ForeignKey(Country, on_delete=models.CASCADE)
+
+    def to_dict(self):
+        return{
+            'id':self.state_id,
+            'name':self.state_name,
+        }
 
 class City(models.Model):
     class Meta:
         db_table = 'City'
     city_id = models.IntegerField(primary_key=True)
     city_name = models.CharField(max_length=30)
-    state = models.ForeignKey(State, on_delete=models.CASCADE)
+    state= models.ForeignKey(State, on_delete=models.CASCADE)
 
 class CompanyDetails(models.Model):
     class Meta:
