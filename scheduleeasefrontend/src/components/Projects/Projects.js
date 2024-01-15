@@ -194,14 +194,19 @@ const Projects = () => {
         //             <ProjectDetails project={selectedProject} onClose={closeProjectDetails} progressBar={getProgressClass} />
         //         ) : (
                     <div className="projects-container">
-                        <h3 style={{ textAlign: 'left' }}>Managed by me</h3>
+                        <h3 style={{ textAlign: 'left', fontFamily: 'Calibri light' }}>Managed by me</h3>
                         <div className="project-header">
                             <div className="header-item">Project Name</div>
                             <div className="header-item">Due Date</div>
                             <div className="header-item">Progress</div>
                         </div>
                         {[...ongoingProjects, ...newProjects].map((project) => (
-                            <Link style={{ textDecoration: 'none', color: 'black' }} to='/ProjectDetails' state={{project1:{project}}}>
+                            // <Link style={{ textDecoration: 'none', color: 'black' }} to='/ProjectDetails' state={{project1:{project}}}>
+                            <Link 
+                                to='/ProjectDetails'
+                                state={{project}}
+                                style={{ textDecoration: 'none', color: 'black' }} 
+                            >
                             <div key={project.id} className="project-card">
                             {/* onClick={() => openProjectDetails(project)} */}
                                 <div className="project-details">
@@ -226,7 +231,7 @@ const Projects = () => {
                                 <ProjectDetails project={selectedProject} onClose={closeProjectDetails} progressBar={getProgressClass} />
                         )} */}
 
-                        <h3 style={{ textAlign: 'left' }}>Assigned to me</h3>
+                        <h3 style={{ textAlign: 'left', fontFamily: 'Calibri light' }}>Assigned to me</h3>
                         <div className="project-header">
                             <div className="header-item">Project Name</div>
                             <div className="header-item">Due Date</div>
