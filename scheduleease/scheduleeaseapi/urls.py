@@ -4,9 +4,11 @@ from . import views
 urlpatterns = [
 
     #registration process
+    path('registration/', views.registration, name='registration'),
+
     path('country/', views.country, name='country'),
     path('state/', views.state, name='state'),
-
+    path('city/', views.city, name='city'),
     # Login process
     path('login/', views.login, name='loginauthentication'),
 

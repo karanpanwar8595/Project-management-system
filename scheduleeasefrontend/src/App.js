@@ -14,7 +14,7 @@ import Registration from './components/registration/SignupForm';
 import Profile from './components/profile/Profile';
 import UpdateProfile from './components/updateprofile/UpdateProfile';
 import DisscussionBox from './components/Disscussion/Disscussion';
-import DisscussionBox from './components/Disscussion/Disscussion'
+
 import ProjectDetails from './components/Projects/ProjectDetails';
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Login from './components/login_Page/Login';
@@ -24,6 +24,7 @@ import Addtask from './components/addtask/Addtask';
 import ModifyTask from './components/modifytask/Modifytask';
 import Payment from './components/Payment/Payment';
 import Dashboard from './components/Dashboard/Dashboard';
+import BlockUser from './components/BlockUser/BlockUser';
 
 function App() {
   const [authenticateddata, setAuthenticateddata] = useState({'value': false});
@@ -141,6 +142,16 @@ function App() {
                 }>
                 </Route>
 
+                <Route exact path='blockuser' element={
+                  <>
+
+                    < BlockUser />
+
+
+                  </>
+                }>
+                </Route>
+
                 <Route exact path='registration' element={
                   <>
                     < Registration />
@@ -196,7 +207,13 @@ function App() {
 
                   }>
                 </Route>
+                <Route exact path='profile' element=
+                  {
 
+                    <Profile />
+
+                  }>
+                </Route>
 
               </Routes>
             </div>

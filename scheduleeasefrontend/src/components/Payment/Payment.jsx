@@ -32,9 +32,19 @@ const PaymentCard = ({ project }) => {
           </div>
         </div>
         <div className="payment-detail-item paybuttonbox">
-            <div className='paybutton'>Pay Now</div>
-            
-            </div>
+
+        {project.paymentdone ? (
+  <div className='paidinfo'>
+    <div className='paid-text'>Paid</div>
+    <div className='paid-date'>{project.paymentdate}</div>
+  </div>
+) : (
+  <button className={`paybutton`} >
+    Pay Now
+  </button>
+)}
+      </div>
+
       </div>
     </div>
   );
@@ -51,8 +61,8 @@ const Payment = () => {
     // Assuming 'payments' is an array
     const [payments, setPayments] = useState([
         // Sample data, replace it with your actual data
-        { id: 1, name: 'Project 1', paymentdate: '2024-01-11', completion: 50 , amount: 200000},
-        { id: 2, name: 'Project 2', paymentdate: 'NOT DONE', completion: 75 , amount: 200000},
+        { id: 1, name: 'Project 1', paymentdone:true,paymentdate: '2024-01-11', completion: 50 , amount: 200000},
+        { id: 2, name: 'Project 2',paymentdone:false, paymentdate: 'NOT DONE', completion: 75 , amount: 200000},
        
         
 
@@ -71,7 +81,10 @@ const Payment = () => {
                 <div className="payment-header-item">Payment Amount</div>
 
                 <div className="payment-header-item">Progress</div>
-                <div className="payment-header-item">Payment Date</div>
+  
+                <div className="payment-header-item " style={{ textAlign: "end", paddingRight: "10px" }}
+
+>Payment Date</div>
             </div>
             <div className='payment-card-list'>
 

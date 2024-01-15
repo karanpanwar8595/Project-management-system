@@ -11,7 +11,10 @@
     overflow-x: auto;
     max-height: 78vh;
 }
-
+.signup-input{
+    width: auto;
+  max-width: -webkit-fill-available;
+}
 .signup-title {
     color: #333;
     height: max-content;
@@ -44,7 +47,7 @@
 
 .signup-name-column {
     display: flex;
-    gap: 10px;
+
 }
 
 .signup-beside {
@@ -82,6 +85,43 @@
     flex-direction: column;
     max-height: 120px;
     overflow-y: auto;
+    z-index: 3;
+}
+
+.mgr{
+    margin-right: 40px;
+}
+
+#addressitemlist{display: flex;
+flex-direction: row;
+}
+
+.addressitem{
+    width:30% ;
+    margin-right: 5%;
+    /* padding-right: 5%; */
+
+}
+.buttonsignup{
+    border: 1px solid #007bff;
+    width: 100px;
+    padding: 10px 5px;
+    border-radius: 8px;
+    /* font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; */
+    font-weight: 400;
+    align-items: flex-end;
+    margin-left: auto;
+    background-color: #ffffff;
+    color: #007bff;
+     font-weight: 600;
+     letter-spacing: 1px;
+}
+
+.buttonsignup:hover{
+    background-color: #007bff;
+    color: white;
+    font-weight: 600;
+    letter-spacing: 1px;
 }
 /*isme button ke  gadbad hai*/
 

@@ -49,7 +49,7 @@ const SideNavbar = () => {
               <div className="task-dropdown-content">
                 {/* Dropdown content goes here */}
                 <Link to="/registration" onClick={() => handleLinkClick('/Registration')}><div className={`dropdown sidenavitem ${activeLink === '/Registration' ? 'active' : ''}`}>Registration</div></Link>
-                <Link to="/blockuser" onClick={() => handleLinkClick('/Blockuser')}><div className={`dropdown sidenavitem ${activeLink === '/tasks' ? 'active' : ''}`}>Blockuser</div></Link>
+                <Link to="/blockuser" onClick={() => handleLinkClick('/blockuser')}><div className={`dropdown sidenavitem ${activeLink === '/blockuser' ? 'active' : ''}`}>Blockuser</div></Link>
 
               </div>
 

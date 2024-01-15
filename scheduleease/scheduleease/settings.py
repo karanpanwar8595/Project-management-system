@@ -105,27 +105,27 @@ WSGI_APPLICATION = 'scheduleease.wsgi.application'
 # }
 # }
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.mysql',
-#         'NAME': 'collegeproject',
-#         'USER': 'root',
-#         'PASSWORD': 'root',
-#         'HOST': 'localhost',
-#         'PORT': '3306',  # Change it to your MySQL port if necessary
-#     }
-# }
-
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'collegeproject',
         'USER': 'root',
-        'PASSWORD': '(Mitul@14',
+        'PASSWORD': 'root',
         'HOST': 'localhost',
         'PORT': '3306',  # Change it to your MySQL port if necessary
+    }
 }
-}
+
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.mysql',
+#         'NAME': 'collegeproject',
+#         'USER': 'root',
+#         'PASSWORD': '(Mitul@14',
+#         'HOST': 'localhost',
+#         'PORT': '3306',  # Change it to your MySQL port if necessary
+# }
+# }
 
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators

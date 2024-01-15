@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from scheduleeaseapi.models import Profile,Country,State
+from scheduleeaseapi.models import Profile,Country,State,City
 from django.core.mail import send_mail
 from django.http import HttpResponse
 from rest_framework.decorators import api_view
@@ -13,33 +13,50 @@ import string
 @api_view(['post'])
 def registration(request):
         try:
-            # Get the posted data from the request body
             data = json.loads(request.body)
-            # Access the data (assuming 'username' and 'password' keys in the posted data)
-            inputemail = data.get('loginemail')
+            print(data)
+            inputemail = data.get('inputemail')
             inputpassword = generate_random_password(12)
-            photo=data.get('photo')
-            firstname=data.get('fname')
-            middlename=data.get('mname')
-            lastname=data.get('lname')
-            userrole=data.get('role')
-            usergender=data.get('gender')
-            dateofbirth=data.get('dob')
-            user_status = 1
-            profile_status = 1
+            # photo=data.get('photo')
+            firstname=data.get('firstname')
+            middlename=data.get('middlename')
+            lastname=data.get('lastname')
+            userrole=data.get('userrole')
+            usergender=data.get('usergender')
+            dateofbirth=data.get('dateofbirth')
+
             city=data.get('city_id')
             print(inputemail)
-            logincretentialdata = Profile.objects.get(email=inputemail,password=inputpassword)
-            print(logincretentialdata)
-            
-            if (logincretentialdata):
-                dic_login_cretential_data=logincretentialdata.login_to_dict()
-                print(dic_login_cretential_data)
-                print(dic_login_cretential_data['user_status'])
-                if (dic_login_cretential_data['user_status']):
-                    return Response({"profile_data": dic_login_cretential_data,"value":True})
-            else:
-                return Response({"profile_data": False,"value":False})
+            try:
+                login_credential_data = Profile.objects.get(email=inputemail)
+                # Profile with the given email exists
+                print("Profile found:", login_credential_data)
+                # Continue with the rest of your code...
+                return Response({"profile_data": "user email already exist","value":False})
+            except Profile.DoesNotExist:
+                print("creation started")
+                profile_instance = Profile.objects.create(
+                    email=inputemail,
+                    password=inputpassword,
+                    fname=firstname,
+                    mname=middlename,
+                    lname=lastname,
+                    role=userrole,
+                    gender=usergender,
+                    dob=dateofbirth,
+                    city_id=city,
+                    user_status = 1,
+                    profile_status = 1,
+                    # Add other fields as needed...
+                    gst_no=None,
+                )
+
+                # Save the instance to the database
+                profile_instance.save()
+                return Response({"profile_data": "Registration is Successful","value":True})
+
+               
+                  
         except Exception as e:
             print(e)
             return Response({"profile_data": "Internal Error","value":False})
@@ -68,6 +85,22 @@ def state(request):
         state_list = [state.to_dict() for state in states]
         print(state_list)
         return Response({"data":state_list,"value":True})
+    except Exception as e:
+        print(e)
+        return Response({"data":"no data","value":False})
+
+
+@api_view(['post'])
+def city(request):
+    try:
+        data = json.loads(request.body)
+        print(request.body)
+        user_state_id = data.get('state_id')
+        print(user_state_id)
+        citys = City.objects.filter(state_id=user_state_id)
+        city_list = [city.to_dict() for city in citys]
+        print(city_list)
+        return Response({"data":city_list,"value":True})
     except Exception as e:
         print(e)
         return Response({"data":"no data","value":False})

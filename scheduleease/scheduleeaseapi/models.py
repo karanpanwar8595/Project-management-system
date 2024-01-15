@@ -166,6 +166,12 @@ class City(models.Model):
     city_name = models.CharField(max_length=30)
     state= models.ForeignKey(State, on_delete=models.CASCADE)
 
+    def to_dict(self):
+        return{
+            'id':self.city_id,
+            'name':self.city_name,
+        }
+
 class CompanyDetails(models.Model):
     class Meta:
         db_table = 'CompanyDetails'
