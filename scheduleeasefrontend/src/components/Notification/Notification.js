@@ -15,7 +15,7 @@ const Notification = () => {
 
     return (
         <div className="notification-container">
-            <h2 className='header'>Notifications</h2>
+            <h1 className='header'>Notifications</h1>
             {notifications.map(notification => (
                 <div key={notification.id} className="notification">
                     <FontAwesomeIcon icon={faBell} />
