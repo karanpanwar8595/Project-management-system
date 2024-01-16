@@ -65,6 +65,11 @@ class ProjectMember(models.Model):
     role = models.SmallIntegerField()
     joined_on = models.DateField()
     removed_on = models.DateField(null=True)
+    def to_project_dict(self):
+        return{
+            'project':self.project,
+        }
+
 
 class Task(models.Model):
     class Meta:

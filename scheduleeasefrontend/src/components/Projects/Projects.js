@@ -1,4 +1,5 @@
-import React, { useState,useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
+import axios from 'axios';
 import './Projects.css'
 import plus from './plus.png'
 // import ProjectDetails from './ProjectDetails.js'
@@ -7,31 +8,50 @@ import { Switch, Case, Default } from 'react-router-dom';
 
 
 const Projects = () => {
-    const [userrole,setUserRole]=useState(0);
-    const [isManager,setIsManager]=useState(false);
-    
+    const [userrole, setUserRole] = useState(0);
+    const [isManager, setIsManager] = useState(false);
+
+    const ProjectDetails = async () => {
+        try {
+            const ProjectDetails = { useremail: "mitul@mail.com" };
+            const response = await axios.post('http://127.0.0.1:8000/api/projectdetails/', ProjectDetails);
+            // ye data request me jayega in views.py
+
+            if (response.data['value']) {
+                console.log(response);
+                console.log('Project component connected');
+            } else {
+                console.log("error")
+            }
+        } catch (error) {
+            console.error('Error during login:', error);
+        }
+    };
     useEffect(() => {//this help in seting authentication to false when we relode
 
         try {
-            const role_id=JSON.parse(sessionStorage.getItem('loginData')).profile_data.role;
+            const role_id = JSON.parse(sessionStorage.getItem('loginData')).profile_data.role;
             setUserRole(role_id);
             console.log(role_id);
 
 
-            
-            if (role_id == "1"){
-                setIsManager(true); 
+
+            if (role_id == "1") {
+                setIsManager(true);
             }
-            else{
+            else {
                 setIsManager(false);
 
             }
 
-          
+
         } catch (error) {
-console.log(error);
+            console.log(error);
         }
-      }, []);
+
+        ProjectDetails();
+    }, []);
+
     const ongoingProjects = [
         {
             id: 1,
@@ -102,7 +122,7 @@ console.log(error);
     //------------------------------------------------------------------------------------------------------------------------
 
     const [showForm, setShowForm] = useState(false);
-    
+
     // Form Project start date and due date
     const [startDate, setStartDate] = useState('');
     const [dueDate, setDueDate] = useState('');
@@ -207,24 +227,24 @@ console.log(error);
     //------------------------------------------------------------------------------------------------------------------------
 
     return (
-                    <div className="projects-container">
+        <div className="projects-container">
 
-                        
 
-    {isManager ? (
-        <>
-<h3 style={{ textAlign: 'left', fontFamily: 'Calibri light' }}>Managed by me</h3>
-                        <div className="project-header">
-                            <div className="header-item">Project Name</div>
-                            <div className="header-item">Due Date</div>
-                            <div className="header-item">Progress</div>
-                        </div>
-                        {[...ongoingProjects, ...newProjects].map((project) => (
-                            <Link 
-                                to='/ProjectDetails'
-                                state={{project}}
-                                style={{ textDecoration: 'none', color: 'black' }} 
-                            >
+
+            {isManager ? (
+                <>
+                    <h3 style={{ textAlign: 'left', fontFamily: 'Calibri light' }}>Managed by me</h3>
+                    <div className="project-header">
+                        <div className="header-item">Project Name</div>
+                        <div className="header-item">Due Date</div>
+                        <div className="header-item">Progress</div>
+                    </div>
+                    {[...ongoingProjects, ...newProjects].map((project) => (
+                        <Link
+                            to='/ProjectDetails'
+                            state={{ project }}
+                            style={{ textDecoration: 'none', color: 'black' }}
+                        >
                             <div key={project.id} className="project-card">
 
                                 <div className="project-details">
@@ -241,40 +261,40 @@ console.log(error);
                                     </div>
                                 </div>
                             </div>
-                            </Link>
-                        ))}
+                        </Link>
+                    ))}
 
-                        <h3 style={{ textAlign: 'left', fontFamily: 'Calibri light' }}>Assign to me</h3>
-                        <div className="project-header">
-                            <div className="header-item">Project Name</div>
-                            <div className="header-item">Due Date</div>
-                            <div className="header-item">Project Manager</div>
-                        </div>
-                        {assignedProjects.map((project) => (
-                            <div key={project.id} className="project-card">
-                                <div className="project-details">
-                                    <div className="detail-item">{project.name}</div>
-                                    <div className="detail-item">{project.dueDate}</div>
-                                    <div className="detail-item">{project.man}</div>
-                                </div>
+                    <h3 style={{ textAlign: 'left', fontFamily: 'Calibri light' }}>Assign to me</h3>
+                    <div className="project-header">
+                        <div className="header-item">Project Name</div>
+                        <div className="header-item">Due Date</div>
+                        <div className="header-item">Project Manager</div>
+                    </div>
+                    {assignedProjects.map((project) => (
+                        <div key={project.id} className="project-card">
+                            <div className="project-details">
+                                <div className="detail-item">{project.name}</div>
+                                <div className="detail-item">{project.dueDate}</div>
+                                <div className="detail-item">{project.man}</div>
                             </div>
-                        ))}
-                        <img src={plus} class='plus-symbol' alt='not found' onClick={toggleForm} />
-    </> 
-):(
-     <>
-    <h3 style={{ textAlign: 'left', fontFamily: 'Calibri light' }}>Project</h3>
-                        <div className="project-header">
-                            <div className="header-item">Project Name</div>
-                            <div className="header-item">Due Date</div>
-                            <div className="header-item">Progress</div>
                         </div>
-                        {[...ongoingProjects, ...newProjects].map((project) => (
-                            <Link 
-                                to='/ProjectDetails'
-                                state={{project}}
-                                style={{ textDecoration: 'none', color: 'black' }} 
-                            >
+                    ))}
+                    <img src={plus} class='plus-symbol' alt='not found' onClick={toggleForm} />
+                </>
+            ) : (
+                <>
+                    <h3 style={{ textAlign: 'left', fontFamily: 'Calibri light' }}>Project</h3>
+                    <div className="project-header">
+                        <div className="header-item">Project Name</div>
+                        <div className="header-item">Due Date</div>
+                        <div className="header-item">Progress</div>
+                    </div>
+                    {[...ongoingProjects, ...newProjects].map((project) => (
+                        <Link
+                            to='/ProjectDetails'
+                            state={{ project }}
+                            style={{ textDecoration: 'none', color: 'black' }}
+                        >
                             <div key={project.id} className="project-card">
 
                                 <div className="project-details">
@@ -291,128 +311,128 @@ console.log(error);
                                     </div>
                                 </div>
                             </div>
-                            </Link>
-                        ))}
-    </>
+                        </Link>
+                    ))}
+                </>
 
-    )
+            )
 
 
-}
+            }
 
-                        
 
-                        {/* ---------------------------------------------Add New Project Form------------------------------------------------ */}
-                        {showForm && (
-                            <div className="modal-overlay">
-                                <div className="modal">
-                                    <div className="form-header">
-                                        <span onClick={toggleForm}>Close</span>
-                                    </div>
-                                    <form onSubmit={handleFormSubmit}>
-                                        <div className="form-row">
-                                            <label htmlFor="projectName">Project Name:</label>
-                                            <input className="in-txtarea" type="text" id="projectName" name="projectName" required />
-                                        </div>
-                                        <div className="form-row">
-                                            <label htmlFor="startDate">Start Date:</label>
-                                            <input
-                                                className="in-txtarea"
-                                                type="date"
-                                                id="startDate"
-                                                name="startDate"
-                                                value={startDate}
-                                                onChange={(e) => setStartDate(e.target.value)}
-                                                required
-                                            />
-                                        </div>
-                                        <div className="form-row">
-                                            <label htmlFor="dueDate">Due Date:</label>
-                                            <input
-                                                className="in-txtarea"
-                                                type="date"
-                                                id="dueDate"
-                                                name="dueDate"
-                                                value={dueDate}
-                                                onChange={(e) => setDueDate(e.target.value)}
-                                                required
-                                            />
-                                        </div>
-                                        <div className="form-row">
-                                            <label htmlFor="projectDescription">Project Description:</label>
-                                            <textarea className="in-txtarea" id="projectDescription" name="projectDescription" />
-                                        </div>
-                                        <div className="form-row">
-                                            <label htmlFor="budget">Budget:</label>
-                                            <input className="in-txtarea" type="number" id="budget" name="budget" required />
-                                        </div>
-                                        <div className="form-row">
-                                            <label htmlFor="companyName">Company Name:</label>
-                                            <input className="in-txtarea" type="text" id="companyName" name="companyName" required />
-                                        </div>
-                                        <div className="form-row">
-                                            <label htmlFor="attachment">Attachment:</label>
-                                            <input
-                                                className="in-txtarea"
-                                                type="file"
-                                                id="attachment"
-                                                name="attachment"
-                                                onChange={(e) => handleFileChange(e, 'attachment')}
-                                            />
-                                            <div>
-                                                {selectedAttachments.map((file, index) => (
-                                                    <div key={index}>{file.name}</div>
-                                                ))}
-                                            </div>
-                                        </div>
 
-                                        <div className="form-row">
-                                            <label htmlFor="document">Document:</label>
-                                            <input
-                                                className="in-txtarea"
-                                                type="file"
-                                                id="document"
-                                                name="document"
-                                                onChange={(e) => handleFileChange(e, 'document')}
-                                            />
-                                            <div>
-                                                {selectedDocuments.map((file, index) => (
-                                                    <div key={index}>{file.name}</div>
-                                                ))}
-                                            </div>
-                                        </div>
-                                        <div className="form-row client-search-row">
-                                            <label htmlFor="Add client">Add Client:</label>
-                                            <input
-                                                className="in-txtarea"
-                                                type="text"
-                                                id="clientSearch"
-                                                value={clientSearch}
-                                                placeholder='Search Here...'
-                                                onChange={handleClientSearchChange}
-                                                required={!selectedClient}
-                                            />
-                                            {clientResults.map(client => (
-                                                <div key={client.email} className="client-result">
-                                                    {client.name} ({client.email})
-                                                    <button className="add-form-btn" type="button" onClick={() => handleAddClient(client)}>Add</button>
-                                                </div>
-                                            ))}
-                                        </div>
-                                        {selectedClient && (
-                                            <div className="selected-client">
-                                                {selectedClient.name} ({selectedClient.email})
-                                                <button className="add-form-btn" type="button" onClick={handleRemoveClient}>Remove</button>
-                                            </div>
-                                        )}
-                                        <div className="form-row">
-                                            <button className="add-form-btn" type="submit">Submit</button>
-                                        </div>
-                                    </form>
-                                </div>
-                            </div >
-                        )}
+            {/* ---------------------------------------------Add New Project Form------------------------------------------------ */}
+            {showForm && (
+                <div className="modal-overlay">
+                    <div className="modal">
+                        <div className="form-header">
+                            <span onClick={toggleForm}>Close</span>
                         </div>
+                        <form onSubmit={handleFormSubmit}>
+                            <div className="form-row">
+                                <label htmlFor="projectName">Project Name:</label>
+                                <input className="in-txtarea" type="text" id="projectName" name="projectName" required />
+                            </div>
+                            <div className="form-row">
+                                <label htmlFor="startDate">Start Date:</label>
+                                <input
+                                    className="in-txtarea"
+                                    type="date"
+                                    id="startDate"
+                                    name="startDate"
+                                    value={startDate}
+                                    onChange={(e) => setStartDate(e.target.value)}
+                                    required
+                                />
+                            </div>
+                            <div className="form-row">
+                                <label htmlFor="dueDate">Due Date:</label>
+                                <input
+                                    className="in-txtarea"
+                                    type="date"
+                                    id="dueDate"
+                                    name="dueDate"
+                                    value={dueDate}
+                                    onChange={(e) => setDueDate(e.target.value)}
+                                    required
+                                />
+                            </div>
+                            <div className="form-row">
+                                <label htmlFor="projectDescription">Project Description:</label>
+                                <textarea className="in-txtarea" id="projectDescription" name="projectDescription" />
+                            </div>
+                            <div className="form-row">
+                                <label htmlFor="budget">Budget:</label>
+                                <input className="in-txtarea" type="number" id="budget" name="budget" required />
+                            </div>
+                            <div className="form-row">
+                                <label htmlFor="companyName">Company Name:</label>
+                                <input className="in-txtarea" type="text" id="companyName" name="companyName" required />
+                            </div>
+                            <div className="form-row">
+                                <label htmlFor="attachment">Attachment:</label>
+                                <input
+                                    className="in-txtarea"
+                                    type="file"
+                                    id="attachment"
+                                    name="attachment"
+                                    onChange={(e) => handleFileChange(e, 'attachment')}
+                                />
+                                <div>
+                                    {selectedAttachments.map((file, index) => (
+                                        <div key={index}>{file.name}</div>
+                                    ))}
+                                </div>
+                            </div>
+
+                            <div className="form-row">
+                                <label htmlFor="document">Document:</label>
+                                <input
+                                    className="in-txtarea"
+                                    type="file"
+                                    id="document"
+                                    name="document"
+                                    onChange={(e) => handleFileChange(e, 'document')}
+                                />
+                                <div>
+                                    {selectedDocuments.map((file, index) => (
+                                        <div key={index}>{file.name}</div>
+                                    ))}
+                                </div>
+                            </div>
+                            <div className="form-row client-search-row">
+                                <label htmlFor="Add client">Add Client:</label>
+                                <input
+                                    className="in-txtarea"
+                                    type="text"
+                                    id="clientSearch"
+                                    value={clientSearch}
+                                    placeholder='Search Here...'
+                                    onChange={handleClientSearchChange}
+                                    required={!selectedClient}
+                                />
+                                {clientResults.map(client => (
+                                    <div key={client.email} className="client-result">
+                                        {client.name} ({client.email})
+                                        <button className="add-form-btn" type="button" onClick={() => handleAddClient(client)}>Add</button>
+                                    </div>
+                                ))}
+                            </div>
+                            {selectedClient && (
+                                <div className="selected-client">
+                                    {selectedClient.name} ({selectedClient.email})
+                                    <button className="add-form-btn" type="button" onClick={handleRemoveClient}>Remove</button>
+                                </div>
+                            )}
+                            <div className="form-row">
+                                <button className="add-form-btn" type="submit">Submit</button>
+                            </div>
+                        </form>
+                    </div>
+                </div >
+            )}
+        </div>
         //         )
         //     }
         // </div >
