@@ -56,13 +56,13 @@ const UserProfileForm = () => {
 
           <div className="name-column">
             <label htmlFor="firstName">First Name:</label>
-            <input type="text" id="firstName" value="baburao" readOnly />
+            <input type="text" id="firstName" value="b" readOnly />
 
             <label htmlFor="middleName">Middle Name:</label>
-            <input type="text" id="middleName" value="ganpatrao" readOnly />
+            <input type="text" id="middleName" value="g" readOnly />
 
             <label htmlFor="lastName">Last Name:</label>
-            <input type="text" id="lastName" value="aapte" readOnly />
+            <input type="text" id="lastName" value="aa" readOnly />
           </div>
 
           <div className="beside">
