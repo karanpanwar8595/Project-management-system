@@ -33,7 +33,6 @@ const SideNavbar = () => {
 
           <Link to="/project" onClick={() => handleLinkClick('/project')}><div className={`sidenavitem ${activeLink === '/project' ? 'active' : ''}`}>Project</div></Link>
 
-          <Link to="/disscussion" onClick={() => handleLinkClick('/disscussion')}><div className={`sidenavitem ${activeLink === '/disscussion' ? 'active' : ''}`}>Disccussion</div></Link>
 
           <Link to="/payment" onClick={() => handleLinkClick('/payment')}><div className={`sidenavitem ${activeLink === '/payment' ? 'active' : ''}`}>Payment</div></Link>
 
@@ -55,12 +54,6 @@ const SideNavbar = () => {
 
             )}
           </div>
-
-
-
-
-
-
 
 
 

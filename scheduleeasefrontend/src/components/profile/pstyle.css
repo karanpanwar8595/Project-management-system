@@ -1,11 +1,11 @@
 /* Navbar Styles */
 
 .profile-navbar-top {
-    background-color: #3498db;
-    color: white;
+    /* background-color: #3498db; */
+    color: rgb(0, 0, 0);
     display: flex;
-    justify-content: space-between;
-    align-items: center;
+    /* justify-content: space-between; */
+    align-items: flex-end;
     padding: 10px;
 }
 
@@ -26,7 +26,7 @@
 }
 
 .profile-navbar-top a {
-    color: white;
+    color: rgb(0, 0, 0);
     text-decoration: none;
 }
 
@@ -42,6 +42,26 @@
 
 .profile {
     text-align: center;
+    display: flex;
+    overflow: hidden;
+    max-height: 83vh;
+    min-height: 83vh;
+    background-color: #ffffff;
+    flex-direction: column;
+    background-color: #ffffff;
+    padding: 20px 20px;
+    border-radius: 12px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    overflow: auto;
+    overflow-y: auto;
+    overflow-x: auto;
+}
+#profile-edit-button{
+    display: flex;
+    align-items: center;
+}
+.edit-icon{
+    margin-right: 8px;
 }
 
 .photo-upload {

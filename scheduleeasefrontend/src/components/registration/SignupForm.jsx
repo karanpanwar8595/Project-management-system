@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import './SignupFormStyles.css'; // Import CSS file
+import './SignupForm.css'; 
 import axios from 'axios';
 
 
@@ -242,15 +242,12 @@ var gender_id=0;
 
   const handleSubmit = () => {
     if (!isValidEmail || !selectedRole || !firstName || !gender) {
-      alert('Please fill out all required fields correctly.');
+      // alert('Please fill out all required fields correctly.');
       return;
     }
     submitButton();
 
     console.log('Form submitted successfully!');
-
-
-
   };
 
 
@@ -271,6 +268,7 @@ var gender_id=0;
     fetchData();  // Call the async function immediately
   }, []);
 
+
   return (
     <div className="signup-content">
       <div className="signup-title">
@@ -285,6 +283,7 @@ var gender_id=0;
             placeholder="Email"
             value={email}
             onChange={handleEmailChange}
+            required
           />
           {!isValidEmail && <p className="error-message">Please enter a valid email address</p>}
    
@@ -292,7 +291,8 @@ var gender_id=0;
           <div className="signup-name-column">
 
             <label htmlFor="firstName" className="signup-label"></label>
-            <input value={firstName} type="text" id="firstName" className="signup-input mgr" placeholder="First name" onChange={(e) => setFirstName(e.target.value)} />
+            <input value={firstName} type="text" id="firstName" className="signup-input mgr" placeholder="First name" onChange={(e) => setFirstName(e.target.value)} 
+            required/>
 
             <label htmlFor="middleName" className="signup-label"></label>
             <input value={middleName} type="text" id="middleName" className="signup-input mgr" placeholder="Middle name" onChange={(e) => setMiddleName(e.target.value)} />
@@ -313,7 +313,8 @@ var gender_id=0;
               <label htmlFor="gender" className="signup-label">
                 Gender:
               </label>
-              <select value={gender} id="gender" className="signup-select" onChange={(e) => setGender(e.target.value)}>
+              <select value={gender} id="gender" className="signup-select" onChange={(e) => setGender(e.target.value)}
+              required>
                 <option>choose gender</option>
                 <option>Male</option>
                 <option>Female</option>
@@ -330,6 +331,7 @@ var gender_id=0;
                 className="signup-select"
                 onChange={(e) => setSelectedRole(e.target.value)}
                 value={selectedRole}
+                required
               >
                 <option value="">Choose role</option>
                 <option value="Admin">Admin</option>
@@ -343,7 +345,8 @@ var gender_id=0;
           <label htmlFor="dob" className="signup-label">
             Date of Birth:
           </label>
-          <input value={dob} type="date" id="dob" className="signup-input" onChange={(e) => setDOB(e.target.value)} />
+          <input value={dob} type="date" id="dob" className="signup-input" onChange={(e) => setDOB(e.target.value)}
+          required />
           <div id='addressitemlist'>
             <div className='addressitem'>
 
@@ -359,6 +362,7 @@ var gender_id=0;
                   onBlur={handleCountryInputBlur}
                   placeholder="Enter Country"
                   className='signup-input'
+                  required
                 />
 
                 {countryisListVisible && (
@@ -390,6 +394,7 @@ var gender_id=0;
                   onBlur={handleStateInputBlur}
                   placeholder="Enter State"
                   className='signup-input'
+                  required
                 />
 
                 {stateisListVisible && (
@@ -422,6 +427,7 @@ var gender_id=0;
                   onBlur={handleCityInputBlur}
                   placeholder="Enter city"
                   className='signup-input'
+                  required
                 />
 
                 {cityisListVisible && (
@@ -512,7 +518,7 @@ var gender_id=0;
           <br />
 
           <a href="#">
-            <button type="button" className="buttonsignup" onClick={handleSubmit}>
+            <button type="submit" className="buttonsignup" onClick={handleSubmit}>
               Submit
             </button>
           </a>

@@ -1,10 +1,37 @@
-import React, { useState } from 'react'
+import React, { useState,useEffect } from 'react'
 import './Projects.css'
 import plus from './plus.png'
 // import ProjectDetails from './ProjectDetails.js'
 import { Link } from 'react-router-dom';
+import { Switch, Case, Default } from 'react-router-dom';
+
 
 const Projects = () => {
+    const [userrole,setUserRole]=useState(0);
+    const [isManager,setIsManager]=useState(false);
+    
+    useEffect(() => {//this help in seting authentication to false when we relode
+
+        try {
+            const role_id=JSON.parse(sessionStorage.getItem('loginData')).profile_data.role;
+            setUserRole(role_id);
+            console.log(role_id);
+
+
+            
+            if (role_id == "1"){
+                setIsManager(true); 
+            }
+            else{
+                setIsManager(false);
+
+            }
+
+          
+        } catch (error) {
+console.log(error);
+        }
+      }, []);
     const ongoingProjects = [
         {
             id: 1,
@@ -75,7 +102,7 @@ const Projects = () => {
     //------------------------------------------------------------------------------------------------------------------------
 
     const [showForm, setShowForm] = useState(false);
-
+    
     // Form Project start date and due date
     const [startDate, setStartDate] = useState('');
     const [dueDate, setDueDate] = useState('');
@@ -148,15 +175,7 @@ const Projects = () => {
         return 'very-high';
     };
 
-    // const openProjectDetails = (project) => {
-    //     setSelectedProject(project);
-    //     setProjectDetailsVisible(true);
-    // };
 
-    // const closeProjectDetails = () => {
-    //     setSelectedProject(null);
-    //     setProjectDetailsVisible(false);
-    // };
 
     const handleFormSubmit = (event) => {
         event.preventDefault();
@@ -188,27 +207,26 @@ const Projects = () => {
     //------------------------------------------------------------------------------------------------------------------------
 
     return (
-        // <div>
-        //     {
-        //         projectDetailsVisible ? (
-        //             <ProjectDetails project={selectedProject} onClose={closeProjectDetails} progressBar={getProgressClass} />
-        //         ) : (
                     <div className="projects-container">
-                        <h3 style={{ textAlign: 'left', fontFamily: 'Calibri light' }}>Managed by me</h3>
+
+                        
+
+    {isManager ? (
+        <>
+<h3 style={{ textAlign: 'left', fontFamily: 'Calibri light' }}>Managed by me</h3>
                         <div className="project-header">
                             <div className="header-item">Project Name</div>
                             <div className="header-item">Due Date</div>
                             <div className="header-item">Progress</div>
                         </div>
                         {[...ongoingProjects, ...newProjects].map((project) => (
-                            // <Link style={{ textDecoration: 'none', color: 'black' }} to='/ProjectDetails' state={{project1:{project}}}>
                             <Link 
                                 to='/ProjectDetails'
                                 state={{project}}
                                 style={{ textDecoration: 'none', color: 'black' }} 
                             >
                             <div key={project.id} className="project-card">
-                            {/* onClick={() => openProjectDetails(project)} */}
+
                                 <div className="project-details">
                                     <div className="detail-item">{project.name}</div>
                                     <div className="detail-item">{project.dueDate}</div>
@@ -226,12 +244,7 @@ const Projects = () => {
                             </Link>
                         ))}
 
-                        {/* Project Details View */}
-                        {/* {selectedProject && (
-                                <ProjectDetails project={selectedProject} onClose={closeProjectDetails} progressBar={getProgressClass} />
-                        )} */}
-
-                        <h3 style={{ textAlign: 'left', fontFamily: 'Calibri light' }}>Assigned to me</h3>
+                        <h3 style={{ textAlign: 'left', fontFamily: 'Calibri light' }}>Assign to me</h3>
                         <div className="project-header">
                             <div className="header-item">Project Name</div>
                             <div className="header-item">Due Date</div>
@@ -246,8 +259,48 @@ const Projects = () => {
                                 </div>
                             </div>
                         ))}
-
                         <img src={plus} class='plus-symbol' alt='not found' onClick={toggleForm} />
+    </> 
+):(
+     <>
+    <h3 style={{ textAlign: 'left', fontFamily: 'Calibri light' }}>Project</h3>
+                        <div className="project-header">
+                            <div className="header-item">Project Name</div>
+                            <div className="header-item">Due Date</div>
+                            <div className="header-item">Progress</div>
+                        </div>
+                        {[...ongoingProjects, ...newProjects].map((project) => (
+                            <Link 
+                                to='/ProjectDetails'
+                                state={{project}}
+                                style={{ textDecoration: 'none', color: 'black' }} 
+                            >
+                            <div key={project.id} className="project-card">
+
+                                <div className="project-details">
+                                    <div className="detail-item">{project.name}</div>
+                                    <div className="detail-item">{project.dueDate}</div>
+                                    <div className="detail-item">
+                                        <div className="progress-container">
+                                            <div
+                                                className={`progress-filler ${getProgressClass(project.completion)}`}
+                                                style={{ width: `${project.completion}%` }}>
+                                                <span className="progress-label">{`${project.completion}%`}</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            </Link>
+                        ))}
+    </>
+
+    )
+
+
+}
+
+                        
 
                         {/* ---------------------------------------------Add New Project Form------------------------------------------------ */}
                         {showForm && (

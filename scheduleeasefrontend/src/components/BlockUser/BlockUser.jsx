@@ -12,6 +12,7 @@ const UserCard = ({ user }) => {
 
 
     return (
+        
         <div key={user.id} className={`user-card ${user.blocked ? 'blocked' : ''}`}>
             <div className="userprofilepic"><img src={profilepic} alt="" /></div>
             <div className="userdetails">
@@ -26,6 +27,7 @@ const UserCard = ({ user }) => {
                 {user.blocked ? 'Unblock' : 'Block'}
             </button>
         </div>
+        
     );
 };
 
@@ -41,6 +43,7 @@ const BlockUser = () => {
     return (
         <div className="block-user-container">
 
+        <h3>Users</h3>
 
             {users.map((user) => (
                 <UserCard user={user} />

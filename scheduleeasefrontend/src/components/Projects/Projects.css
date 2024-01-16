@@ -7,7 +7,10 @@
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
   border-radius: 8px;
   overflow: auto;
+  min-height: 83vh;
+
   max-height: 83vh;
+  background-color: #ffffff;
 }
 
 .projects-container::-webkit-scrollbar {

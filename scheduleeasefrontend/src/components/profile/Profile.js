@@ -1,30 +1,23 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import './pstyle.css';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faPencilAlt } from '@fortawesome/free-solid-svg-icons';
+
 
 const Profile = () => {
   return (
     <div className="profile">
       {/* Navbar top */}
       <div className="profile-navbar-top">
-        <div className="profile-title">
-          <h1>Client Profile</h1>
-        </div>
+  <Link to="/updateProfile">
+    <div id='profile-edit-button'>
+      <FontAwesomeIcon icon={faPencilAlt} className="edit-icon" />
+      EDIT
+    </div>
+  </Link>
+</div>
 
-        {/* Navbar */}
-        <ul>
-          {/* Add your navigation links/icons as needed */}
-          <li>
-            <Link to="/updateProfile">EDIT</Link>
-          </li>
-          <li>
-            <Link to="/icon-page">
-              <i className="fa fa-icon fa-2x"></i>
-            </Link>
-          </li>
-          {/* ... */}
-        </ul>
-      </div>
       {/* End Navbar top */}
 
       {/* Personal Information */}

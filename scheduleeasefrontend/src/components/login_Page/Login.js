@@ -10,9 +10,18 @@ const Login = ({ onDataFromChild }) => {
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
-
+  const [isValidEmail,setIsValidEmail]=useState(true)
   const sendLoginDataToParent = (authenticationcode) => {
     onDataFromChild(authenticationcode);
+  };
+const handleEmailInput=(e)=>{
+  const inputValue = e.target.value;
+    setUsername(inputValue);
+    if (email == " "){
+      setIsValidEmail(true)
+    }
+    setIsValidEmail(/\S+@\S+\.\S+/.test(inputValue));
+
   };
 
 
@@ -25,9 +34,9 @@ const Login = ({ onDataFromChild }) => {
       setError(null);
   
       // Basic validation
-      if (!email || !password) {
+      if (!email || !password || !isValidEmail) {
        
-        setError('Please enter both email and password.');
+        setError('Please enter both email and password correctly.');
         setLoading(false);
         return;
       }
@@ -65,9 +74,16 @@ const Login = ({ onDataFromChild }) => {
             className={"inputTExt"}
             autoComplete="off"
             value={email}
-            onChange={(e) => setUsername(e.target.value)}
+            onChange={handleEmailInput}
           />
         </div>
+        {isValidEmail ? (
+  <>
+    
+  </>
+) : (
+  <div className='emailnotvalid'>Enter a valid Email</div>
+)}
         <div className="inputGRoup">
           <i className="fa fa-unlock-alt"></i>
           <input
@@ -86,7 +102,7 @@ const Login = ({ onDataFromChild }) => {
         onClick={handleLogin}
         disabled={loading}
       >
-        {loading ? 'Logging in...' : 'Submit'}
+        {loading ? 'Logging in...' : 'Login'}
       </button>
     </div>
     <br />

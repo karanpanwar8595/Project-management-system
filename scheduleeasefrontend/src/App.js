@@ -27,7 +27,7 @@ import Dashboard from './components/Dashboard/Dashboard';
 import BlockUser from './components/BlockUser/BlockUser';
 
 function App() {
-  const [authenticateddata, setAuthenticateddata] = useState({'value': false});
+  const [authenticateddata, setAuthenticateddata] = useState({ 'value': false });
 
   const handleLoginDataFromChild = (userLoginData) => {
     const userLoginDataToJson = JSON.stringify(userLoginData)
@@ -58,8 +58,8 @@ function App() {
             <Route exact path='' element=
               {
                 <>
-                <div className='login-container'>
-                  <Login onDataFromChild={handleLoginDataFromChild} />
+                  <div className='login-container'>
+                    <Login onDataFromChild={handleLoginDataFromChild} />
                   </div>
                 </>
               } />
@@ -90,9 +90,9 @@ function App() {
 
 
             <div className="container">
-            
+
               <Routes>
-              
+
                 {/* first route goes to test container */}
                 <Route exact path='tasks' element=
                   {
@@ -110,10 +110,10 @@ function App() {
                 }>
                 </Route>
                 <Route
-  exact
-  path='/modifytask'
-  element={<ModifyTask/>}
-/>
+                  exact
+                  path='/modifytask'
+                  element={<ModifyTask />}
+                />
                 {/* <Route exact path='modifytask' element={
                   <>
                     < ModifyTask />
@@ -122,7 +122,7 @@ function App() {
                   </>
                 }>
                 </Route> */}
-               <Route exact path='dashboard' element={
+                <Route exact path='dashboard' element={
                   <>
 
                     < Dashboard />
@@ -152,6 +152,15 @@ function App() {
                 }>
                 </Route>
 
+                <Route exact path='updateprofile' element={
+                  <>
+
+                    < UpdateProfile />
+
+
+                  </>
+                }>
+                </Route>
                 <Route exact path='registration' element={
                   <>
                     < Registration />
