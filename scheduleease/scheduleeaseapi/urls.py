@@ -25,5 +25,7 @@ urlpatterns = [
     path('messagesendertoreciver/', views.messagesendertoreciver, name='messagesendertoreciver'),
     path('messagesofauser/', views.messagesofauser, name='messagesofauser'),
 
+    # Project Component
+    path('projectdetails/', views.projectdetails, name='projectdetails'),
     
 ]

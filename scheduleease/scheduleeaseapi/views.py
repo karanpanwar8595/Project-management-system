@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from scheduleeaseapi.models import Profile,Country,State,City
+from scheduleeaseapi.models import Profile,Country,State,City,ProjectMember
 from django.core.mail import send_mail
 from django.http import HttpResponse
 from rest_framework.decorators import api_view
@@ -220,3 +220,18 @@ def messagesofauser(request):
    
     return Response( [{'sendertype':0,'messagetxt':"how are you",'timestamp':"10:20"},{'sendertype':1,'messagetxt':"i am fine",'timestamp':"10:20"}])
 
+# Project Component
+@api_view(['post'])
+def projectdetails(request):
+    # request : data came from
+    try:
+        data = json.loads(request.body)
+        print(data)
+        useremail = data.get('useremail')
+        # get : function get(key) dala == value milegi
+        inprojects = ProjectMember.objects.filter(email=useremail)
+        inprojectslist = [inproject.to_project_dict() for inproject in inprojects]
+        print(inprojectslist)
+        return Response({"projectdetails":True, "value":True})
+    except Exception as e:
+        return Response({"projectdetails":False, "value":False})
