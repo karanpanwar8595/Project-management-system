@@ -1,9 +1,23 @@
-.Dashboard-container {
+/* .Dashboard-container {
     border-radius: 6px;
     background-color: #ffffff;
     position: fixed;
     height: 83vh;
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
     min-width: 82%;
-    /* margin-top: 80px; */
-  }
+    margin-top: 80px;
+  } */
+  /* Previous .Dashboard-container style */
+
+.Dashboard-container {
+  position: relative;
+  background-color: #ffffff;
+  max-width: auto;
+  margin-top: auto auto;
+  padding: 5px 25px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  border-radius: 8px;
+  min-height: 83vh; 
+  max-height: 83vh;
+  overflow: auto;
+}
