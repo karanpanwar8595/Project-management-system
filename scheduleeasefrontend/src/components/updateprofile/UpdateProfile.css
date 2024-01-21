@@ -1,189 +1,212 @@
-.form-content {
-    background-color: #f4f4f4;
-    padding: 50px;
+.signup-content {
+    background-color: #ffffff;
+    padding: 20px 50px;
     border-radius: 12px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    max-width: 1100px;
-    margin-right: 10px;
-    width: 100%;
+    max-width: 1200px;
+    /* margin-right: 100%; */
+    width: 74vw;
+    overflow: auto;
+    overflow-y: auto;
+    overflow-x: auto;
+    max-height: 78vh;
 }
 
-label {
-    margin-top: 10px;
-    color: #333;
+.signup-input {
+    width: auto;
+    max-width: -webkit-fill-available;
 }
 
-.user-profile-form-container input,
-.user-profile-form-container select,
-.user-profile-form-container button {
-    margin-top: 5px;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    width: 100%;
-}
-
-.user-profile-form-container input[type="checkbox"] {
-    margin-left: 5px;
-}
-
-.name-column {
-    display: flex;
-    gap: 10px;
-}
-
-.beside {
-    display: flex;
-    justify-content: space-between;
-    gap: 10px;
-}
-
-.update-profile-buttton {
-    background-color: #007bff;
-    color: powderblue;
-    cursor: pointer;
-    font-size: 16px;
-}
-
-.update-profile-buttton:hover {
-    background-color: #0056b3;
-}
-
-.update-profile-container {
-    display: flex;
-    height: 100vh;
-}
-
-.profile-content {
-    background-color: #f4f4f4;
-    padding: 50px;
-    border-radius: 12px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    max-width: 800px;
-    margin-right: 20%;
-    width: 100%;
-}
-
-.form-title {
-    text-align: center;
+.signup-title {
     color: #333;
     height: max-content;
 }
 
-label {
+.signup-form {
+    display: flex;
+    flex-direction: column;
+}
+
+.signup-label {
     margin-top: 10px;
     color: #333;
 }
 
-
-/* input,
-select {
-    margin-top: 5px;
-    padding: 10px;
-    border: 1px solid skyblue;
-    border-radius: 4px;
-    width: 100%;
-} */
-
-input[type="checkbox"] {
-    margin-left: 5px;
-}
-
-.name-column {
-    display: flex;
-    gap: 10px;
-}
-
-.beside {
-    display: flex;
-    justify-content: space-between;
-    gap: 10px;
-}
-
-
-/* button {
-    background-color: #007bff;
-    color: #fff;
-    cursor: pointer;
-    font-size: 16px;
-}
-
-button:hover {
-    background-color: #0056b3;
-} */
-
-
-/* .upf-user-profile-form-container {
-    display: flex;
-    height: 100vh;
-}
-
-.upf-form-content {
-    background-color: #f4f4f4;
-    padding: 50px;
-    border-radius: 12px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    max-width: 800px;
-    margin-right: 20%;
-    width: 100%;
-}
-
-.upf-label {
-    margin-top: 10px;
-    color: #333;
-}
-
-.upf-input,
-.upf-select,
-.upf-button {
+.signup-form input,
+.signup-form select,
+.signup-form button {
     margin-top: 5px;
     padding: 10px;
     border: 1px solid #ccc;
+    /*box ka color ander kai*/
     border-radius: 4px;
     width: 100%;
 }
 
-
-
-.upf-name-column {
-    display: flex;
-    gap: 10px;
+.signup-form input[type="checkbox"] {
+    margin-left: 5px;
 }
 
-.upf-beside {
+.signup-name-column {
+    display: flex;
+
+}
+
+.signup-beside {
     display: flex;
     justify-content: space-between;
     gap: 10px;
 }
 
-.upf-update-profile-button {
-    background-color: #007bff;
-    color: powderblue;
+.addresslistitem {
+    padding: 8px;
     cursor: pointer;
-    font-size: 16px;
+    transition: background-color 0.3s;
 }
 
-.upf-update-profile-button:hover {
-    background-color: #0056b3;
+.addresslistitem:hover {
+    background-color: #f0f0f0;
 }
 
-.upf-update-profile-container {
-    display: flex;
-    height: 100vh;
+.listofaddress {
+    position: relative;
+    margin-bottom: 10px;
 }
 
-.upf-profile-content {
-    background-color: #f4f4f4;
-    padding: 50px;
-    border-radius: 12px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    max-width: 800px;
-    margin-right: 20%;
+.addresslist {
+    position: absolute;
+    top: 100%;
+    left: 0;
     width: 100%;
+    background-color: #fff;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+    border: 1px solid #ccc;
+    border-top: none;
+    border-radius: 0 0 8px 8px;
+    display: flex;
+    flex-direction: column;
+    max-height: 120px;
+    overflow-y: auto;
+    z-index: 3;
 }
 
-.upf-form-title {
+.mgr {
+    margin-right: 40px;
+}
+
+#addressitemlist {
+    display: flex;
+    flex-direction: row;
+}
+
+.addressitem {
+    width: 30%;
+    margin-right: 5%;
+    /* padding-right: 5%; */
+
+}
+
+.buttonsignup {
+    border: 1px solid #007bff;
+    width: 100px;
+    padding: 10px 5px;
+    border-radius: 8px;
+    /* font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; */
+    font-weight: 400;
+    align-items: flex-end;
+    margin-left: auto;
+    background-color: #ffffff;
+    color: #007bff;
+    font-weight: 600;
+    letter-spacing: 1px;
+}
+
+.buttonsignup:hover {
+    background-color: #007bff;
+    color: white;
+    font-weight: 600;
+    letter-spacing: 1px;
+}
+
+/*isme button ke  gadbad hai*/
+
+
+
+
+
+
+
+.company-container {
+    min-width: 94%;
+    margin: auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    background-color: white;
+    min-height: 78vh;
+}
+
+.signup-label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: bold;
+}
+
+.signup-input {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 16px;
+    box-sizing: border-box;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.newcompanybutton {
+    background-color: #4caf50;
+    color: white;
+    padding: 10px 15px;
     text-align: center;
-    color: #333;
-    height: max-content;
-} */
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.newcompanybutton:hover {
+    background-color: #45a049;
+}
+
+
+.error-message {
+    color: rgb(246, 0, 0);
+    padding-right: 20px;
+}
+
+
+.required_tag {
+    color: rgba(255, 0, 0, 0.441);
+    font-size: x-small;
+    margin-bottom: 10px;
+
+}
+
+.error-box {
+    color: red;
+    position: fixed;
+    top: 10;
+    left: 50%;
+    transform: translateX(-50%);
+    min-width: 70%;
+    background-color: #f5f3f3;
+    padding: 20px 0px;
+    text-align: center;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-left: 100px;
+    z-index: 20;
+
+}

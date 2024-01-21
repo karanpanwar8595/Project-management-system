@@ -26,36 +26,101 @@ class Profile(models.Model):
             'role': self.role,
             'user_status': self.user_status,
         }
+    def project_to_dict(self):
+        return {
+            'email': self.email,
+            'name':self.fname+self.lname,
+            'gst_no': self.gst_no.to_dict() if self.gst_no else None,
+        }
     
     def to_dict(self):
         return {
             'email': self.email,
-            'password': self.password,
             'photo': self.photo,
+            'name':self.fname+" "+self.lname,
             'fname': self.fname,
             'mname': self.mname,
             'lname': self.lname,
             'role': self.role,
             'gender': self.gender,
             'dob': str(self.dob),  # Convert DateField to string representation
-            'city': self.city.to_dict() if self.city else None,  # Assuming City model has a to_dict method
+            'city': self.city.profile_to_dict() if self.city else None,  # Assuming City model has a to_dict method
             'user_status': self.user_status,
             'profile_status': self.profile_status,
-            'gst_no': self.gst_no.to_dict() if self.gst_no else None,  # Assuming CompanyDetails model has a to_dict method
+            'gst_no': self.gst_no.to_dict() if self.gst_no else None,
+        }
+    
+    def client_to_dict(self):
+        return{
+            'email': self.email,
+            'name': self.fname+self.mname+self.lname,
         }
 
 class Project(models.Model):
     class Meta:
         db_table = 'Project'
-    project_id = models.IntegerField(primary_key=True)
+    project_id = models.AutoField(primary_key=True)
     project_name = models.CharField(max_length=20)
     start_date = models.DateField()
     deadline = models.DateField()
     project_des = models.CharField(max_length=1000, null=True)
+    budget = models.DecimalField(max_digits=10, decimal_places=2, null=True)
     client = models.ForeignKey(Profile, on_delete=models.CASCADE)
+    
 
+
+    def to_dict(self):
+        return {
+            'project_id': self.project_id,
+            'project_name': self.project_name,
+            'start_date': str(self.start_date),
+            'deadline': str(self.deadline),
+            'project_des': self.project_des,
+            'budget': float(self.budget) if self.budget is not None else None,
+            'client': self.client.to_dict() if self.client else None,
+            }
+    
+    def to_projectuserin_dict(self):
+        return {
+            'id': self.project_id,
+            'name': self.project_name,
+            
+            }
     def _str_(self):
         return self.project_name
+    
+    def to_projectmanager_dict(self):
+        return {
+            'id': self.project_id,
+            'name': self.project_name,
+            'startDate': self.start_date,
+            'dueDate': self.deadline,
+            'projectDescription': self.project_des,
+            'budget': float(self.budget) if self.budget is not None else None,
+            'client': self.client.project_to_dict() if self.client is not None else None,
+        }
+    
+    def to_projectadmin_dict(self):
+        return {
+            'id': self.project_id,
+            'name': self.project_name,
+            'startDate': self.start_date,
+            'dueDate': self.deadline,
+            'projectDescription': self.project_des,
+            'budget': float(self.budget) if self.budget is not None else None,
+            'client': self.client.project_to_dict() if self.client is not None else None,
+        }
+    
+    def to_projectteam_dict(self):
+        return {
+            'id': self.project_id,
+            'name': self.project_name,
+            'startDate': self.start_date,
+            'dueDate': self.deadline,
+            'projectDescription': self.project_des,
+            'budget': float(self.budget) if self.budget is not None else None,
+            'client': self.client.project_to_dict() if self.client is not None else None,
+            }
 
 class ProjectMember(models.Model):
     class Meta:
@@ -65,6 +130,36 @@ class ProjectMember(models.Model):
     role = models.SmallIntegerField()
     joined_on = models.DateField()
     removed_on = models.DateField(null=True)
+
+    def project_detail_team_to_dict(self):
+        return {
+             
+            'email': self.email.to_dict(),  
+            
+            }
+    def to_dict(self):
+        return {
+            'project': self.project.to_dict(),  
+            'email': self.email.to_dict(),  
+            'role': self.role,
+            'joined_on': str(self.joined_on),
+            'removed_on': str(self.removed_on) if self.removed_on else None,
+        }
+    def to_projectuserin_dict(self):
+        return {
+            'projects': self.project.to_projectuserin_dict(), 
+            'role': self.role,
+            
+        }
+    def to_projectmember_dict(self):
+        return{
+            'member': self.email.to_dict(),
+        }
+    def to_project_dict(self):
+        return{
+            'project':self.project,
+        }
+
 
 class Task(models.Model):
     class Meta:
@@ -158,6 +253,13 @@ class State(models.Model):
             'id':self.state_id,
             'name':self.state_name,
         }
+    def profile_to_dict(self):
+        return{
+            'id':self.state_id,
+            'name':self.state_name,
+            'country_id':self.country.to_dict(),
+
+        }
 
 class City(models.Model):
     class Meta:
@@ -170,12 +272,31 @@ class City(models.Model):
         return{
             'id':self.city_id,
             'name':self.city_name,
+
+        }
+    def profile_to_dict(self):
+        return{
+            'id':self.city_id,
+            'name':self.city_name,
+            'state_id':self.state.profile_to_dict(),
+
+            
         }
 
 class CompanyDetails(models.Model):
     class Meta:
         db_table = 'CompanyDetails'
-    gst_no = models.IntegerField(primary_key=True)
+    gst_no = models.BigIntegerField(primary_key=True)
     company_name = models.CharField(max_length=50)
     address = models.CharField(max_length=100)
     phone = models.CharField(max_length=10)
+
+    def to_dict(self):
+        return {
+            'gst_no': self.gst_no,
+            'name': self.company_name,
+            'address': self.address,
+            'phone': self.phone,
+        }
+
+

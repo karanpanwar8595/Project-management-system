@@ -28,6 +28,12 @@ const Disscussion = () => {
 
   const onClickSendButton = (event) => {
     event.preventDefault();
+    if (inputValueMessageTextBox==''){
+      return ;
+    }
+    if (activereciveruser.length === 0) {
+      return ;
+    }
     // ... do something with inputValue
     // var inputValueMessageTextBoxStatic = inputValueMessageTextBox
     axios.post('http://127.0.0.1:8000/api/messagesendertoreciver/', { sender: 'karan', reciver: activereciveruser.email, textmessage: inputValueMessageTextBox }).then((response) => {

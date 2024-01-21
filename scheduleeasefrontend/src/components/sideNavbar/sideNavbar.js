@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState ,useEffect} from 'react';
 import './SideNavbar.css'; // Import CSS file for styling
 import { Link } from 'react-router-dom';
 import logo from './logo.png';
@@ -10,7 +10,12 @@ import { faChevronUp, faChevronDown } from '@fortawesome/free-solid-svg-icons';
 const SideNavbar = () => {
   const [activeLink, setActiveLink] = useState('');  // Set initial active link
   const [taskIsOpen, setTaskIsOpen] = useState(false);
+  const [role,setRole] =useState(""); 
 
+
+  useEffect(() => {
+    setRole(JSON.parse(sessionStorage.getItem('loginData')).profile_data.role);  // Call the async function immediately
+  }, []);
   const handleLinkClick = (path) => {
     setActiveLink(path);
   };
@@ -20,7 +25,6 @@ const SideNavbar = () => {
   };
 
 
-  const role = JSON.parse(sessionStorage.getItem('loginData')).profile_data.role;
   if (role === 0) { //for admin
     return (
       <div className="side-navbar">
@@ -49,6 +53,7 @@ const SideNavbar = () => {
                 {/* Dropdown content goes here */}
                 <Link to="/registration" onClick={() => handleLinkClick('/Registration')}><div className={`dropdown sidenavitem ${activeLink === '/Registration' ? 'active' : ''}`}>Registration</div></Link>
                 <Link to="/blockuser" onClick={() => handleLinkClick('/blockuser')}><div className={`dropdown sidenavitem ${activeLink === '/blockuser' ? 'active' : ''}`}>Blockuser</div></Link>
+                <Link to="/viewcompany" onClick={() => handleLinkClick('/viewcompany')}><div className={`dropdown sidenavitem ${activeLink === '/viewcompany' ? 'active' : ''}`}>Add Company</div></Link>
 
               </div>
 
@@ -95,8 +100,10 @@ const SideNavbar = () => {
 
               <div className="task-dropdown-content">
                 {/* Dropdown content goes here */}
-                <Link to="/tasks" onClick={() => handleLinkClick('/tasks/me')}><div className={`dropdown sidenavitem ${activeLink === '/tasks/me' ? 'active' : ''}`}>Assign to me</div></Link>
-                <Link to="/tasks" onClick={() => handleLinkClick('/tasks/other')}><div className={`dropdown sidenavitem ${activeLink === '/tasks/other' ? 'active' : ''}`}>Assign to Other</div></Link>
+                <Link to="/tasktome" onClick={() => handleLinkClick('/tasks/me')}><div className={`dropdown sidenavitem ${activeLink === '/tasks/me' ? 'active' : ''}`}>Assign to me</div></Link>
+                <Link to="/taskbyme" onClick={() => handleLinkClick('/tasks/other')}><div className={`dropdown sidenavitem ${activeLink === '/tasks/other' ? 'active' : ''}`}>Assign to Other</div></Link>
+
+                
               </div>
 
             )}
@@ -108,6 +115,7 @@ const SideNavbar = () => {
     );
   }
   else if (role === 2) {//for teammember
+    return(
     <div className="side-navbar">
       <div href="#" className="navbar-logo">
         <img src={logo} alt="Logo" />
@@ -127,12 +135,12 @@ const SideNavbar = () => {
 
         <Link to="/Notification" onClick={() => handleLinkClick('/Notification')}><div className={`sidenavitem ${activeLink === '/Notification' ? 'active' : ''}`}>Notification</div></Link>
 
-        <Link to="/tasks" onClick={() => handleLinkClick('/tasks/me')}><div className={`dropdown sidenavitem ${activeLink === '/tasks/me' ? 'active' : ''}`}>Tasks</div></Link>
+        <Link to="/tasktome" onClick={() => handleLinkClick('/tasks/me')}><div className={`sidenavitem ${activeLink === '/tasks/me' ? 'active' : ''}`}>Tasks</div></Link>
 
 
       </div>
 
-    </div>
+    </div>)
   }
   else if (role === 3) {//for manager
     return (
