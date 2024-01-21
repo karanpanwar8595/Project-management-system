@@ -22,7 +22,9 @@
     background-color: #fff;
     border: 1px solid #dee2e6;
 }
-
+.listelement:hover{
+  background-color: rgb(206, 206, 206);
+}
 .nametext{
     font-size: 15px;
 }

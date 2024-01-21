@@ -1,12 +1,15 @@
 import React, { useEffect, useState } from 'react';
-import './SignupForm.css'; 
+import './SignupForm.css';
 import axios from 'axios';
 
 
 const SignupForm = () => {
   const [showPassword, setShowPassword] = useState(false);
-  const [email, setEmail] = useState('');
   const [isValidEmail, setIsValidEmail] = useState(true);
+  const [isValidDob, setIsValidDob] = useState(false);
+  const [errors, setErrors] = useState(false);
+
+  const [email, setEmail] = useState('');
   const [selectedRole, setSelectedRole] = useState('');
   const [firstName, setFirstName] = useState('');
   const [middleName, setMiddleName] = useState('');
@@ -14,7 +17,18 @@ const SignupForm = () => {
   const [gender, setGender] = useState('');
   const [address, setAddress] = useState('');
   const [dob, setDOB] = useState('');
+  const [message, setMessage] = useState('');
+  const [gstno, setGstNo] = useState('');
 
+  // const [address, setAddress] = useState('');
+  const handleGstNoClick = (gstno) => {
+    setGstNo(gstno);
+  }
+    ;
+  // Event handler for updating the address state
+  const handleAddressChange = (e) => {
+    setAddress(e.target.value);
+  };
 
 
 
@@ -37,6 +51,13 @@ const SignupForm = () => {
   const [cityListItemsconst, setCityListItemsconst] = useState(["No item", "hello"]);
   const [cityisListVisible, setCityListVisible] = useState(false);
   // const [cityValue, setCityValue] = useState('');
+  const [GstValue, setGstValue] = useState('');
+  const [gstListItems, setGstListItems] = useState(["No item", "hello"]);
+  const [gstnumberListItemsconst, setGstListItemsconst] = useState(["No item", "hello"]);
+  const [gstisListVisible, setGstListVisible] = useState(false);
+  // const [cityValue, setCityValue] = useState('');
+
+
 
   // Country function
   const handleCountryChange = (e) => {
@@ -170,15 +191,72 @@ const SignupForm = () => {
 
   };
 
+
+
+  // gst
+
+
+  const handleGstChange = (e) => {
+    const value = e.target.value;
+    setGstValue(value);
+    // Filter the list based on the input value
+    const filteredItems = gstnumberListItemsconst.filter((gstnumber) =>
+      gstnumber.name.toLowerCase().includes(value.toLowerCase())
+    );
+    // Update the list with the filtered items
+    setCityListItems(filteredItems);
+  };
+
+  const handleGstItemClick = (itemName) => {
+    setGstValue(itemName);
+  };
+  const gstfetchData = async () => {
+    // console.log(state_id)
+    try {
+      // const selstate_id = { state_id: state_id }
+      const response = await axios.post('http://127.0.0.1:8000/api/allcompanydata/');
+      if (response.data.value) {
+        console.log(response.data.data);
+        setGstListItemsconst(response.data.data);
+        setGstListItems(response.data.data);
+      } else {
+        console.log('Country loading failed');
+      }
+    } catch (error) {
+      console.error('Error during login:', error);
+    }
+  };
+  const handleGstInputFocus = () => {
+    setGstListVisible(true);
+
+    gstfetchData();
+
+
+  };
+
+  const handleGstInputBlur = () => {
+    // Adding a slight delay to prevent the list from disappearing before the click on list item is registered
+    setTimeout(() => setGstListVisible(false), 200);
+    console.log("blur");
+
+  };
+
+
+
+
+
   const submitButton = async () => {
+
+
     try {
       var cityId = 0;
       var role_id = 0;
-var gender_id=0;
+      var gender_id = 0;
       for (const cityDetail in cityListItemsconst) {
 
         if (cityListItemsconst[cityDetail].name === cityValue) {
           // Assuming fetchData is a function that fetches data based on the country ID
+          console.log(cityValue);
           cityId = cityListItemsconst[cityDetail].id;
 
         }
@@ -206,7 +284,18 @@ var gender_id=0;
           break;
 
       }
-      const regdata = { inputemail: email, firstname: firstName, middlename: middleName, lastname: lastName, userrole: role_id, usergender: gender_id, dateofbirth: dob, city: cityId }
+      const regdata = {
+        inputemail: email,
+        firstname: firstName,
+        middlename: middleName,
+        lastname: lastName,
+        address: address,
+        userrole: role_id,
+        usergender: gender_id,
+        dateofbirth: dob,
+        gst_no: gstno,
+        city: cityId
+      }
       const response = await axios.post('http://127.0.0.1:8000/api/registration/', regdata);
       if (response.data.value) {
         setEmail('');
@@ -240,9 +329,16 @@ var gender_id=0;
 
 
 
-  const handleSubmit = () => {
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (email == '' && firstName == "" && gender == "" && selectedRole == '' && dob == '' && address == '' && countryValue == '' && stateValue == '' && cityValue == '') {
+      setMessage("Please enter all the required fields")
+      setErrors(true)
+      return
+
+    }
     if (!isValidEmail || !selectedRole || !firstName || !gender) {
-      // alert('Please fill out all required fields correctly.');
+
       return;
     }
     submitButton();
@@ -273,8 +369,34 @@ var gender_id=0;
     <div className="signup-content">
       <div className="signup-title">
         <form className="signup-form">
+          {errors && (
+            <div className='error-box' style={{ color: "red" }}>
+              <div className='error-message' style={{ paddingLeft: '20px' }}>{message}</div>
+              <div className='closeButton' style={{ paddingRight: '20px' }}
+                onClick={() => setErrors(false)}>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  width="20"
+                  height="20"
+                  style={{ cursor: 'pointer' }}
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    d="M6 18L18 6M6 6l12 12"
+                  />
+                </svg>
+              </div>
+            </div>
+          )}
+
+
           <label htmlFor="email" className="signup-label">
-            Email:
+            Email: <span className='required_tag'>*required</span>
           </label>
           <input
             type="email"
@@ -283,16 +405,17 @@ var gender_id=0;
             placeholder="Email"
             value={email}
             onChange={handleEmailChange}
-            required
+
           />
           {!isValidEmail && <p className="error-message">Please enter a valid email address</p>}
-   
-          Name:
+
+          <span>Name:</span><span className='required_tag'>*required</span>
           <div className="signup-name-column">
 
             <label htmlFor="firstName" className="signup-label"></label>
-            <input value={firstName} type="text" id="firstName" className="signup-input mgr" placeholder="First name" onChange={(e) => setFirstName(e.target.value)} 
-            required/>
+
+            <input value={firstName} type="text" id="firstName" className="signup-input mgr" placeholder="First name" onChange={(e) => setFirstName(e.target.value)}
+            />
 
             <label htmlFor="middleName" className="signup-label"></label>
             <input value={middleName} type="text" id="middleName" className="signup-input mgr" placeholder="Middle name" onChange={(e) => setMiddleName(e.target.value)} />
@@ -306,15 +429,16 @@ var gender_id=0;
           <input type="file" id="image" className="signup-input" placeholder="photo" />
 
 
+
           <div className="signup-beside">
             <div style={{ width: '50%' }}>
 
 
               <label htmlFor="gender" className="signup-label">
-                Gender:
+                Gender:<span className='required_tag'>*required</span>
               </label>
               <select value={gender} id="gender" className="signup-select" onChange={(e) => setGender(e.target.value)}
-              required>
+              >
                 <option>choose gender</option>
                 <option>Male</option>
                 <option>Female</option>
@@ -324,14 +448,14 @@ var gender_id=0;
             <div style={{ width: '50%' }}>
 
               <label htmlFor="role" className="signup-label">
-                Role:
+                Role:<span className='required_tag'>*required</span>
               </label>
               <select
                 id="role"
                 className="signup-select"
                 onChange={(e) => setSelectedRole(e.target.value)}
                 value={selectedRole}
-                required
+
               >
                 <option value="">Choose role</option>
                 <option value="Admin">Admin</option>
@@ -343,15 +467,27 @@ var gender_id=0;
           </div>
 
           <label htmlFor="dob" className="signup-label">
-            Date of Birth:
+            Date of Birth:<span className='required_tag'>*required</span>
           </label>
           <input value={dob} type="date" id="dob" className="signup-input" onChange={(e) => setDOB(e.target.value)}
-          required />
+          />
+
+          <label htmlFor="addressline" className="signup-label">
+            Address: <span className='required_tag'>*required</span>
+          </label>
+          <input
+            type="addressline"
+            id="addressline"
+            className="signup-input"
+            placeholder="Address"
+            value={address}
+            onChange={handleAddressChange}
+          />
           <div id='addressitemlist'>
             <div className='addressitem'>
 
               <label className="signup-label">
-                Country:
+                Country:<span className='required_tag'>*required</span>
               </label>
               <div className='listofaddress'>
                 <input
@@ -362,7 +498,6 @@ var gender_id=0;
                   onBlur={handleCountryInputBlur}
                   placeholder="Enter Country"
                   className='signup-input'
-                  required
                 />
 
                 {countryisListVisible && (
@@ -383,7 +518,7 @@ var gender_id=0;
             </div>
             <div className='addressitem'>
               <label htmlFor="" className="signup-label">
-                State
+                State:<span className='required_tag'>*required</span>
               </label>
               <div className='listofaddress'>
                 <input
@@ -394,7 +529,7 @@ var gender_id=0;
                   onBlur={handleStateInputBlur}
                   placeholder="Enter State"
                   className='signup-input'
-                  required
+
                 />
 
                 {stateisListVisible && (
@@ -416,7 +551,7 @@ var gender_id=0;
 
             <div className='addressitem'>
               <label htmlFor="city" className="signup-label">
-                City
+                City:<span className='required_tag'>*required</span>
               </label>
               <div className='listofaddress'>
                 <input
@@ -427,7 +562,7 @@ var gender_id=0;
                   onBlur={handleCityInputBlur}
                   placeholder="Enter city"
                   className='signup-input'
-                  required
+
                 />
 
                 {cityisListVisible && (
@@ -448,72 +583,64 @@ var gender_id=0;
             </div>
           </div>
 
-          {selectedRole === 'Client' && (
+          {selectedRole === 'Client' ? (
             <>
-              <label className="signup-label">
-                <b> Company information </b>{' '}
-              </label>
-              <label htmlFor="companyName" className="signup-label">
-                Company Name:
-              </label>
-              <input type="text" id="companyName" className="signup-input" placeholder="Company name" />
+              <div className='addressitem'>
 
-              <label htmlFor="gstNumber" className="signup-label">
-                GST Number:
-              </label>
-              <input type="text" id="gstNumber" className="signup-input" placeholder="Gst number" />
+                <label className="signup-label">
+                  Gst Number:<span className='required_tag'>*required</span>
+                </label>
+                <div className='listofaddress'>
+                  <input
+                    type="text"
+                    value={GstValue}
+                    onChange={handleGstChange}
+                    onFocus={handleGstInputFocus}
+                    onBlur={handleGstInputBlur}
+                    placeholder="Enter Gst Number"
+                    className='signup-input'
+                  />
 
-              <label htmlFor="companyAddress" className="signup-label">
-                Company Address:
-              </label>
-              <input
-                type="text"
-                id="companyAddress"
-                className="signup-input"
-                placeholder="Company address"
-              />
+                  {gstisListVisible && (
+                    <div className='addresslist'>
+                      {gstListItems.map((gstnumber) => (
+                        <div
+                          className="addresslistitem"
+                          key={gstnumber.gst_no}
+                          onClick={() => {
+                            handleGstItemClick(gstnumber.gst_no + " " + gstnumber.name);
+                            handleGstNoClick(gstnumber.gst_no);
+                          }}
+                        >
+                          {gstnumber.gst_no}   {gstnumber.name}
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                </div>
 
-              <label htmlFor="companyCity" className="signup-label">
-                Company country:
-              </label>
-              <input
-                type="text"
-                id="companyCity"
-                className="signup-input"
-                placeholder="Company country"
-              />
 
-              <label htmlFor="companyState" className="signup-label">
-                Company State:
+              </div>
+            </>
+          ) : (
+            <>
+              {/* Code for non-Client role */}
+              <h3>Certificates</h3>
+              <label htmlFor="image" className="signup-label">
+                HSC Certificate:
               </label>
-              <input
-                type="text"
-                id="companyState"
-                className="signup-input"
-                placeholder="Company state"
-              />
-
-              <label htmlFor="companyCountry" className="signup-label">
-                Company city:
+              <input type="file" id="image" className="signup-input" placeholder="photo" />
+              <label htmlFor="image" className="signup-label">
+                College Degree:
               </label>
-              <input
-                type="text"
-                id="companyCountry"
-                className="signup-input"
-                placeholder="Company city"
-              />
-
-              <label htmlFor="companyPhone" className="signup-label">
-                Company Phone:
+              <input type="file" id="image" className="signup-input" placeholder="photo" />
+              <label htmlFor="image" className="signup-label">
+                Other Certificate:
               </label>
-              <input
-                type="tel"
-                id="companyPhone"
-                className="signup-input"
-                placeholder="Company phone"
-              />
+              <input type="file" id="image" className="signup-input" placeholder="photo" />
             </>
           )}
+
 
           <br />
 

@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import './Tasklist.css'; // Import your custom CSS
 import './Accordion.css';
-import plus from '../Projects/plus.png'
+import plus from './plus.png'
 import { Link } from 'react-router-dom';
 import editicon from './editicon.png';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-import { faPencilAlt } from '@fortawesome/free-solid-svg-icons';
+import { faDownload  } from '@fortawesome/free-solid-svg-icons';
 
 const AccordionItem = ({ task_key, title, content, actstatus, duedate, owner, progress, done_key }) => {
     const [isOpen, setIsOpen] = useState(false);
@@ -37,10 +37,10 @@ const AccordionItem = ({ task_key, title, content, actstatus, duedate, owner, pr
                     {title}
                 </div>
 
-                <div className="accordion-edit-button" onClick={(event) => event.stopPropagation()}>
-                    <Link to="/modifytask" state={{ task_id: { task_key } }}>
-                        <FontAwesomeIcon icon={faPencilAlt} style={{ fontSize: '24px' }}/>
-                    </Link>
+                <div className="accordion-download-button" onClick={(event) => event.stopPropagation()}>
+                  
+                        <FontAwesomeIcon icon={faDownload} style={{ fontSize: '24px' }}/>
+                    
                 </div>
 
                 {/* <div className='accordion-status'>{status}</div> */}
@@ -77,6 +77,7 @@ const Tasklist = () => {
 
                 <div className="task-title-bar">
                     <div className='accordion-header-element'>Task</div>
+                    {/* <div className='accordion-status'></div> */}
                     <div className='accordion-status'></div>
                     <div className='accordion-duedate'>Due Date</div>
                     <div className='accordion-progress'>Manage By</div>
@@ -95,7 +96,7 @@ const Tasklist = () => {
                     ))}
                 </div>
             </div>
-            <Link to="/addtask"><img src={plus} class='plus-symbol' alt='not found' /></Link>
+            {/* <Link to="/addtask"><img src={plus} class='plus-symbol' alt='not found' /></Link> */}
         </div>
     );
 };

@@ -1,5 +1,6 @@
-import React, { useState, useEffect } from 'react'
-import './Dashboard.css'
+// Dashboard.jsx
+import React from 'react';
+import './Dashboard.css';
 
 const Dashboard = () => {
     return (
@@ -12,3 +13,6 @@ const Dashboard = () => {
 }
 
 export default Dashboard;
+
+
+
