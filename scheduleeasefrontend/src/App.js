@@ -29,6 +29,10 @@ import ModifyTask from './components/modifytask/Modifytask';
 import Payment from './components/Payment/Payment';
 import Dashboard from './components/Dashboard/Dashboard';
 import BlockUser from './components/BlockUser/BlockUser';
+import TeamMemberDas from './components/TeamMemberDas/TeamMemberDas';
+import DasNewComp from './components/DasNewComp/DasNewComp';
+
+
 
 function App() {
   const [authenticateddata, setAuthenticateddata] = useState({ 'value': false });
@@ -91,6 +95,8 @@ function App() {
 
             <Navbar />
             <SideNavbar />
+            
+           
 
 
             <div className="container">
@@ -129,7 +135,16 @@ function App() {
                 <Route exact path='dashboard' element={
                   <>
 
-                    < Dashboard />
+                    < DasNewComp />
+
+
+                  </>
+                }>
+                </Route>
+                <Route exact path='newdashboard' element={
+                  <>
+
+                    < TeamMemberDas />
 
 
                   </>

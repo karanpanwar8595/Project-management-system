@@ -1,13 +1,17 @@
-import React, { useState, useEffect } from 'react'
-import './Dashboard.css'
+// Dashboard.jsx
+import React from 'react';
+import './Dashboard.css';
 
 const Dashboard = () => {
-    return(
 
-<div className="Dashboard-container">
-<p>hello</p>
-</div>
 
-);
-}
+  return (
+<>
+</>
+  );
+};
+
 export default Dashboard;
+
+
+

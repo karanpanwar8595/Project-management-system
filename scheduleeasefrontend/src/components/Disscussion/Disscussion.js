@@ -1,6 +1,6 @@
-import "./Disscussion.css"
-import "./Senderbox.css"
-import "./test.css"
+import "./Disscussion.css";
+import "./Senderbox.css";
+import "./test.css";
 
 import axios from 'axios';
 
