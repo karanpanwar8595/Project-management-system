@@ -1,425 +1,660 @@
-import React, { useState } from 'react';
-import './UpdateProfile.css'; // Updated CSS file name
+import React, { useEffect, useState } from 'react';
+import './UpdateProfile.css';
+import axios from 'axios';
 
-const UserProfileForm = () => {
-  const [userEmail, setUserEmail] = useState('bgaa@example.com');
+
+const SignupForm = () => {
+  const [showPassword, setShowPassword] = useState(false);
   const [isValidEmail, setIsValidEmail] = useState(true);
-  const [selectedUserRole, setSelectedUserRole] = useState('Client'); // Set an initial role
+  const [isValidDob, setIsValidDob] = useState(false);
+  const [errors, setErrors] = useState(false);
 
-  const handleEmailChange = (e) => {
-    setUserEmail(e.target.value);
-    // Add your email validation logic if needed
+  const [email, setEmail] = useState('');
+  const [selectedRole, setSelectedRole] = useState('');
+  const [firstName, setFirstName] = useState('');
+  const [middleName, setMiddleName] = useState('');
+  const [lastName, setLastName] = useState('');
+  const [gender, setGender] = useState('');
+  const [address, setAddress] = useState('');
+  const [dob, setDOB] = useState('');
+  const [message, setMessage] = useState('');
+  const [gstno, setGstNo] = useState('');
+
+  // const [address, setAddress] = useState('');
+  const handleGstNoClick = (gstno) => {
+    setGstNo(gstno);
+  }
+    ;
+  // Event handler for updating the address state
+  const handleAddressChange = (e) => {
+    setAddress(e.target.value);
   };
 
-  const handleRoleChange = (e) => {
-    // Do not allow changes to the role field
-    e.preventDefault();
+
+
+
+  // countrydata
+  const [countryValue, setCountryValue] = useState('');
+  const [countryListItems, setCountryListItems] = useState(["No item", "hello"]);
+  const [countryListItemsconst, setCountryListItemsconst] = useState(["No item", "hello"]);
+  const [countryisListVisible, setcountryListVisible] = useState(false);
+
+
+  const [stateValue, setStateValue] = useState('');
+  const [stateListItems, setStateListItems] = useState(["No item", "hello"]);
+  const [stateListItemsconst, setStateListItemsconst] = useState(["No item", "hello"]);
+  const [stateisListVisible, setStateListVisible] = useState(false);
+
+  // const [stateValue, setStateValue] = useState('');
+  const [cityValue, setCityValue] = useState('');
+  const [cityListItems, setCityListItems] = useState(["No item", "hello"]);
+  const [cityListItemsconst, setCityListItemsconst] = useState(["No item", "hello"]);
+  const [cityisListVisible, setCityListVisible] = useState(false);
+  // const [cityValue, setCityValue] = useState('');
+  const [GstValue, setGstValue] = useState('');
+  const [gstListItems, setGstListItems] = useState(["No item", "hello"]);
+  const [gstnumberListItemsconst, setGstListItemsconst] = useState(["No item", "hello"]);
+  const [gstisListVisible, setGstListVisible] = useState(false);
+  // const [cityValue, setCityValue] = useState('');
+
+
+
+  // Country function
+  const handleCountryChange = (e) => {
+    const value = e.target.value;
+    setCountryValue(value);
+    // Filter the list based on the input value
+    const filteredItems = countryListItemsconst.filter((country) =>
+      country.name.toLowerCase().includes(value.toLowerCase())
+    );
+    // Update the list with the filtered items
+    setCountryListItems(filteredItems);
   };
 
-  const handleSubmit = () => {
-    // Your form submission logic goes here
-    // Access form fields using their respective IDs (e.g., document.getElementById('user-email').value)
+  const handleCountryItemClick = (itemName) => {
+    setCountryValue(itemName);
+    setStateValue("");
+    setCityValue("");
 
-    // Assuming the form submission is successful
-    const isUpdateSuccessful = true;
+  };
 
-    if (isUpdateSuccessful) {
-      const confirmation = window.confirm("Update information successfully!");
+  const handleCountryInputFocus = () => {
+    setcountryListVisible(true);
+  };
+  const statefetchData = async (country_id) => {
+    console.log(country_id)
+    try {
+      const selcontry_id = { country_id: country_id }
+      const response = await axios.post('http://127.0.0.1:8000/api/state/', selcontry_id);
+      if (response.data.value) {
+        setStateListItemsconst(response.data.data);
+        setStateListItems(response.data.data);
+      } else {
+        console.log('Country loading failed');
+      }
+    } catch (error) {
+      console.error('Error during login:', error);
+    }
+  };
+  const handleCountryInputBlur = () => {
+    // Adding a slight delay to prevent the list from disappearing before the click on list item is registered
+    setTimeout(() => setcountryListVisible(false), 200);
 
-      if (confirmation) {
-        // Perform any additional action if the user clicks OK in the confirmation prompt
-        // For example, redirect to another page or perform other actions
+  };
+
+
+  // State function 
+
+  const handleStateChange = (e) => {
+    const value = e.target.value;
+    setStateValue(value);
+    // Filter the list based on the input value
+    const filteredItems = stateListItemsconst.filter((country) =>
+      country.name.toLowerCase().includes(value.toLowerCase())
+    );
+    // Update the list with the filtered items
+    setStateListItems(filteredItems);
+  };
+
+  const handleStateItemClick = (itemName) => {
+    setStateValue(itemName);
+
+  };
+
+  const handleStateInputFocus = () => {
+    setStateListVisible(true);
+    for (const countryDetail in countryListItemsconst) {
+
+      if (countryListItemsconst[countryDetail].name === countryValue) {
+        // Assuming fetchData is a function that fetches data based on the country ID
+        console.log(countryListItemsconst[countryDetail].id);
+        statefetchData(countryListItemsconst[countryDetail].id);
+
       }
     }
   };
-  
-  return (
-    <div className="user-profile-form-container">
-      <div className="form-content">
-        <form>
-          <h2>Update Profile </h2>
 
-          <label  htmlFor="user-email">Email:</label>
+  const handleStateInputBlur = () => {
+    // Adding a slight delay to prevent the list from disappearing before the click on list item is registered
+    setTimeout(() => setStateListVisible(false), 200);
+
+  };
+
+  // city function 
+
+  const handleCityChange = (e) => {
+    const value = e.target.value;
+    setCityValue(value);
+    // Filter the list based on the input value
+    const filteredItems = cityListItemsconst.filter((city) =>
+      city.name.toLowerCase().includes(value.toLowerCase())
+    );
+    // Update the list with the filtered items
+    setCityListItems(filteredItems);
+  };
+
+  const handleCityItemClick = (itemName) => {
+    setCityValue(itemName);
+  };
+  const cityfetchData = async (state_id) => {
+    console.log(state_id)
+    try {
+      const selstate_id = { state_id: state_id }
+      const response = await axios.post('http://127.0.0.1:8000/api/city/', selstate_id);
+      if (response.data.value) {
+        setCityListItemsconst(response.data.data);
+        setCityListItems(response.data.data);
+      } else {
+        console.log('Country loading failed');
+      }
+    } catch (error) {
+      console.error('Error during login:', error);
+    }
+  };
+  const handleCityInputFocus = () => {
+    setCityListVisible(true);
+    for (const stateDetail in stateListItemsconst) {
+
+      if (stateListItemsconst[stateDetail].name === stateValue) {
+        // Assuming fetchData is a function that fetches data based on the country ID
+        console.log(stateListItemsconst[stateDetail].id);
+        cityfetchData(stateListItemsconst[stateDetail].id);
+
+      }
+    }
+  };
+
+  const handleCityInputBlur = () => {
+    // Adding a slight delay to prevent the list from disappearing before the click on list item is registered
+    setTimeout(() => setCityListVisible(false), 200);
+    console.log("blur");
+
+  };
+
+
+
+  // gst
+
+
+  const handleGstChange = (e) => {
+    const value = e.target.value;
+    setGstValue(value);
+    // Filter the list based on the input value
+    const filteredItems = gstnumberListItemsconst.filter((gstnumber) =>
+      gstnumber.name.toLowerCase().includes(value.toLowerCase())
+    );
+    // Update the list with the filtered items
+    setCityListItems(filteredItems);
+  };
+
+  const handleGstItemClick = (itemName) => {
+    setGstValue(itemName);
+  };
+  const gstfetchData = async () => {
+    // console.log(state_id)
+    try {
+      // const selstate_id = { state_id: state_id }
+      const response = await axios.post('http://127.0.0.1:8000/api/allcompanydata/');
+      if (response.data.value) {
+        console.log(response.data.data);
+        setGstListItemsconst(response.data.data);
+        setGstListItems(response.data.data);
+      } else {
+        console.log('Country loading failed');
+      }
+    } catch (error) {
+      console.error('Error during login:', error);
+    }
+  };
+  const handleGstInputFocus = () => {
+    setGstListVisible(true);
+
+    gstfetchData();
+
+
+  };
+
+  const handleGstInputBlur = () => {
+    // Adding a slight delay to prevent the list from disappearing before the click on list item is registered
+    setTimeout(() => setGstListVisible(false), 200);
+    console.log("blur");
+
+  };
+
+
+
+
+
+  const submitButton = async () => {
+
+
+    try {
+      var cityId = 0;
+      var role_id = 0;
+      var gender_id = 0;
+      for (const cityDetail in cityListItemsconst) {
+
+        if (cityListItemsconst[cityDetail].name === cityValue) {
+          // Assuming fetchData is a function that fetches data based on the country ID
+          console.log(cityValue);
+          cityId = cityListItemsconst[cityDetail].id;
+
+        }
+      }
+      switch (selectedRole) {
+        case "Admin":
+          role_id = 0
+          break;
+        case "Manager":
+          role_id = 1
+          break;
+        case "Team member":
+          role_id = 2
+          break;
+        case "Client":
+          role_id = 3
+          break;
+      }
+      switch (gender) {
+        case "Male":
+          gender_id = 0
+          break;
+        case "Female":
+          gender_id = 1
+          break;
+
+      }
+      const regdata = {
+        inputemail: email,
+        firstname: firstName,
+        middlename: middleName,
+        lastname: lastName,
+        address: address,
+        userrole: role_id,
+        usergender: gender_id,
+        dateofbirth: dob,
+        gst_no: gstno,
+        city: cityId
+      }
+      const response = await axios.post('http://127.0.0.1:8000/api/registration/', regdata);
+      if (response.data.value) {
+        setEmail('');
+        setFirstName('');
+        setMiddleName('');
+        setLastName("");
+        setGender("");
+        setCountryValue("");
+        setStateValue("");
+        setCityValue("");
+        setSelectedRole("");
+        setDOB("");
+        alert('Registration is done for ' + firstName + " " + middleName + " " + lastName);
+
+      } else {
+        console.log('registration failed');
+      }
+    } catch (error) {
+      console.error('Error during registration:', error);
+    }
+  }
+
+
+  const handleEmailChange = (e) => {
+    const inputValue = e.target.value;
+    setEmail(inputValue);
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    setIsValidEmail(emailRegex.test(inputValue));
+  };
+
+
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (email == '' && firstName == "" && gender == "" && selectedRole == '' && dob == '' && address == '' && countryValue == '' && stateValue == '' && cityValue == '') {
+      setMessage("Please enter all the required fields")
+      setErrors(true)
+      return
+
+    }
+    if (!isValidEmail || !selectedRole || !firstName || !gender) {
+
+      return;
+    }
+    submitButton();
+
+    console.log('Form submitted successfully!');
+  };
+
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.post('http://127.0.0.1:8000/api/country/');
+        if (response.data.value) {
+          setCountryListItemsconst(response.data.data);
+          setCountryListItems(response.data.data);
+        } else {
+          console.log('Country loading failed');
+        }
+      } catch (error) {
+        console.error('Error during login:', error);
+      }
+    };
+    fetchData();  // Call the async function immediately
+  }, []);
+
+
+  return (
+    <div className="signup-content">
+      <div className="signup-title">
+        <form className="signup-form">
+          {errors && (
+            <div className='error-box' style={{ color: "red" }}>
+              <div className='error-message' style={{ paddingLeft: '20px' }}>{message}</div>
+              <div className='closeButton' style={{ paddingRight: '20px' }}
+                onClick={() => setErrors(false)}>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  width="20"
+                  height="20"
+                  style={{ cursor: 'pointer' }}
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    d="M6 18L18 6M6 6l12 12"
+                  />
+                </svg>
+              </div>
+            </div>
+          )}
+
+
+          <label htmlFor="email" className="signup-label">
+            Email: <span className='required_tag'>*required</span>
+          </label>
           <input
             type="email"
-            id="user-email"
+            id="email"
+            className="signup-input"
             placeholder="Email"
-            value={userEmail}
+            value={email}
             onChange={handleEmailChange}
-            readOnly // Make the email field read-only
+
           />
           {!isValidEmail && <p className="error-message">Please enter a valid email address</p>}
 
-          <label htmlFor="image">Photo:</label>
-          <input type="file" id="image" placeholder="Photo" />
-          <br />
+          <span>Name:</span><span className='required_tag'>*required</span>
+          <div className="signup-name-column">
 
-          <div className="name-column">
-            <label htmlFor="firstName">First Name:</label>
-            <input type="text" id="firstName" value="baburao" readOnly />
+            <label htmlFor="firstName" className="signup-label"></label>
 
-            <label htmlFor="middleName">Middle Name:</label>
-            <input type="text" id="middleName" value="ganpatrao" readOnly />
+            <input value={firstName} type="text" id="firstName" className="signup-input mgr" placeholder="First name" onChange={(e) => setFirstName(e.target.value)}
+            />
 
-            <label htmlFor="lastName">Last Name:</label>
-            <input type="text" id="lastName" value="aapte" readOnly />
+            <label htmlFor="middleName" className="signup-label"></label>
+            <input value={middleName} type="text" id="middleName" className="signup-input mgr" placeholder="Middle name" onChange={(e) => setMiddleName(e.target.value)} />
+
+            <label htmlFor="lastName" className="signup-label"></label>
+            <input value={lastName} type="text" id="lastName" className="signup-input " placeholder="Last name" onChange={(e) => setLastName(e.target.value)} />
           </div>
+          <label htmlFor="image" className="signup-label">
+            Photo:
+          </label>
+          <input type="file" id="image" className="signup-input" placeholder="photo" />
 
-          <div className="beside">
-            <label htmlFor="gender">Gender:</label>
-            <select id="gender">
-              <option>Choose gender</option>
-              <option>Male</option>
-              <option>Female</option>
-              <option>Other</option>
-            </select>
 
-            <label htmlFor="user-role">Role:</label>
-            <select id="user-role" onChange={handleRoleChange} value={selectedUserRole}>
-              <option value="">Choose role</option>
-              <option value="Admin">Admin</option>
-              <option value="Team member">Team member</option>
-              <option value="Manager">Manager</option>
-              <option value="Client">Client</option>
-            </select>
-          </div>
 
-          <label htmlFor="dob">Date of Birth:</label>
-          <input type="date" id="dob" />
+          <div className="signup-beside">
+            <div style={{ width: '50%' }}>
 
-          <label htmlFor="cityId">Country:</label>
-          <input type="text" id="cityId" placeholder="Enter your country" />
 
-          <label htmlFor="userStatus">State:</label>
-          <input type="text" id="userStatus" placeholder="Enter your state" />
-
-          <label htmlFor="profileStatus">City:</label>
-          <input type="text" id="profileStatus" placeholder="Enter your city" />
-
-          {selectedUserRole === 'Client' && (
-            <>
-              <label>
-                <b>Company information</b>
+              <label htmlFor="gender" className="signup-label">
+                Gender:<span className='required_tag'>*required</span>
               </label>
-              <label htmlFor="companyName">Company Name:</label>
-              <input type="text" id="companyName" placeholder="Company name" />
+              <select value={gender} id="gender" className="signup-select" onChange={(e) => setGender(e.target.value)}
+              >
+                <option>choose gender</option>
+                <option>Male</option>
+                <option>Female</option>
+                <option>Other</option>
+              </select>
+            </div>
+            <div style={{ width: '50%' }}>
 
-              <label htmlFor="gstNumber">GST Number:</label>
-              <input type="text" id="gstNumber" placeholder="GST number" />
+              <label htmlFor="role" className="signup-label">
+                Role:<span className='required_tag'>*required</span>
+              </label>
+              <select
+                id="role"
+                className="signup-select"
+                onChange={(e) => setSelectedRole(e.target.value)}
+                value={selectedRole}
 
-              <label htmlFor="companyAddress">Company Address:</label>
-              <input type="text" id="companyAddress" placeholder="Company address" />
+              >
+                <option value="">Choose role</option>
+                <option value="Admin">Admin</option>
+                <option value="Team member">Team member</option>
+                <option value="Manager">Manager</option>
+                <option value="Client">Client</option>
+              </select>
+            </div>
+          </div>
 
-              <label htmlFor="companyCity">Company Country:</label>
-              <input type="text" id="companyCity" placeholder="Company country" />
+          <label htmlFor="dob" className="signup-label">
+            Date of Birth:<span className='required_tag'>*required</span>
+          </label>
+          <input value={dob} type="date" id="dob" className="signup-input" onChange={(e) => setDOB(e.target.value)}
+          />
 
-              <label htmlFor="companyState">Company State:</label>
-              <input type="text" id="companyState" placeholder="Company state" />
+          <label htmlFor="addressline" className="signup-label">
+            Address: <span className='required_tag'>*required</span>
+          </label>
+          <input
+            type="addressline"
+            id="addressline"
+            className="signup-input"
+            placeholder="Address"
+            value={address}
+            onChange={handleAddressChange}
+          />
+          <div id='addressitemlist'>
+            <div className='addressitem'>
 
-              <label htmlFor="companyCountry">Company City:</label>
-              <input type="text" id="companyCountry" placeholder="Company city" />
+              <label className="signup-label">
+                Country:<span className='required_tag'>*required</span>
+              </label>
+              <div className='listofaddress'>
+                <input
+                  type="text"
+                  value={countryValue}
+                  onChange={handleCountryChange}
+                  onFocus={handleCountryInputFocus}
+                  onBlur={handleCountryInputBlur}
+                  placeholder="Enter Country"
+                  className='signup-input'
+                />
 
-              <label htmlFor="companyPhone">Company Phone:</label>
-              <input type="tel" id="companyPhone" placeholder="Company phone" />
+                {countryisListVisible && (
+                  <div className='addresslist'>
+                    {countryListItems.map((country) => (
+                      <div
+                        className="addresslistitem"
+                        key={country.id}
+                        onClick={() => handleCountryItemClick(country.name)}
+                      >
+                        {country.name}
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </div>
+
+            </div>
+            <div className='addressitem'>
+              <label htmlFor="" className="signup-label">
+                State:<span className='required_tag'>*required</span>
+              </label>
+              <div className='listofaddress'>
+                <input
+                  type="text"
+                  value={stateValue}
+                  onChange={handleStateChange}
+                  onFocus={handleStateInputFocus}
+                  onBlur={handleStateInputBlur}
+                  placeholder="Enter State"
+                  className='signup-input'
+
+                />
+
+                {stateisListVisible && (
+                  <div className='addresslist'>
+                    {stateListItems.map((state) => (
+                      <div
+                        className="addresslistitem"
+                        key={state.id}
+                        onClick={() => handleStateItemClick(state.name)}
+                      >
+                        {state.name}
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </div>
+
+            </div>
+
+            <div className='addressitem'>
+              <label htmlFor="city" className="signup-label">
+                City:<span className='required_tag'>*required</span>
+              </label>
+              <div className='listofaddress'>
+                <input
+                  type="text"
+                  value={cityValue}
+                  onChange={handleCityChange}
+                  onFocus={handleCityInputFocus}
+                  onBlur={handleCityInputBlur}
+                  placeholder="Enter city"
+                  className='signup-input'
+
+                />
+
+                {cityisListVisible && (
+                  <div className='addresslist'>
+                    {cityListItems.map((city) => (
+                      <div
+                        className="addresslistitem"
+                        key={city.id}
+                        onClick={() => handleCityItemClick(city.name)}
+                      >
+                        {city.name}
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </div>
+
+            </div>
+          </div>
+
+          {selectedRole === 'Client' ? (
+            <>
+              <div className='addressitem'>
+
+                <label className="signup-label">
+                  Gst Number:<span className='required_tag'>*required</span>
+                </label>
+                <div className='listofaddress'>
+                  <input
+                    type="text"
+                    value={GstValue}
+                    onChange={handleGstChange}
+                    onFocus={handleGstInputFocus}
+                    onBlur={handleGstInputBlur}
+                    placeholder="Enter Gst Number"
+                    className='signup-input'
+                  />
+
+                  {gstisListVisible && (
+                    <div className='addresslist'>
+                      {gstListItems.map((gstnumber) => (
+                        <div
+                          className="addresslistitem"
+                          key={gstnumber.gst_no}
+                          onClick={() => {
+                            handleGstItemClick(gstnumber.gst_no + " " + gstnumber.name);
+                            handleGstNoClick(gstnumber.gst_no);
+                          }}
+                        >
+                          {gstnumber.gst_no}   {gstnumber.name}
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                </div>
+
+
+              </div>
+            </>
+          ) : (
+            <>
+              {/* Code for non-Client role */}
+              <h3>Certificates</h3>
+              <label htmlFor="image" className="signup-label">
+                HSC Certificate:
+              </label>
+              <input type="file" id="image" className="signup-input" placeholder="photo" />
+              <label htmlFor="image" className="signup-label">
+                College Degree:
+              </label>
+              <input type="file" id="image" className="signup-input" placeholder="photo" />
+              <label htmlFor="image" className="signup-label">
+                Other Certificate:
+              </label>
+              <input type="file" id="image" className="signup-input" placeholder="photo" />
             </>
           )}
 
+
           <br />
-<br />
-          <button id="update-profile-buttton"type="button" onClick={handleSubmit}>
-            Update Information
-          </button>
+
+          <a href="#">
+            <button type="submit" className="buttonsignup" onClick={handleSubmit}>
+              Submit
+            </button>
+          </a>
         </form>
-      </div>
-    </div>
+      </div >
+    </div >
   );
 };
 
-export default UserProfileForm;
+export default SignupForm;
 
 
-  
-
-
-
-// import React, { useState } from 'react';
-// import './UpdateProfile.css'; // Updated CSS file name
-
-// const UserProfileForm = () => {
-//   const [userEmail, setUserEmail] = useState('bgaa@example.com');
-//   const [isValidEmail, setIsValidEmail] = useState(true);
-//   const [selectedUserRole, setSelectedUserRole] = useState('');
-
-//   const handleEmailChange = (e) => {
-//     e.preventDefault();
-//     // Add your email change logic if needed
-//   };
-
-//   const handleRoleChange = (e) => {
-//     setSelectedUserRole(e.target.value);
-//   };
-
-//   const handleSubmit = () => {
-//     // Your form submission logic goes here
-//     // Access form fields using their respective IDs (e.g., document.getElementById('user-email').value)
-
-//     // Assuming the form submission is successful
-//     const isUpdateSuccessful = true;
-
-//     if (isUpdateSuccessful) {
-//       const confirmation = window.confirm("Update information successfully!");
-
-//       if (confirmation) {
-//         // Perform any additional action if the user clicks OK in the confirmation prompt
-//         // For example, redirect to another page or perform other actions
-//       }
-//     }
-//   };
-
-//   return (
-//     <div className="user-profile-form-container">
-//       <div className="form-content">
-//         <form>
-//           <h2>Update Profile </h2>
-
-//           <label  htmlFor="user-email">Email:</label>
-//           <input
-//             type="email"
-//             id="user-email"
-//             placeholder="Email"
-//             value={userEmail}
-//             onChange={handleEmailChange}
-//             readOnly // Make the email field read-only
-//           />
-//           {!isValidEmail && <p className="error-message">Please enter a valid email address</p>}
-
-//           <label htmlFor="image">Photo:</label>
-//           <input type="file" id="image" placeholder="Photo" />
-//           <br />
-
-//           <div className="name-column">
-//             <label htmlFor="firstName">First Name:</label>
-//             <input type="text" id="firstName" value="baburao" readOnly />
-
-//             <label htmlFor="middleName">Middle Name:</label>
-//             <input type="text" id="middleName" value="ganpatrao" readOnly />
-
-//             <label htmlFor="lastName">Last Name:</label>
-//             <input type="text" id="lastName" value="aapte" readOnly />
-//           </div>
-
-//           <div className="beside">
-//             <label htmlFor="gender">Gender:</label>
-//             <select id="gender">
-//               <option>Choose gender</option>
-//               <option>Male</option>
-//               <option>Female</option>
-//               <option>Other</option>
-//             </select>
-
-//             <label htmlFor="user-role">Role:</label>
-//             <select id="user-role" onChange={handleRoleChange} value={selectedUserRole}>
-//               <option value="">Choose role</option>
-//               <option value="Admin">Admin</option>
-//               <option value="Team member">Team member</option>
-//               <option value="Manager">Manager</option>
-//               <option value="Client">Client</option>
-//             </select>
-//           </div>
-
-//           <label htmlFor="dob">Date of Birth:</label>
-//           <input type="date" id="dob" />
-
-//           <label htmlFor="cityId">Country:</label>
-//           <input type="text" id="cityId" placeholder="Enter your country" />
-
-//           <label htmlFor="userStatus">State:</label>
-//           <input type="text" id="userStatus" placeholder="Enter your state" />
-
-//           <label htmlFor="profileStatus">City:</label>
-//           <input type="text" id="profileStatus" placeholder="Enter your city" />
-
-//           {selectedUserRole === 'Client' && (
-//             <>
-//               <label>
-//                 <b>Company information</b>
-//               </label>
-//               <label htmlFor="companyName">Company Name:</label>
-//               <input type="text" id="companyName" placeholder="Company name" />
-
-//               <label htmlFor="gstNumber">GST Number:</label>
-//               <input type="text" id="gstNumber" placeholder="GST number" />
-
-//               <label htmlFor="companyAddress">Company Address:</label>
-//               <input type="text" id="companyAddress" placeholder="Company address" />
-
-//               <label htmlFor="companyCity">Company Country:</label>
-//               <input type="text" id="companyCity" placeholder="Company country" />
-
-//               <label htmlFor="companyState">Company State:</label>
-//               <input type="text" id="companyState" placeholder="Company state" />
-
-//               <label htmlFor="companyCountry">Company City:</label>
-//               <input type="text" id="companyCountry" placeholder="Company city" />
-
-//               <label htmlFor="companyPhone">Company Phone:</label>
-//               <input type="tel" id="companyPhone" placeholder="Company phone" />
-//             </>
-//           )}
-
-//           <br />
-// <br />
-//           <button id="update-profile-button"type="button" onClick={handleSubmit}>
-//             Update Information
-//           </button>
-//         </form>
-//       </div>
-//     </div>
-//   );
-// };
-
-// export default UserProfileForm;
-
-
-
-
-
-
-
-
-// import React, { useState } from 'react';
-// import './UpdateProfile.css'; // Import CSS file
-
-// const UpdateProfile = () => {
-//   const [email, setEmail] = useState('bgaa@example.com');
-//   const [isValidEmail, setIsValidEmail] = useState(true);
-//   const [selectedRole, setSelectedRole] = useState('');
-
-//   const handleEmailChange = (e) => {
-//     e.preventDefault();
-//   };
-
-//   const handleRoleChange = (e) => {
-//     setSelectedRole(e.target.value);
-//   };
-
-//   const handleSubmit = () => {
-//     // Your form submission logic goes here
-//     // Access form fields using their respective IDs (e.g., document.getElementById('email').value)
-
-//     // Assuming the form submission is successful
-//     const isUpdateSuccessful = true;
-
-//     if (isUpdateSuccessful) {
-//       const confirmation = window.confirm("Update information successfully!");
-
-//       if (confirmation) {
-//         // Perform any additional action if the user clicks OK in the confirmation prompt
-//         // For example, redirect to another page or perform other actions
-//       }
-//     }
-//   };
-
-//   return (
-//     <div className="update-profile-container">
-//       <div className="profile-content">
-//         <form>
-//           <h2>Update User Details</h2>
-
-//           <label htmlFor="email">Email:</label>
-//           <input
-//             type="email"
-//             id="email"
-//             placeholder="Email"
-//             value={email}
-//             onChange={handleEmailChange}
-//             readOnly // Make the email field read-only
-//           />
-//           {!isValidEmail && <p className="error-message">Please enter a valid email address</p>}
-
-//           <label htmlFor="image">Photo:</label>
-//           <input type="file" id="image" placeholder="Photo" />
-//           <br />
-
-//           <div className="name-column">
-//             <label htmlFor="firstName">First Name:</label>
-//             <input type="text" id="firstName" value="baburao" readOnly />
-
-//             <label htmlFor="middleName">Middle Name:</label>
-//             <input type="text" id="middleName" value="ganpatrao" readOnly />
-
-//             <label htmlFor="lastName">Last Name:</label>
-//             <input type="text" id="lastName" value="aapte" readOnly />
-//           </div>
-
-//           <div className="beside">
-//             <label htmlFor="gender">Gender:</label>
-//             <select id="gender">
-//               <option>Choose gender</option>
-//               <option>Male</option>
-//               <option>Female</option>
-//               <option>Other</option>
-//             </select>
-
-//             <label htmlFor="role">Role:</label>
-//             <select id="role" onChange={handleRoleChange} value={selectedRole}>
-//               <option value="">Choose role</option>
-//               <option value="Admin">Admin</option>
-//               <option value="Team member">Team member</option>
-//               <option value="Manager">Manager</option>
-//               <option value="Client">Client</option>
-//             </select>
-//           </div>
-
-//           <label htmlFor="dob">Date of Birth:</label>
-//           <input type="date" id="dob" />
-
-//           <label htmlFor="cityId">Country :</label>
-//           <input type="text" id="cityId" placeholder="Enter your country" />
-
-//           <label htmlFor="userStatus">State:</label>
-//           <input type="text" id="userStatus" placeholder="Enter your state" />
-
-//           <label htmlFor="profileStatus">City:</label>
-//           <input type="text" id="profileStatus" placeholder="Enter your city" />
-
-//           {selectedRole === 'Client' && (
-//             <>
-//               <label>
-//                 <b>Company information</b>
-//               </label>
-//               <label htmlFor="companyName">Company Name:</label>
-//               <input type="text" id="companyName" placeholder="Company name" />
-
-//               <label htmlFor="gstNumber">GST Number:</label>
-//               <input type="text" id="gstNumber" placeholder="GST number" />
-
-//               <label htmlFor="companyAddress">Company Address:</label>
-//               <input type="text" id="companyAddress" placeholder="Company address" />
-
-//               <label htmlFor="companyCity">Company Country:</label>
-//               <input type="text" id="companyCity" placeholder="Company country" />
-
-//               <label htmlFor="companyState">Company State:</label>
-//               <input type="text" id="companyState" placeholder="Company state" />
-
-//               <label htmlFor="companyCountry">Company City:</label>
-//               <input type="text" id="companyCountry" placeholder="Company city" />
-
-//               <label htmlFor="companyPhone">Company Phone:</label>
-//               <input type="tel" id="companyPhone" placeholder="Company phone" />
-//             </>
-//           )}
-
-//           <br />
-
-//           <button id="" type="button" onClick={handleSubmit}>
-//             Update information
-//           </button>
-//         </form>
-//       </div>
-//     </div>
-//   );
-// };
-
-// export default UpdateProfile;

@@ -1,6 +1,8 @@
 from django.urls import path
 from . import views
 
+from django.conf import settings
+from django.conf.urls.static import static
 urlpatterns = [
 
     #registration process
@@ -9,13 +11,17 @@ urlpatterns = [
     path('country/', views.country, name='country'),
     path('state/', views.state, name='state'),
     path('city/', views.city, name='city'),
+    path('allcompanydata/', views.allcompanydata,name='allcompanydata'),
+
+
     # Login process
     path('login/', views.login, name='loginauthentication'),
 
     #forgotpassword process
     path('forgetpassword/', views.forgetpassword, name='forgetpassword'),
 
-
+#profile process
+    path('profileinfo/', views.profileinfo, name='profileinfo'),
 
 
 
@@ -26,6 +32,27 @@ urlpatterns = [
     path('messagesofauser/', views.messagesofauser, name='messagesofauser'),
 
     # Project Component
-    path('projectdetails/', views.projectdetails, name='projectdetails'),
+    path('addingproject/', views.addingproject, name='addingproject'),
+    path('uploadattachments/', views.uploadattachments, name='uploadattachments'),
+
+    path('projectdetailsmanager/', views.projectdetailsmanager, name='projectdetailsmanager'),
+    
+    path('projectdetailsadmin/', views.projectdetailsadmin, name='projectdetailsadmin'),
+
+    path('projectdetailsteam/', views.projectdetailsteam, name='projectdetailsteam'),
+    path('fetchclient/', views.fetchclient, name='fetchclient'),
+    path('projectcompletion/', views.projectcompletion, name='projectcompletion'),
+
+
+
+#Teammember
+    path('allmember/', views.allmember, name='allmember'),
+    path('addteammembers/', views.addteammembers, name='addteammembers'),
+    path('userinproject/', views.userinproject, name='userinproject'),
+    path('projectmembers/', views.projectmembers, name='projectmembers'),
+
+
+
+
     
 ]

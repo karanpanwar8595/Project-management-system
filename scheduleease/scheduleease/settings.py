@@ -12,6 +12,9 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 
 from pathlib import Path
 
+
+
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -25,7 +28,11 @@ SECRET_KEY = 'django-insecure-*)$z%9mf9q@boe%%%6olr7_(dw^upnu6)!p52o9_kc&88bd5@h
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+
+
+]
+
 
 
 # Application definition
@@ -40,11 +47,15 @@ INSTALLED_APPS = [
 
 
     'scheduleeaseapi.apps.ScheduleeaseapiConfig',
-    'corsheaders',
     'rest_framework',
+    'corsheaders',
+    
 ]
 
 MIDDLEWARE = [
+
+    'corsheaders.middleware.CorsMiddleware',
+
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -54,13 +65,12 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 
 
-    'corsheaders.middleware.CorsMiddleware',
-    'django.middleware.common.CommonMiddleware',
+    
 ]
 
 
 CORS_ORIGIN_ALLOW_ALL = True
-
+CORS_ALLOW_ALL_ORIGINS = True
 
 ROOT_URLCONF = 'scheduleease.urls'
 
@@ -105,17 +115,6 @@ WSGI_APPLICATION = 'scheduleease.wsgi.application'
 # }
 # }
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'collegeproject',
-        'USER': 'root',
-        'PASSWORD': '(Mitul@14',
-        'HOST': 'localhost',
-        'PORT': '3306',  # Change it to your MySQL port if necessary
-    }
-}
-
 # DATABASES = {
 #     'default': {
 #         'ENGINE': 'django.db.backends.mysql',
@@ -124,8 +123,19 @@ DATABASES = {
 #         'PASSWORD': '(Mitul@14',
 #         'HOST': 'localhost',
 #         'PORT': '3306',  # Change it to your MySQL port if necessary
+#     }
 # }
-# }
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'collegeproject',
+        'USER': 'root',
+        'PASSWORD': 'root',
+        'HOST': 'localhost',
+        'PORT': '3306',  # Change it to your MySQL port if necessary
+}
+}
 
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators

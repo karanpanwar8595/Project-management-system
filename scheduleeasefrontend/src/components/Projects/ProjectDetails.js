@@ -5,12 +5,15 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPencilAlt } from '@fortawesome/free-solid-svg-icons';
 
 const ProjectDetails = () => {
-
     const location = useLocation();
     // const project1 = JSON.stringify(location.state.project1);
     // const project = JSON.parse(project1).project
-    const project = location.state.project
-    console.log(project)
+    const project = location.state.projects;
+    console.log(13,project)  ;
+    const isTeamMember=location.state.isTeamMember;
+ 
+    const attachments= ['/project-plan.pdf'];
+    const documents= ['/Aadhar.jpg', '/4th sem result.pdf'];
 
     const handleDocumentClick = (path) => {
         window.open(path, '_blank');
@@ -27,7 +30,7 @@ const ProjectDetails = () => {
 
     return (
         <div className="project-details-container">
-            {/* <div className="back-arrow" onClick={onClose}>&larr;</div> */}
+            
             <div className="project-header-container">
                 <h2 className="proj-header">{project.name}</h2>
                 <button className="edit-button">
@@ -56,21 +59,47 @@ const ProjectDetails = () => {
                     </div>
                 </div>
             </div>
-            <div className="section">
+            {isTeamMember ? (
+                    <>
+                        <div className="section">
                 <div className="section-title">Company Details</div>
                 <div className="section-content">
                     <div className="start">
                         <div className="company-name">Company Name</div>
-                        <div className="client-name">{project.companyName}</div>
+                        <div className="client-name">{project.client.gst_no.name}</div>
                     </div>
                     <div className="start">
                         <div className="client-name">Client Name</div>
-                        <div className="client-name">{project.clientName}</div>
+                        <div className="client-name">{project.client.name}</div>
                     </div>
                 </div>
             </div>
             <div className="budget">Budget  {project.budget}</div>
+                    </>
+                ) : (<>
+                    
+                </>
+                )}
+
+            
             <div className="section">
+                <div className="section-title">Attachments</div>
+                <div className="attachments">
+                    {attachments.map((attachment, index) => (
+                        <a key={index} href={attachment} onClick={() => handleDocumentClick(attachment)} target="_blank" rel="noopener noreferrer">{attachment}</a>
+                    ))}
+                </div>
+            </div>
+            <div className="section">
+                <div className="section-title">Documents</div>
+                <div className="documents">
+                    {documents.map((document, index) => (
+                        <a key={index} href={document} onClick={() => handleDocumentClick(document)} target="_blank" rel="noopener noreferrer">{document}</a>
+                    ))}
+                </div>
+            </div>
+
+            {/* <div className="section">
                 <div className="section-title">Attachments</div>
                 <div className="attachments">
                     {project.attachments.map((attachment, index) => (
@@ -85,7 +114,7 @@ const ProjectDetails = () => {
                         <a key={index} href={document} onClick={() => handleDocumentClick(document)} target="_blank" rel="noopener noreferrer">{document}</a>
                     ))}
                 </div>
-            </div>
+            </div> */}
         </div>
     );
 };
