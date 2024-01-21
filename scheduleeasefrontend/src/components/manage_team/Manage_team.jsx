@@ -1,12 +1,14 @@
-import React, { useState, useEffect } from 'react';
-import './Manage_team.css'
-import Modal from '../modal_form/Modal'
-import pic from './profile.png'
+import React, { useState } from 'react';
+import './Manage_team.css';
+import pic from './profile.png';
+import pic1 from './profile1.webp';
+import pic2 from './profile2.jpg';
+import pic3 from './profile3.jpg';
 
 const UserProfileCard = ({ user }) => {
   return (
     <div className="team-profile-card">
-      <img src={pic} alt="Profile" className="team-profile-image" />
+      <img src={user.profileImage} alt="Profile" className="team-profile-image" />
       <div className="team-profile-info">
         <h2 className="team-profile-name">{user.name}</h2>
         <div className="team-profile-details">
@@ -17,73 +19,54 @@ const UserProfileCard = ({ user }) => {
   );
 };
 
-
-
-
 const Manage_team = () => {
-  const [isModalOpen, setModalOpen] = useState(false);
-
-  const openModal = () => {
-    // Inside the render method of Manage_team.jsx
-
-    setModalOpen(true);
-    // Inside the render method of Manage_team.jsx
-
-  };
   const [teammemberList, setTeamMemberList] = useState([
     {
       id: 1,
-      name: 'John Doe',
+      name: 'John Dev',
       role: 'Developer',
-      email: 'john.doe@example.com',
-      profileImage: 'path/to/john-doe.jpg',
+      email: 'john.dev@example.com',
+      profileImage: pic,
     },
     {
       id: 2,
-      name: 'Jane Smith',
+      name: 'Steve Smith',
       role: 'Designer',
-      email: 'jane.smith@example.com',
-      profileImage: 'path/to/jane-smith.jpg',
+      email: 'steve.smith@example.com',
+      profileImage: pic1,
     },
     {
       id: 3,
-      name: 'Jane Smith',
+      name: 'Adam smith',
       role: 'Designer',
-      email: 'jane.smith@example.com',
-      profileImage: 'path/to/jane-smith.jpg',
+      email: 'adam.smith@example.com',
+      profileImage: pic2,
     },
     {
       id: 4,
-      name: 'Jane Smith',
+      name: 'anthony',
       role: 'Designer',
-      email: 'jane.smith@example.com',
-      profileImage: 'path/to/jane-smith.jpg',
+      email: 'anthnoy@example.com',
+      profileImage: pic3,
     },
     // Add more team members as needed
   ]);
-  
 
   return (
-
     <div className='Manage-team-container'>
-      {/* <h5>Select your project</h5> */}
       <select className='select-project'>
-      <option disabled defaultValue="">Select a Project</option>
-      <option>Project 1</option>
-      <option>Project 2</option>
-      <option>Project 3</option>
-    </select>
+        <option disabled defaultValue="">Select a Project</option>
+        <option>Project 1</option>
+        <option>Project 2</option>
+        <option>Project 3</option>
+      </select>
       <div className="profile-grid">
-      {teammemberList.map((teamMember) => (
-                <UserProfileCard user= {teamMember} />
-                
-                ))}
-
-
+        {teammemberList.map((teamMember) => (
+          <UserProfileCard key={teamMember.id} user={teamMember} />
+        ))}
       </div>
-      {/* <img src={plus} className='plus-symbol'  alt="Plus Symbol" /> */}
     </div>
-  )
-}
+  );
+};
 
-export default Manage_team
+export default Manage_team;
