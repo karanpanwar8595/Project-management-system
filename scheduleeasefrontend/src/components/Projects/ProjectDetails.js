@@ -34,7 +34,7 @@ const ProjectDetails = () => {
             
             <div className="project-header-container">
                 <h2 className="proj-header">{project.name}</h2>
-                <button className="edit-button" onClick={toggleForm}>
+                <button className="edit-button">
                     <FontAwesomeIcon icon={faPencilAlt} /> Edit
                 </button>
             </div>
@@ -76,10 +76,13 @@ const ProjectDetails = () => {
                 </div>
             </div>
             <div className="budget">Budget  {project.budget}</div>
-                    </>
+               
+                  </>
+
                 ) : (<>
-                    
                 </>
+                    
+               
                 )}
 
             
@@ -100,24 +103,11 @@ const ProjectDetails = () => {
                 </div>
             </div>
 
-            {/* <div className="section">
-                <div className="section-title">Attachments</div>
-                <div className="attachments">
-                    {project.attachments.map((attachment, index) => (
-                        <a key={index} href={attachment} onClick={() => handleDocumentClick(attachment)} target="_blank" rel="noopener noreferrer">{attachment}</a>
-                    ))}
-                </div>
-            </div>
-            <div className="section">
-                <div className="section-title">Documents</div>
-                <div className="documents">
-                    {project.documents.map((document, index) => (
-                        <a key={index} href={document} onClick={() => handleDocumentClick(document)} target="_blank" rel="noopener noreferrer">{document}</a>
-                    ))}
-                </div>
-            </div>
+            
+             
+            
         </div>
     );
 };
 
-export default ProjectDetails;
+export default ProjectDetails

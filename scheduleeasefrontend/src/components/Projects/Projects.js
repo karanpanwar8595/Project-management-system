@@ -56,7 +56,7 @@ const ProjectCard = ({ project }) => {
     return (
         <Link
             to='/ProjectDetails'
-            state={{ projects ,isTeamMember:true}}
+            state={{ projects, isTeamMember: true }}
             style={{ textDecoration: 'none', color: 'black' }}
         >
             <div key={project.id} className="project-card">
@@ -128,7 +128,7 @@ const ProjectCardToMe = ({ project }) => {
     return (
         <Link
             to='/ProjectDetails'
-            state={{ projects ,isTeamMember:false}}
+            state={{ projects, isTeamMember: false }}
             style={{ textDecoration: 'none', color: 'black' }}
         >
             <div key={project.id} className="project-card">
@@ -237,7 +237,7 @@ const Projects = () => {
             // ye data request me jayega in views.py
 
             if (response.data['value']) {
-                console.log(response.data);
+                console.log('projecadded', response.data);
                 console.log('Project component connected');
             } else {
                 console.log("error")
@@ -475,10 +475,12 @@ const Projects = () => {
             alert('Please select a valid client');
             return;
         }
-
+        const email = JSON.parse(sessionStorage.getItem('loginData')).profile_data.email;
+        const client_email = selectedClient['email'].replace(/'/g, '');
         const newProject = {
-            id: newProjects.length + 1, // Simple id assignment, remember to use a more robust method
-            name: projectName,
+            projectname: projectname,
+            projectdescription: projectDec,
+            startdate: startDate,
             dueDate: dueDate,
             client_id: client_email,
             completion: 0,
@@ -571,9 +573,25 @@ const Projects = () => {
                             <span onClick={toggleForm}>Close</span>
                         </div>
                         <form onSubmit={handleFormSubmit}>
+
                             <div className="form-row">
                                 <label htmlFor="projectName">Project Name:</label>
-                                <input className="in-txtarea" type="text" id="projectName" name="projectName" onChange={(e) => setProjectNameError(validateProjectName(e.target.value))} required />
+                                <input
+                                    className="in-txtarea"
+                                    type="text"
+                                    id="projectName"
+                                    name="projectName"
+                                    onChange={(e) => {
+                                        // Validation function (replace with your own validation logic)
+                                        const validationError = validateProjectName(e.target.value);
+
+                                        // Update state with the input value and validation result
+                                        setProjectName(e.target.value);
+                                        setProjectNameError(validationError);
+                                    }}
+                                    value={projectname}
+                                    required
+                                />
                                 {projectNameError && <span className="error-message">{projectNameError}</span>}
                             </div>
                             <div className="form-row">
@@ -587,8 +605,9 @@ const Projects = () => {
                                     onChange={(e) => {
                                         setStartDateError(validateStartDate(e.target.value));
                                         setStartDate(e.target.value);
+
                                     }}
-                                    required
+
 
                                 />
                                 {startDateError && <span className="error-message">{startDateError}</span>}
@@ -605,7 +624,7 @@ const Projects = () => {
                                         setDueDateError(validateDueDate(startDate, e.target.value));
                                         setDueDate(e.target.value);
                                     }}
-                                    required
+
                                 />
                                 {dueDateError && <span className="error-message">{dueDateError}</span>}
                             </div>
@@ -618,13 +637,21 @@ const Projects = () => {
                             </div>
                             <div className="form-row">
                                 <label htmlFor="budget">Budget:</label>
-                                <input className="in-txtarea" type="number" id="budget" name="budget" onChange={(e) => setBudgetError(validateBudget(e.target.value))} required />
+                                <input
+                                    className="in-txtarea"
+                                    type="number"
+                                    id="budget"
+                                    name="budget"
+                                    required
+                                    value={budget}
+                                    onChange={(e) => {
+                                        setBudget(e.target.value);
+                                        setBudgetError(validateBudget(e.target.value));
+                                    }}
+                                />
                                 {budgetError && <span className="error-message">{budgetError}</span>}
                             </div>
-                            <div className="form-row">
-                                <label htmlFor="companyName">Company Name:</label>
-                                <input className="in-txtarea" type="text" id="companyName" name="companyName" required />
-                            </div>
+
                             <div className="form-row">
                                 <label htmlFor="attachment">Attachment:</label>
                                 <input
@@ -672,7 +699,7 @@ const Projects = () => {
                                     value={clientSearch}
                                     placeholder='Search Here...'
                                     onChange={handleClientSearchChange}
-                                    required={!selectedClient}
+                                    // required={!selectedClient}
                                     disabled={!!selectedClient} // Disable when client is selected
                                 />
                                 {clientSearch && clientResults.length === 0 && !selectedClient && (
