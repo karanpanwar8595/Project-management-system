@@ -66,7 +66,7 @@ const Login = ({ onDataFromChild }) => {
           <input
             type="text"
             placeholder="Username"
-            className={"inputTExt"}
+            className={"inputTEext"}
             autoComplete="off"
             value={email}
             onChange={handleEmailInput}
@@ -83,16 +83,17 @@ const Login = ({ onDataFromChild }) => {
           <input
             type={showPassword ? 'text' : 'password'}
             placeholder="Password"
-            className="inputTExt"
+            className="inputTEext"
             autoComplete="off"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
+            
           />
-          <i
-            className={`eyeIcon ${showPassword ? 'fa fa-eye-slash' : 'fa fa-eye'}`}
+          <i className={`fa ${showPassword ? 'fa fa-eye-slash' : 'fa fa-eye'}`}
             onClick={() => setShowPassword(!showPassword)}
           ></i>
         </div>
+        
         <br />
         <div className="buttonGroup">
           <button

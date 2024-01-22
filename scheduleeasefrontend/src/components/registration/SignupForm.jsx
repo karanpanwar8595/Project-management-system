@@ -308,6 +308,9 @@ const SignupForm = () => {
         setCityValue("");
         setSelectedRole("");
         setDOB("");
+        setGstValue('');
+        setAddress('');
+
         alert('Registration is done for ' + firstName + " " + middleName + " " + lastName);
 
       } else {
@@ -331,12 +334,34 @@ const SignupForm = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (email == '' && firstName == "" && gender == "" && selectedRole == '' && dob == '' && address == '' && countryValue == '' && stateValue == '' && cityValue == '') {
+    console.log("role",selectedRole);
+    const today = new Date();  // Get today's date
+    const dobDate = new Date(dob)
+    if (dobDate.getTime() >= today.getTime()) {
+      setMessage("Date must be past date")
+          setErrors(true)
+          setDOB('');
+          return;
+    }
+    if (email == '' || firstName == "" || gender == "" || selectedRole == '' || dob == '' || address == '' ||countryValue == '' || stateValue == '' || cityValue == '') {
+      
+      console.log("role",selectedRole);
       setMessage("Please enter all the required fields")
       setErrors(true)
-      return
+      return;
 
     }
+    if(selectedRole=="Client"){
+      if(GstValue==''){
+
+      setMessage("Please enter all the required fields")
+      setErrors(true)
+      return;
+      }
+    }
+
+
+
     if (!isValidEmail || !selectedRole || !firstName || !gender) {
 
       return;
@@ -370,7 +395,7 @@ const SignupForm = () => {
       <div className="signup-title">
         <form className="signup-form">
           {errors && (
-            <div className='error-box' style={{ color: "red" }}>
+            <div className='error-box' style={{ }}>
               <div className='error-message' style={{ paddingLeft: '20px' }}>{message}</div>
               <div className='closeButton' style={{ paddingRight: '20px' }}
                 onClick={() => setErrors(false)}>

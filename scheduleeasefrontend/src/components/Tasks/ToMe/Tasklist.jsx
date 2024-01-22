@@ -5,6 +5,7 @@ import plus from './plus.png'
 import { Link } from 'react-router-dom';
 import editicon from './editicon.png';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import axios from 'axios';
 
 import { faDownload  } from '@fortawesome/free-solid-svg-icons';
 
@@ -65,6 +66,26 @@ const AccordionItem = ({ task_key, title, content, actstatus, duedate, owner, pr
 const Tasklist = () => {
 
     const [taskList, setTasklist] = useState([{ title: "First task", content: "This  is the second item's accordion body. It is hidden by default, until the collapse pis is the second item's accordion body. It is hidden by default, until the collapse phis is the second item's accordion body. ", status:"Completed", duedate: "12/10/2023", progress: "20%", owner: "Suresh" }, { title: "Second task", content: "This  is the second item's accordion body. It is hidden by default, until the collapse pis is the second item's accordion body. It is hidden by default, until the collapse phis is the second item's accordion body. ", status:"Complete", duedate: "12/10/2023", progress: "20%", owner: "Ramesh" }]);
+
+    useEffect(() => {
+        fetchalltaskofme();
+      }, []); 
+    const fetchalltaskofme = (event) => {
+
+        axios.post('http://127.0.0.1:8000/api/taskassigntome/', { useremail:JSON.parse(sessionStorage.getItem('loginData')).profile_data.email }).then((response) => {
+          if (response) {
+            console.log(response.data);
+            // setMessageList(messagelist)
+            // var newMessage=[{'sendertype':1,'messagetxt': inputValueMessageTextBox,'timestamp':"10:20"}]
+            // setMessageList(messagelist => messagelist.concat(newMessage));
+            // setInputMessageTextBox("");
+          }
+        }, (error) => {
+          console.log(error);
+        });
+      }
+
+
 
 
     return (

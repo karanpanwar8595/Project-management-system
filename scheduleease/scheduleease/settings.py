@@ -107,7 +107,7 @@ WSGI_APPLICATION = 'scheduleease.wsgi.application'
 # DATABASES = {
 #     'default': {
 #         'ENGINE': 'django.db.backends.mysql',
-#         'NAME': 'college',
+#         'NAME': 'collegeproject',
 #         'USER': 'root',
 #         'PASSWORD': 'Karan@123',
 #         'HOST': 'localhost',

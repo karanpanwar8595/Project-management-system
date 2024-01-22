@@ -1,7 +1,7 @@
-from django.shortcuts import render
+# from django.shortcuts import render
 from scheduleeaseapi.models import Profile,Country,State,City,ProjectMember,Project,ProjectDocument,Payment,Task,TaskDocument,ProfileDocument,CompanyDetails
 from django.core.mail import send_mail
-from django.http import HttpResponse
+# from django.http import HttpResponse
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from django.core.mail import get_connection
@@ -149,7 +149,7 @@ def login(request):
         # Access the data (assuming 'username' and 'password' keys in the posted data)
         inputemail = data.get('loginemail')
         inputpassword = data.get('loginpassword')
-        print(inputemail)
+        print(inputemail,inputpassword)
         logincretentialdata = Profile.objects.get(email=inputemail,password=inputpassword)
         print(logincretentialdata)
         
@@ -183,7 +183,7 @@ def mailsenderapi(inputemail,new_password):
         'host': 'smtp.gmail.com',
         'port': 587,
         'user': 'ujjwalbhansali55@gmail.com',
-        'password': 'ndrn zxki ieqv hywg',
+        'password': '',
         'use_tls': True,  # Set to True if your email provider requires TLS
     }
     connection = get_connection(
@@ -558,6 +558,46 @@ def profileinfo(request):
         
         print(profiledetail)
         return Response({"data":profiledetail,"value":True})
+    except Exception as e:
+        print(e)
+        return Response({"data":"no data","value":False})
+
+
+
+#task process
+    
+       
+@api_view(['post'])
+def taskassigntome(request):
+    try:
+        data = json.loads(request.body)
+        print(data)
+        useremail = data.get('useremail')
+
+        profile_instance= get_object_or_404(Profile, email=useremail)
+        tasks_of_users = Task.objects.filter(team_member = profile_instance)
+        alltasks = [tasks_of_user.task_to_dict() for tasks_of_user in tasks_of_users]
+
+        print(alltasks)
+        return Response({"data":alltasks,"value":True})
+    except Exception as e:
+        print(e)
+        return Response({"data":"no data","value":False})
+ 
+
+@api_view(['post'])
+def taskassigntoother(request):
+    try:
+        data = json.loads(request.body)
+        print(data)
+        useremail = data.get('useremail')
+
+        profile_instance= get_object_or_404(Profile, email=useremail)
+        tasks_of_users = Task.objects.filter(manager = profile_instance)
+        alltasks = [tasks_of_user.task_to_dict() for tasks_of_user in tasks_of_users]
+
+        print(alltasks)
+        return Response({"data":alltasks,"value":True})
     except Exception as e:
         print(e)
         return Response({"data":"no data","value":False})

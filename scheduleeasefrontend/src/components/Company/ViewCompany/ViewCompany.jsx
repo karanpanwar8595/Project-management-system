@@ -45,6 +45,7 @@ const CompanyList = ({  }) => {
             <div className="detail-item">
             <Link to='/editcompany'
             state={{companydetails}}
+            style={{ textDecoration: 'none', color: 'black' }}
             >
             <div className={`CompanyEditbutton`}  >
               Edit
