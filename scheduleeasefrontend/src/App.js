@@ -4,7 +4,9 @@ import Navbar from './components/navbar/Navbar';
 import SideNavbar from './components/sideNavbar/sideNavbar';
 import Manage_team from './components/manage_team/Manage_team';
 import Project from './components/Projects/Projects';
-import Tasklist from './components/Tasks/Tasklist';
+import TaskToMe from './components/Tasks/ToMe/Tasklist';
+import TaskBYMe from './components/Tasks/ByMe/Tasklist';
+import EditCompany from './components/Company/EditCompany/EditCompany'
 import Notification from './components/Notification/Notification';
 import Modal from './components/modal_form/Modal';
 import Cal from './components/calendar/Cal';
@@ -19,12 +21,18 @@ import ProjectDetails from './components/Projects/ProjectDetails';
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Login from './components/login_Page/Login';
 import ForgotPassword from './components/login_Page/forgot password/ForgotPassword';
+import AddCompany from './components/Company/AddCompany/AddCompany';
+import ViewCompany from './components/Company/ViewCompany/ViewCompany'
 // import Registration from './components/registration/SignupForm';
 import Addtask from './components/addtask/Addtask';
 import ModifyTask from './components/modifytask/Modifytask';
 import Payment from './components/Payment/Payment';
 import Dashboard from './components/Dashboard/Dashboard';
 import BlockUser from './components/BlockUser/BlockUser';
+import TeamMemberDas from './components/TeamMemberDas/TeamMemberDas';
+import DasNewComp from './components/DasNewComp/DasNewComp';
+
+
 
 function App() {
   const [authenticateddata, setAuthenticateddata] = useState({ 'value': false });
@@ -87,6 +95,8 @@ function App() {
 
             <Navbar />
             <SideNavbar />
+            
+           
 
 
             <div className="container">
@@ -94,13 +104,13 @@ function App() {
               <Routes>
 
                 {/* first route goes to test container */}
-                <Route exact path='tasks' element=
+                {/* <Route exact path='tasks' element=
                   {
                     <>
                       <Tasklist />
                     </>
                   }>
-                </Route>
+                </Route> */}
                 <Route exact path='disscussion' element={
                   <>
                     < DisscussionBox />
@@ -125,7 +135,52 @@ function App() {
                 <Route exact path='dashboard' element={
                   <>
 
-                    < Dashboard />
+                    < DasNewComp />
+
+
+                  </>
+                }>
+                </Route>
+                <Route exact path='newdashboard' element={
+                  <>
+
+                    < TeamMemberDas />
+
+
+                  </>
+                }>
+                </Route>
+                <Route exact path='addtask' element={
+                  <>
+
+                    < Addtask />
+
+
+                  </>
+                }>
+                </Route>
+                <Route exact path='addcompany' element={
+                  <>
+
+                    < AddCompany />
+
+
+                  </>
+                }>
+                </Route>
+                <Route exact path='editcompany' element={
+                  <>
+
+                    < EditCompany />
+
+
+                  </>
+                }>
+                </Route>
+                <Route exact path='viewcompany' element={
+                  <>
+
+                    < ViewCompany />
 
 
                   </>
@@ -168,9 +223,15 @@ function App() {
                 }>
                 </Route>
 
-                <Route exact path='addtask' element={
+                <Route exact path='tasktome' element={
                   <>
-                    < Addtask />
+                    < TaskToMe />
+                  </>
+                }>
+                </Route>
+                <Route exact path='taskbyme' element={
+                  <>
+                   <TaskBYMe/>
                   </>
                 }>
                 </Route>
@@ -178,9 +239,17 @@ function App() {
                 {/*Manage team component route */}
                 <Route exact path='manage_team' element=
                   {
-                    <div className="maincomponentcontainer">
+             
                       <Manage_team />
-                      <Modal />
+                      
+                 
+                  }>
+                </Route>
+                <Route exact path='add_team_member' element=
+                  {
+                    <div className="maincomponentcontainer">
+                      <Modal /> 
+                      
                     </div>
                   }>
                 </Route>

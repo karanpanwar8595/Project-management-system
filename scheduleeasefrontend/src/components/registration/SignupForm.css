@@ -11,10 +11,12 @@
     overflow-x: auto;
     max-height: 78vh;
 }
-.signup-input{
+
+.signup-input {
     width: auto;
-  max-width: -webkit-fill-available;
+    max-width: -webkit-fill-available;
 }
+
 .signup-title {
     color: #333;
     height: max-content;
@@ -88,21 +90,23 @@
     z-index: 3;
 }
 
-.mgr{
+.mgr {
     margin-right: 40px;
 }
 
-#addressitemlist{display: flex;
-flex-direction: row;
+#addressitemlist {
+    display: flex;
+    flex-direction: row;
 }
 
-.addressitem{
-    width:30% ;
+.addressitem {
+    width: 30%;
     margin-right: 5%;
     /* padding-right: 5%; */
 
 }
-.buttonsignup{
+
+.buttonsignup {
     border: 1px solid #007bff;
     width: 100px;
     padding: 10px 5px;
@@ -113,78 +117,96 @@ flex-direction: row;
     margin-left: auto;
     background-color: #ffffff;
     color: #007bff;
-     font-weight: 600;
-     letter-spacing: 1px;
+    font-weight: 600;
+    letter-spacing: 1px;
 }
 
-.buttonsignup:hover{
+.buttonsignup:hover {
     background-color: #007bff;
     color: white;
     font-weight: 600;
     letter-spacing: 1px;
 }
+
 /*isme button ke  gadbad hai*/
 
 
-/* .buttonsignup {
-    margin-top: 5px;
-    padding: 10px;
+
+
+
+
+
+.company-container {
+    min-width: 94%;
+    margin: auto;
+    padding: 20px;
     border: 1px solid #ccc;
-    border-radius: 4px;
-    width: 100%;
-} */
-
-
-/* .sign-content {
-    background-color: #f4f4f4;
-    padding: 50px;
-    border-radius: 12px;
+    border-radius: 8px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    max-width: 1200px;
-    margin-right: 100%;
-    width: 80%;
+    background-color: white;
+    min-height: 78vh;
 }
 
-.form-title {
-    text-align: center;
-    color: #333;
-    height: max-content;
+.signup-label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: bold;
 }
 
-form {
-    display: flex;
-    flex-direction: column;
-}
-
-label {
-    margin-top: 10px;
-    color: #333;
-}
-
-
-/* input,
-select,
-button {
-    margin-top: 5px;
-    padding: 10px;
+.signup-input {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 16px;
+    box-sizing: border-box;
     border: 1px solid #ccc;
     border-radius: 4px;
-    width: 100%;
-} */
-
-
-/*
-input[type="checkbox"] {
-    margin-left: 5px;
 }
 
-.name-column {
-    display: flex;
-    gap: 10px;
+.newcompanybutton {
+    background-color: #4caf50;
+    color: white;
+    padding: 10px 15px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    border-radius: 4px;
+    cursor: pointer;
 }
 
-.beside {
+.newcompanybutton:hover {
+    background-color: #45a049;
+}
+
+
+.error-message {
+    color: rgb(246, 0, 0);
+    padding-right: 20px;
+}
+
+
+.required_tag {
+    color: rgba(255, 0, 0, 0.441);
+    font-size: x-small;
+    margin-bottom: 10px;
+
+}
+
+.error-box {
+    color: red;
+    position: fixed;
+    top: 10;
+    left: 50%;
+    transform: translateX(-50%);
+    min-width: 70%;
+    background-color: #f5f3f3;
+    padding: 20px 0px;
+    text-align: center;
+    border-radius: 8px;
     display: flex;
+    flex-direction: row;
     justify-content: space-between;
-    gap: 10px;
-} */
+    margin-left: 100px;
+    z-index: 20;
+
+}

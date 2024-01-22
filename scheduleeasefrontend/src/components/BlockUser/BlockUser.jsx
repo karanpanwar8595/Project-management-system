@@ -43,7 +43,7 @@ const BlockUser = () => {
     return (
         <div className="block-user-container">
 
-        <h3>Users</h3>
+        <h2 style={{paddingLeft:"30px"}}>Users</h2>
 
             {users.map((user) => (
                 <UserCard user={user} />
