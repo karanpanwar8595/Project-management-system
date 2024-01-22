@@ -6,7 +6,7 @@ import Manage_team from './components/manage_team/Manage_team';
 import Project from './components/Projects/Projects';
 import TaskToMe from './components/Tasks/ToMe/Tasklist';
 import TaskBYMe from './components/Tasks/ByMe/Tasklist';
-import EditCompany from './components/Company/EditCompany/EditCompany'
+import EditCompany from './components/Company/EditCompany/EditCompany';
 import Notification from './components/Notification/Notification';
 import Modal from './components/modal_form/Modal';
 import Cal from './components/calendar/Cal';
@@ -22,7 +22,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Login from './components/login_Page/Login';
 import ForgotPassword from './components/login_Page/forgot password/ForgotPassword';
 import AddCompany from './components/Company/AddCompany/AddCompany';
-import ViewCompany from './components/Company/ViewCompany/ViewCompany'
+import ViewCompany from './components/Company/ViewCompany/ViewCompany';
 // import Registration from './components/registration/SignupForm';
 import Addtask from './components/addtask/Addtask';
 import ModifyTask from './components/modifytask/Modifytask';
@@ -31,6 +31,8 @@ import Dashboard from './components/Dashboard/Dashboard';
 import BlockUser from './components/BlockUser/BlockUser';
 import TeamMemberDas from './components/TeamMemberDas/TeamMemberDas';
 import DasNewComp from './components/DasNewComp/DasNewComp';
+
+import ChangePassword from './components/changepassword/ChangePassword'
 
 
 
@@ -278,6 +280,16 @@ function App() {
                   }>
                 </Route>
 
+
+                <Route exact path='changepassword' element=
+                  {
+                    
+                      <ChangePassword />
+                  
+                  }>
+                </Route>
+                
+
                 <Route exact path='calendar' element=
                   {
 
@@ -292,6 +304,7 @@ function App() {
 
                   }>
                 </Route>
+                
 
               </Routes>
             </div>

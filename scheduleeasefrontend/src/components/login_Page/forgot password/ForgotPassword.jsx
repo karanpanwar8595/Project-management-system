@@ -1,15 +1,27 @@
-// ForgotPassword.jsx
-
 import React, { useState } from 'react';
 import styles from './ForgotPassword.module.css';
 import axios from 'axios';
 
 const ForgotPassword = () => {
   const [inputEmail, setEmail] = useState('');
+  const [errorMessage, setErrorMessage] = useState('');
+
+  const validateEmail = (email) => {
+    // Regular expression for a simple email validation
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+  };
 
   const handleSubmit = (event) => {
     event.preventDefault();
+
+    if (!validateEmail(inputEmail)) {
+      setErrorMessage('Please enter a valid email address.');
+      return;
+    }
+
     const forgotPasswordEmailCredentials = { forgotpasswordemail: inputEmail };
+
     axios.post('http://127.0.0.1:8000/api/forgetpassword/', forgotPasswordEmailCredentials)
       .then((response) => {
         console.log(response);
@@ -25,7 +37,7 @@ const ForgotPassword = () => {
     cursor: 'pointer',
     letterSpacing: '4px',
     borderRadius: '8px',
-    backgroundColor: '#0065fcff',
+    backgroundColor: '#3498db',
     border: 'none',
     color: 'white',
     marginLeft: '50px',
@@ -33,22 +45,25 @@ const ForgotPassword = () => {
 
   return (
     <div className={styles.forgotPasswordContainer}>
-     
       <form onSubmit={handleSubmit} className={styles.forgotPasswordForm}>
-       
         <label htmlFor="email">Enter your Email:</label>
         <input
           type="email"
           id="email"
           value={inputEmail}
-          onChange={(e) => setEmail(e.target.value)}
+          onChange={(e) => {
+            setEmail(e.target.value);
+            setErrorMessage('');
+          }}
           required
-        />  <br />
+        />
+        <br />
         <br />
         <br />
         <button id="forgot-button" type="submit" style={buttonStyle}>
           Submit
         </button>
+        {errorMessage && <p style={{ color: 'red' }}>{errorMessage}</p>}
       </form>
     </div>
   );
