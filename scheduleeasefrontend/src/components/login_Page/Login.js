@@ -87,12 +87,13 @@ const Login = ({ onDataFromChild }) => {
             autoComplete="off"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
+            
           />
-          <i
-            className={`eyeIcon ${showPassword ? 'fa fa-eye-slash' : 'fa fa-eye'}`}
+          <i className={`fa ${showPassword ? 'fa fa-eye-slash' : 'fa fa-eye'}`}
             onClick={() => setShowPassword(!showPassword)}
           ></i>
         </div>
+        
         <br />
         <div className="buttonGroup">
           <button
