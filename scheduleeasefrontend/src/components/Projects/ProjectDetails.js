@@ -3,6 +3,7 @@ import './ProjectDetails.css';
 import { useLocation } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPencilAlt } from '@fortawesome/free-solid-svg-icons';
+import { useState } from 'react'
 
 const ProjectDetails = () => {
     const location = useLocation();
@@ -38,7 +39,7 @@ const ProjectDetails = () => {
                 </button>
             </div>
             <p className="project-description">{project.projectDescription}</p>
-            <span style={{ fontSize: '25px' }}> Progress </span>
+            <span style={{ fontSize: '20px' }}> Progress </span>
             <div className="progress-cont">
                 <div
                     className={`progress-filler ${getProgressClass(project.completion)}`}
@@ -75,10 +76,13 @@ const ProjectDetails = () => {
                 </div>
             </div>
             <div className="budget">Budget  {project.budget}</div>
-                    </>
+               
+                  </>
+
                 ) : (<>
-                    
                 </>
+                    
+               
                 )}
 
             
@@ -99,25 +103,11 @@ const ProjectDetails = () => {
                 </div>
             </div>
 
-            {/* <div className="section">
-                <div className="section-title">Attachments</div>
-                <div className="attachments">
-                    {project.attachments.map((attachment, index) => (
-                        <a key={index} href={attachment} onClick={() => handleDocumentClick(attachment)} target="_blank" rel="noopener noreferrer">{attachment}</a>
-                    ))}
-                </div>
-            </div>
-            <div className="section">
-                <div className="section-title">Documents</div>
-                <div className="documents">
-                    {project.documents.map((document, index) => (
-                        <a key={index} href={document} onClick={() => handleDocumentClick(document)} target="_blank" rel="noopener noreferrer">{document}</a>
-                    ))}
-                </div>
-            </div> */}
+            
+             
+            
         </div>
     );
 };
 
 export default ProjectDetails
-

@@ -13,7 +13,8 @@ const Navbar = () => {
   const handleLogout = () => {
     sessionStorage.removeItem('loginData');
     sessionStorage.removeItem('profileData');
-
+    
+    // Navigating to the login page
     navigate('/');
     window.location.reload();
   };

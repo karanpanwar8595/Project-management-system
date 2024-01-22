@@ -1,11 +1,12 @@
-import React, { useState, useEffect } from 'react';
-import './Manage_team.css'
-import Modal from '../modal_form/Modal'
-import pic from './profile.png'
-import plus from '../manage_team/plus.png'
-import { Link } from 'react-router-dom';
+import React, { useState,useEffect } from 'react';
+import './Manage_team.css';
+import plus from './plus.png';
 import axios from 'axios';
-
+import { Link } from 'react-router-dom';
+import pic from './profile.png';
+import pic1 from './profile1.webp';
+import pic2 from './profile2.jpg';
+import pic3 from './profile3.jpg';
 
 const UserProfileCard = ({ user }) => {
   const [role, setRole] = useState('');
@@ -119,7 +120,6 @@ const Manage_team = () => {
 
 
   return (
-
     <div className='Manage-team-container'>
       {/* <h5>Select your project</h5> */}
       <select className='select-project' value={selectedProject} onChange={(event) => handleProjectChange(event)}>
@@ -145,4 +145,4 @@ const Manage_team = () => {
   )
 }
 
-export default Manage_team
+export default Manage_team;

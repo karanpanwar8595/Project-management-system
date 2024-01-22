@@ -4,9 +4,6 @@ import './Projects.css'
 import plus from './plus.png'
 // import ProjectDetails from './ProjectDetails.js'
 import { Link } from 'react-router-dom';
-import { Switch, Case, Default } from 'react-router-dom';
-import { faL } from '@fortawesome/free-solid-svg-icons';
-
 
 const ProjectCard = ({ project }) => {
     const [projects, setProjects] = useState(project);
@@ -59,7 +56,7 @@ const ProjectCard = ({ project }) => {
     return (
         <Link
             to='/ProjectDetails'
-            state={{ projects ,isTeamMember:true}}
+            state={{ projects, isTeamMember: true }}
             style={{ textDecoration: 'none', color: 'black' }}
         >
             <div key={project.id} className="project-card">
@@ -131,7 +128,7 @@ const ProjectCardToMe = ({ project }) => {
     return (
         <Link
             to='/ProjectDetails'
-            state={{ projects ,isTeamMember:false}}
+            state={{ projects, isTeamMember: false }}
             style={{ textDecoration: 'none', color: 'black' }}
         >
             <div key={project.id} className="project-card">
@@ -197,12 +194,19 @@ const Projects = () => {
     const [selectedClient, setSelectedClient] = useState(null);
     const [clientResults, setClientResults] = useState([]);
 
+    // Multiple/Delete attachment and document
+    const [selectedAttachments, setSelectedAttachments] = useState([]);
+    const [selectedDocuments, setSelectedDocuments] = useState([]);
+
     // New project addition
     const [newProjects, setNewProjects] = useState([]);
 
-    // Multiple attachment and document
-    const [selectedAttachments, setSelectedAttachments] = useState([]);
-    const [selectedDocuments, setSelectedDocuments] = useState([]);
+    // validation in form
+    const [projectNameError, setProjectNameError] = useState('');
+    const [budgetError, setBudgetError] = useState('');
+    // not used : const [companyNameError, setCompanyNameError] = useState('');
+    const [startDateError, setStartDateError] = useState('');
+    const [dueDateError, setDueDateError] = useState('');
 
 
     const FetchClient = async () => {
@@ -233,7 +237,7 @@ const Projects = () => {
             // ye data request me jayega in views.py
 
             if (response.data['value']) {
-                console.log(response.data);
+                console.log('projecadded', response.data);
                 console.log('Project component connected');
             } else {
                 console.log("error")
@@ -335,7 +339,7 @@ const Projects = () => {
 
         const formData = new FormData();
         // const formData = new FormData();
-        selectedAttachments.forEach((file, index) => {
+        selectedAttachments.forEach((file, _index) => {
             formData.append(`attachment`, file);
         });
 
@@ -367,8 +371,7 @@ const Projects = () => {
     const handleClientSearchChange = (e) => {
         setClientSearch(e.target.value);
         if (selectedClient) {
-            alert('client is already selected')
-            return
+            return;
         }
         if (e.target.value) {
             const searchResults = clients.filter(client =>
@@ -401,6 +404,14 @@ const Projects = () => {
         }
     };
 
+    const removeAttachment = (index) => {
+        setSelectedAttachments(old => old.filter((_, i) => i !== index));
+    };
+
+    const removeDocument = (index) => {
+        setSelectedDocuments(old => old.filter((_, i) => i !== index));
+    };
+
     const getProgressClass = (percentage) => {
         if (percentage < 25) return 'low';
         if (percentage < 50) return 'medium';
@@ -408,30 +419,64 @@ const Projects = () => {
         return 'very-high';
     };
 
+    // validation function
+    const validateProjectName = (name) => {
+        if (!name.trim()) return 'Project name is required.';
+        if (name.length < 4) return 'Project name must be at least 4 characters long.';
+        return '';
+    };
 
+    const validateBudget = (budget) => {
+        if (budget === '') return 'Budget is required.';
+        if (isNaN(budget) || budget <= 0) return 'Please enter a valid budget amount.';
+        return '';
+    };
+
+    // not used : const validateCompanyName = (name) => {
+    //     if (!name.trim()) return 'Company name is required.';
+    //     return '';
+    // };
+
+    const validateStartDate = (date) => {
+        const today = new Date().toISOString().split('T')[0];
+        if (date < today) return 'Start date must be today or a future date.';
+        return '';
+    };
+
+    const validateDueDate = (startDate, dueDate) => {
+        if (dueDate <= startDate) return 'Due date must be greater than the start date.';
+        return '';
+    };
 
     const handleFormSubmit = (event) => {
         event.preventDefault();
 
+        // Perform final validation checks
+        const projectName = event.target.projectName.value;
+        const budget = event.target.budget.value;
+        // const companyName = event.target.companyName.value;
 
+        const projectNameError = validateProjectName(projectName);
+        const budgetError = validateBudget(budget);
+        // const companyNameError = validateCompanyName(companyName);
+        const startDateError = validateStartDate(startDate);
+        const dueDateError = validateDueDate(startDate, dueDate);
 
-        // const projectName = event.target.projectName.value;
-        const today = new Date().toISOString().split('T')[0];
-        if (startDate < today) {
-            alert('Start date must be today or a future date.');
+        if (projectNameError || budgetError || startDateError || dueDateError) {
+            setProjectNameError(projectNameError);
+            setBudgetError(budgetError);
+            // setCompanyNameError(companyNameError);
+            setStartDateError(startDateError);
+            setDueDateError(dueDateError);
             return;
         }
 
-        if (dueDate <= startDate) {
-            alert('Due date must be greater than the start date.');
+        if (!selectedClient) {
+            alert('Please select a valid client');
             return;
         }
-
-
         const email = JSON.parse(sessionStorage.getItem('loginData')).profile_data.email;
         const client_email = selectedClient['email'].replace(/'/g, '');
-
-
         const newProject = {
             projectname: projectname,
             projectdescription: projectDec,
@@ -528,12 +573,26 @@ const Projects = () => {
                             <span onClick={toggleForm}>Close</span>
                         </div>
                         <form onSubmit={handleFormSubmit}>
+
                             <div className="form-row">
                                 <label htmlFor="projectName">Project Name:</label>
-                                <input className="in-txtarea" type="text" id="projectName" name="projectName" required
+                                <input
+                                    className="in-txtarea"
+                                    type="text"
+                                    id="projectName"
+                                    name="projectName"
+                                    onChange={(e) => {
+                                        // Validation function (replace with your own validation logic)
+                                        const validationError = validateProjectName(e.target.value);
+
+                                        // Update state with the input value and validation result
+                                        setProjectName(e.target.value);
+                                        setProjectNameError(validationError);
+                                    }}
                                     value={projectname}
-                                    onChange={(e) => setProjectName(e.target.value)}
+                                    required
                                 />
+                                {projectNameError && <span className="error-message">{projectNameError}</span>}
                             </div>
                             <div className="form-row">
                                 <label htmlFor="startDate">Start Date:</label>
@@ -543,10 +602,15 @@ const Projects = () => {
                                     id="startDate"
                                     name="startDate"
                                     value={startDate}
-                                    onChange={(e) => setStartDate(e.target.value)}
-                                    required
+                                    onChange={(e) => {
+                                        setStartDateError(validateStartDate(e.target.value));
+                                        setStartDate(e.target.value);
+
+                                    }}
+
 
                                 />
+                                {startDateError && <span className="error-message">{startDateError}</span>}
                             </div>
                             <div className="form-row">
                                 <label htmlFor="dueDate">Due Date:</label>
@@ -556,9 +620,13 @@ const Projects = () => {
                                     id="dueDate"
                                     name="dueDate"
                                     value={dueDate}
-                                    onChange={(e) => setDueDate(e.target.value)}
-                                    required
+                                    onChange={(e) => {
+                                        setDueDateError(validateDueDate(startDate, e.target.value));
+                                        setDueDate(e.target.value);
+                                    }}
+
                                 />
+                                {dueDateError && <span className="error-message">{dueDateError}</span>}
                             </div>
                             <div className="form-row">
                                 <label htmlFor="projectDescription">Project Description:</label>
@@ -569,10 +637,19 @@ const Projects = () => {
                             </div>
                             <div className="form-row">
                                 <label htmlFor="budget">Budget:</label>
-                                <input className="in-txtarea" type="number" id="budget" name="budget" required
+                                <input
+                                    className="in-txtarea"
+                                    type="number"
+                                    id="budget"
+                                    name="budget"
+                                    required
                                     value={budget}
-                                    onChange={(e) => setBudget(e.target.value)}
+                                    onChange={(e) => {
+                                        setBudget(e.target.value);
+                                        setBudgetError(validateBudget(e.target.value));
+                                    }}
                                 />
+                                {budgetError && <span className="error-message">{budgetError}</span>}
                             </div>
 
                             <div className="form-row">
@@ -587,7 +664,10 @@ const Projects = () => {
                                 />
                                 <div>
                                     {selectedAttachments.map((file, index) => (
-                                        <div key={index}>{file.name}</div>
+                                        <div key={index} className="file-item">
+                                            {file.name}
+                                            <span className="remove-icon" onClick={() => removeAttachment(index)}>×</span>
+                                        </div>
                                     ))}
                                 </div>
                             </div>
@@ -603,7 +683,10 @@ const Projects = () => {
                                 />
                                 <div>
                                     {selectedDocuments.map((file, index) => (
-                                        <div key={index}>{file.name}</div>
+                                        <div key={index} className="file-item">
+                                            {file.name}
+                                            <span className="remove-icon" onClick={() => removeDocument(index)}>×</span>
+                                        </div>
                                     ))}
                                 </div>
                             </div>
@@ -616,8 +699,14 @@ const Projects = () => {
                                     value={clientSearch}
                                     placeholder='Search Here...'
                                     onChange={handleClientSearchChange}
-                                    required={!selectedClient}
+                                    // required={!selectedClient}
+                                    disabled={!!selectedClient} // Disable when client is selected
                                 />
+                                {clientSearch && clientResults.length === 0 && !selectedClient && (
+                                    <div className="no-match-message">
+                                        No matching clients found.
+                                    </div>
+                                )}
                                 {clientResults.map(client => (
                                     <div key={client.email} className="client-result">
                                         {client.name} ({client.email})

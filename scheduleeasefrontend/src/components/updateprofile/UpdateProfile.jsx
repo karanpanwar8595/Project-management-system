@@ -643,12 +643,10 @@ const SignupForm = () => {
 
 
           <br />
-
-          <a href="#">
-            <button type="submit" className="buttonsignup" onClick={handleSubmit}>
-              Submit
-            </button>
-          </a>
+<br />
+          <button id="update-profile-buttton"type="button" onClick={handleSubmit}>
+            Update Information
+          </button>
         </form>
       </div >
     </div >

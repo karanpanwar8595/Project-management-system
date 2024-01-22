@@ -27,7 +27,7 @@
 }
 
 .section-title {
-    font-size: 20px;
+    font-size: 18px;
     color: #333;
     margin-bottom: 23px;
     font-weight: bold;
@@ -35,7 +35,7 @@
 }
 
 .section-content {
-    font-size: 16px;
+    font-size: 15px;
     color: #444;
 }
 
@@ -46,14 +46,14 @@
 }
 
 .proj-header{
-    font-size: 37px;
+    font-size: 30px;
     color: #333;
     margin-bottom: 30px;
     text-align: left;
 }
 
 .project-description {
-    font-size: 20px;
+    font-size: 17px;
     color: #666; 
     margin-bottom: 20px;
     background-color: #f2f2f2;
@@ -120,10 +120,10 @@
     border: none;
     cursor: pointer;
     padding: 8px 18px;
-    font-size: 20px;
+    font-size: 600;
     display: flex;
     align-items: center;
-    border-radius: 5px;
+    border-radius: 8px;
 }
 
 .edit-button .fa-pencil-alt {

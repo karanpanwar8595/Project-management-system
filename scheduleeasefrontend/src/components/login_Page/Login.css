@@ -65,8 +65,8 @@ color: rgba(243, 36, 36, 0.914);
     justify-content: center;
 }
 
-.inputTExt {
-    width: 90%;
+.inputTEext {
+    width: 80%;
     height: 40px;
     background: transparent;
     border: none;
@@ -139,5 +139,47 @@ color: rgba(243, 36, 36, 0.914);
     color:red;
     padding-left: 20px;
     padding-top:5px
+  }
+  .eyeIcon {
+    .eyeIcon {
+        font-size: 20px;
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        right: 10px; /* Adjust the right position as needed */
+        color: #666;
+      }
+  }
+  .inputGRoup {
+    position: relative;
+    margin-top: 40px;
+  }
+  
+  .inputTExt {
+    width: 90%;
+    height: 40px;
+    background: transparent;
+    border: none;
+    outline: none;
+    font-size: 20px;
+    padding-left: 40px; /* Adjust the padding to create space for the icons */
+    color: black;
+    border: 5px solid whitesmoke;
+    border-radius: 8px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-weight: 500;
+    font-size: medium;
+  }
+  
+  .fa {
+    font-size: 20px;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    left: 10px; /* Adjust the left position as needed */
+    color: #666;
+  }
+  .inputGRoup.password-input .fa-unlock-alt {
+    display: none;
   }
   
