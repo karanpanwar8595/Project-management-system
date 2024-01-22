@@ -6,15 +6,15 @@ import { Link } from 'react-router-dom';
 import editicon from './editicon.png';
 import { faPencilAlt, faDownload } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-
+import axios from 'axios';
 
 const AccordionItem = ({ task_key, title, content, actstatus, duedate, owner, progress, done_key }) => {
     const [isOpen, setIsOpen] = useState(false);
     const [isComplete, setIsComplete] = useState(false);
-    console.log("sta",actstatus)
-    const [status,setStatus]=useState(actstatus);
+    console.log("sta", actstatus)
+    const [status, setStatus] = useState(actstatus);
     // const [addButtonintask, setAddButtonInTask] = useState(false);
-    console.log("status",status)
+    console.log("status", status)
     useEffect(() => {
         if (status == 'Completed') {
             setIsComplete(true)
@@ -39,14 +39,14 @@ const AccordionItem = ({ task_key, title, content, actstatus, duedate, owner, pr
 
                 <div className="accordion-edit-button" onClick={(event) => event.stopPropagation()}>
                     <Link to="/modifytask" state={{ task_id: { task_key } }}>
-                        <FontAwesomeIcon icon={faPencilAlt} style={{ fontSize: '24px' }}/>
+                        <FontAwesomeIcon icon={faPencilAlt} style={{ fontSize: '24px' }} />
                     </Link>
                 </div>
 
                 <div className="accordion-download-button" onClick={(event) => event.stopPropagation()}>
                     {/* <Link to="/" state={{ task_id: { task_key } }}> */}
-                        <FontAwesomeIcon icon={faDownload} style={{ fontSize: '24px' }}/>
-               
+                    <FontAwesomeIcon icon={faDownload} style={{ fontSize: '24px' }} />
+
                 </div>
 
                 {/* <div className='accordion-status'>{status}</div> */}
@@ -55,7 +55,7 @@ const AccordionItem = ({ task_key, title, content, actstatus, duedate, owner, pr
                 <div className='accordion-owner'>{owner}</div>
                 <div
                     className={`accordion-add-button ${done_key} ${isComplete ? 'complete' : 'bymenotcomplete'}`} key={done_key}
-                    onClick={(event) => { event.stopPropagation();}}
+                    onClick={(event) => { event.stopPropagation(); }}
                 > {status}
                 </div>
             </div>
@@ -69,8 +69,21 @@ const AccordionItem = ({ task_key, title, content, actstatus, duedate, owner, pr
 
 
 const Tasklist = () => {
+    useEffect(() => {
+        fetchalltasktoother();
+      }, []); 
+    const [taskList, setTasklist] = useState([{ title: "First task", content: "This  is the second item's accordion body. It is hidden by default, until the collapse pis is the second item's accordion body. It is hidden by default, until the collapse phis is the second item's accordion body. ", status: "Completed", duedate: "12/10/2023", progress: "20%", owner: "Suresh" }, { title: "Second task", content: "This  is the second item's accordion body. It is hidden by default, until the collapse pis is the second item's accordion body. It is hidden by default, until the collapse phis is the second item's accordion body. ", status: "Complete", duedate: "12/10/2023", progress: "20%", owner: "Ramesh" }]);
 
-    const [taskList, setTasklist] = useState([{ title: "First task", content: "This  is the second item's accordion body. It is hidden by default, until the collapse pis is the second item's accordion body. It is hidden by default, until the collapse phis is the second item's accordion body. ", status:"Completed", duedate: "12/10/2023", progress: "20%", owner: "Suresh" }, { title: "Second task", content: "This  is the second item's accordion body. It is hidden by default, until the collapse pis is the second item's accordion body. It is hidden by default, until the collapse phis is the second item's accordion body. ", status:"Complete", duedate: "12/10/2023", progress: "20%", owner: "Ramesh" }]);
+    const fetchalltasktoother = () => {
+        axios.post('http://127.0.0.1:8000/api/taskassigntoother/', { useremail: JSON.parse(sessionStorage.getItem('loginData')).profile_data.email }).then((response) => {
+            if (response) {
+                console.log(response.data);
+
+            }
+        }, (error) => {
+            console.log(error);
+        });
+    }
 
 
     return (

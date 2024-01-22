@@ -160,6 +160,10 @@ class ProjectMember(models.Model):
             'project':self.project,
         }
 
+    def tasktome(self):
+        return{
+            'project':self.project,
+        }
 
 class Task(models.Model):
     class Meta:
@@ -176,6 +180,31 @@ class Task(models.Model):
 
     def _str_(self):
         return self.task_title
+    
+    def to_dict(self):
+        return {
+            'task_id': self.task_id,
+            'task_title': self.task_title,
+            'task_desc': self.task_desc,
+            'start_date': str(self.start_date),
+            'completion_date': str(self.completion_date) if self.completion_date else None,
+            'deadline': str(self.deadline),
+            'project_id': self.project,
+            'manager_id': self.manager,
+            'team_member_id': self.team_member,
+        }
+    def task_to_dict(self):
+        return {
+            'task_id': self.task_id,
+            'task_title': self.task_title,
+            'task_desc': self.task_desc,
+            'start_date': str(self.start_date),
+            'completion_date': str(self.completion_date) if self.completion_date else None,
+            'deadline': str(self.deadline),
+            'project_id': self.project.to_projectuserin_dict(),
+            'manager_id': self.manager.to_dict(),
+            'team_member_id': self.team_member.to_dict(),
+        }
 
 class MesgMaster(models.Model):
     class Meta:
