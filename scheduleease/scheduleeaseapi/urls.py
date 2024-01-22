@@ -51,7 +51,10 @@ urlpatterns = [
     path('userinproject/', views.userinproject, name='userinproject'),
     path('projectmembers/', views.projectmembers, name='projectmembers'),
 
+#tasks
 
+    path('taskassigntome/', views.taskassigntome, name='taskassigntome'),
+    path('taskassigntoother/', views.taskassigntoother, name='taskassigntoother'),
 
 
     

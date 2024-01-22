@@ -183,7 +183,7 @@ def mailsenderapi(inputemail,new_password):
         'host': 'smtp.gmail.com',
         'port': 587,
         'user': 'ujjwalbhansali55@gmail.com',
-        'password': 'ndrn zxki ieqv hywg',
+        'password': '',
         'use_tls': True,  # Set to True if your email provider requires TLS
     }
     connection = get_connection(
@@ -558,6 +558,46 @@ def profileinfo(request):
         
         print(profiledetail)
         return Response({"data":profiledetail,"value":True})
+    except Exception as e:
+        print(e)
+        return Response({"data":"no data","value":False})
+
+
+
+#task process
+    
+       
+@api_view(['post'])
+def taskassigntome(request):
+    try:
+        data = json.loads(request.body)
+        print(data)
+        useremail = data.get('useremail')
+
+        profile_instance= get_object_or_404(Profile, email=useremail)
+        tasks_of_users = Task.objects.filter(team_member = profile_instance)
+        alltasks = [tasks_of_user.task_to_dict() for tasks_of_user in tasks_of_users]
+
+        print(alltasks)
+        return Response({"data":alltasks,"value":True})
+    except Exception as e:
+        print(e)
+        return Response({"data":"no data","value":False})
+ 
+
+@api_view(['post'])
+def taskassigntoother(request):
+    try:
+        data = json.loads(request.body)
+        print(data)
+        useremail = data.get('useremail')
+
+        profile_instance= get_object_or_404(Profile, email=useremail)
+        tasks_of_users = Task.objects.filter(manager = profile_instance)
+        alltasks = [tasks_of_user.task_to_dict() for tasks_of_user in tasks_of_users]
+
+        print(alltasks)
+        return Response({"data":alltasks,"value":True})
     except Exception as e:
         print(e)
         return Response({"data":"no data","value":False})
