@@ -132,10 +132,19 @@ function App() {
                   </>
                 }>
                 </Route> */}
-                <Route exact path='dashboard' element={
+                <Route exact path='dashnew' element={
                   <>
 
                     < DasNewComp />
+
+
+                  </>
+                }>
+                </Route>
+                <Route exact path='dashboard' element={
+                  <>
+
+                    < Dashboard />
 
 
                   </>
