@@ -66,7 +66,7 @@ const Login = ({ onDataFromChild }) => {
           <input
             type="text"
             placeholder="Username"
-            className={"inputTExt"}
+            className={"inputTEext"}
             autoComplete="off"
             value={email}
             onChange={handleEmailInput}
@@ -83,7 +83,7 @@ const Login = ({ onDataFromChild }) => {
           <input
             type={showPassword ? 'text' : 'password'}
             placeholder="Password"
-            className="inputTExt"
+            className="inputTEext"
             autoComplete="off"
             value={password}
             onChange={(e) => setPassword(e.target.value)}

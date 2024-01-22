@@ -1,7 +1,7 @@
-from django.shortcuts import render
+# from django.shortcuts import render
 from scheduleeaseapi.models import Profile,Country,State,City,ProjectMember,Project,ProjectDocument,Payment,Task,TaskDocument,ProfileDocument,CompanyDetails
 from django.core.mail import send_mail
-from django.http import HttpResponse
+# from django.http import HttpResponse
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from django.core.mail import get_connection
@@ -149,7 +149,7 @@ def login(request):
         # Access the data (assuming 'username' and 'password' keys in the posted data)
         inputemail = data.get('loginemail')
         inputpassword = data.get('loginpassword')
-        print(inputemail)
+        print(inputemail,inputpassword)
         logincretentialdata = Profile.objects.get(email=inputemail,password=inputpassword)
         print(logincretentialdata)
         
