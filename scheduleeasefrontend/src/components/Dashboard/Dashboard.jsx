@@ -6,6 +6,7 @@ import { faCommentDots } from '@fortawesome/free-solid-svg-icons';
 import { faCalendar } from '@fortawesome/free-solid-svg-icons';
 import { Link } from 'react-router-dom';
 import ManagerCalendar from './ManagerCalendar';
+import Graph from './Graph';
 
 const Dashboard = () => {
 
@@ -53,6 +54,7 @@ const Dashboard = () => {
                 </div>
             </div>
             <ManagerCalendar/>
+            <Graph/>
         </div>
     );
 }

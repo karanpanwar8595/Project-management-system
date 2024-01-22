@@ -11,7 +11,7 @@ const ManagerCalendar = () => {
         setSelectedDate(date);
     };
 
-    // --------------For adding event---------------
+    // --------------Function For adding event---------------
     // const handleAddEvent = () => {
     //     const newEvent = {
     //         title: `Event ${events.length + 1}`,
@@ -44,20 +44,27 @@ const ManagerCalendar = () => {
         if (eventDates.includes(date.toDateString())) {
             return <div className="event-dot" />;
         }
-
         return null;
     };
 
     return (
-        <div className="team-event-calendar">
-            <div className="calendar-container">
+        <div className='manager-calendar'>
+            <div className='cal-container'>
                 <Calendar
                     onChange={handleDateChange}
                     value={selectedDate}
                     tileContent={tileContent}
                 />
             </div>
-            {/* <div className="event-list">
+        </div>
+    );
+};
+
+export default ManagerCalendar;
+
+// <div className="manager-calendar">
+{/* --------------------Use below function when making it dynamic----------------- */ }
+{/* <div className="event-list">
                 <h4>Events on {selectedDate.toLocaleDateString()}</h4>
                 <ul>
                     {events.map((event, index) => (
@@ -67,11 +74,7 @@ const ManagerCalendar = () => {
                     ))}
                 </ul>
             </div> */}
-            {/* <button className="cal-Button" onClick={handleAddEvent}>
+{/* <button className="cal-Button" onClick={handleAddEvent}>
                 Add Event
             </button> */}
-        </div>
-    );
-};
-
-export default ManagerCalendar;
+// </div>

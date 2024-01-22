@@ -9,6 +9,7 @@
   min-height: 83vh; 
   max-height: 83vh;
   overflow: auto;
+  flex-direction: column;
 }
 
 /* ---------------------------------------------------------------- */
