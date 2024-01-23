@@ -142,11 +142,10 @@ const ProjectCardToMe = ({ project }) => {
     );
 };
 
-
 const Projects = () => {
-    const [projectname, setProjectName] = useState(0);
-    const [projectDec, setProjectDesc] = useState(0);
-    const [budget, setBudget] = useState(0);
+    const [projectname, setProjectName] = useState('');
+    const [projectDec, setProjectDesc] = useState('');
+    const [budget, setBudget] = useState('');
 
     const [userrole, setUserRole] = useState(0);
     const [isManager, setIsManager] = useState(false);
@@ -165,15 +164,12 @@ const Projects = () => {
             attachments: ['/project-plan.pdf'],
             documents: ['/Aadhar.jpg', '/4th sem result.pdf']
         },
-
     ]);
-
-
-
 
     const [assignedProjects, setAssignProjects] = useState([
 
     ]);
+
     const [clients, setClients] = useState([]);
 
     // const clients = [
@@ -203,6 +199,7 @@ const Projects = () => {
 
     // validation in form
     const [projectNameError, setProjectNameError] = useState('');
+    const [projectDescriptionError, setProjectDescriptionError] = useState('');
     const [budgetError, setBudgetError] = useState('');
     // not used : const [companyNameError, setCompanyNameError] = useState('');
     const [startDateError, setStartDateError] = useState('');
@@ -214,7 +211,7 @@ const Projects = () => {
 
             const response = await axios.post('http://127.0.0.1:8000/api/fetchclient/');
 
-
+            console.log('client', response.data.data)
             if (response.data.value) {
                 setClients(response.data.data)
                 console.log(clients)
@@ -423,12 +420,66 @@ const Projects = () => {
     const validateProjectName = (name) => {
         if (!name.trim()) return 'Project name is required.';
         if (name.length < 4) return 'Project name must be at least 4 characters long.';
+
+        // name = name.replace(/\s+/g, ' ').trim();
+
+        const firstFourCharacters = name.slice(0, 4);
+        if (!/^[a-zA-Z]+$/.test(firstFourCharacters)) {
+            return 'First four characters must be alphabets.';
+        }
+
+        const restOfName = name.slice(4);
+        if (restOfName && !/^[a-zA-Z0-9 ]*$/.test(restOfName)) {
+            return 'Only alphabets, digits, and a single space are allowed.';
+        }
+
+        if (/\s{2,}/.test(name)) {
+            return 'Only a single space is allowed between words.';
+        }
+
+        if (/^(.)\1+$/.test(name)) {
+            return 'Repeated characters are not allowed.';
+        }
+
+        // if (/[^a-zA-Z0-9]/.test(name)) {
+        //     return 'Special characters are not allowed.';
+        // }
         return '';
     };
 
+    const validateProjectDescription = (desc) => {
+        desc = desc.trim();
+    
+        if (desc) {
+            if (desc.length < 20) {
+                return 'Description is too short. Please provide more detail.';
+            }
+            if (desc.length > 400) {
+                return 'Description is too long. Please shorten it to under 400 characters.';
+            }
+            if (/^(.)\1+$/.test(desc)) {
+                return 'Please provide a more meaningful description.';
+            }
+            if (/\s{2,}/.test(desc)) {
+                return 'Only a single space is allowed between words.';
+            }
+            if (/(.)\1{3,}/.test(desc)) {
+                return 'Please avoid long sequences of the same character.';
+            }
+            if (/[^a-zA-Z0-9\s]{2,}/.test(desc)) {
+                return 'Please avoid repeated special characters.';
+            }
+            if (!/([a-zA-Z].*){10,}/.test(desc)) {
+                return 'Description must contain at least 10 alphabet characters.';
+            }
+        }
+        return '';
+    };
+    
     const validateBudget = (budget) => {
         if (budget === '') return 'Budget is required.';
         if (isNaN(budget) || budget <= 0) return 'Please enter a valid budget amount.';
+        if (budget < 5000) return `The budget must be at least ₹5000.`;
         return '';
     };
 
@@ -454,9 +505,11 @@ const Projects = () => {
         // Perform final validation checks
         const projectName = event.target.projectName.value;
         const budget = event.target.budget.value;
+        const projDes = event.target.projectDescription.value
         // const companyName = event.target.companyName.value;
 
         const projectNameError = validateProjectName(projectName);
+        const projectDescriptionError = validateProjectDescription(projDes);
         const budgetError = validateBudget(budget);
         // const companyNameError = validateCompanyName(companyName);
         const startDateError = validateStartDate(startDate);
@@ -464,6 +517,7 @@ const Projects = () => {
 
         if (projectNameError || budgetError || startDateError || dueDateError) {
             setProjectNameError(projectNameError);
+            setProjectDescriptionError(projectDescriptionError);
             setBudgetError(budgetError);
             // setCompanyNameError(companyNameError);
             setStartDateError(startDateError);
@@ -501,8 +555,6 @@ const Projects = () => {
 
     return (
         <div className="projects-container">
-
-
 
             {isManager ? (
                 <>
@@ -624,7 +676,6 @@ const Projects = () => {
                                         setDueDateError(validateDueDate(startDate, e.target.value));
                                         setDueDate(e.target.value);
                                     }}
-
                                 />
                                 {dueDateError && <span className="error-message">{dueDateError}</span>}
                             </div>
@@ -632,8 +683,12 @@ const Projects = () => {
                                 <label htmlFor="projectDescription">Project Description:</label>
                                 <textarea className="in-txtarea" id="projectDescription" name="projectDescription"
                                     value={projectDec}
-                                    onChange={(e) => setProjectDesc(e.target.value)}
+                                    onChange={(e) => {
+                                        setProjectDescriptionError(validateProjectDescription(e.target.value))
+                                        setProjectDesc(e.target.value);
+                                    }}
                                 />
+                                {projectDescriptionError && <span className="error-message">{projectDescriptionError}</span>}
                             </div>
                             <div className="form-row">
                                 <label htmlFor="budget">Budget:</label>

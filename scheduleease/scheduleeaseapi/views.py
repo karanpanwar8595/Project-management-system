@@ -444,6 +444,7 @@ def fetchclient(request):
            
         profiles = Profile.objects.filter(role=3)
         profile_list = [profile.client_to_dict() for profile in profiles]
+        print(profile_list)
         # print(city_list)
         return Response({"data":profile_list,"value":True})
     except Exception as e:
