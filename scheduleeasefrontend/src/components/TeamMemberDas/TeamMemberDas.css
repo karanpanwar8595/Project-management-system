@@ -39,6 +39,9 @@
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
 
   }
+  .project-snapshot-section{
+    max-height: 15vh;
+  }
   
   .side-column {
     width: 30%;

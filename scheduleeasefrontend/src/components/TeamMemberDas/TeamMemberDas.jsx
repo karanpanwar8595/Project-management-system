@@ -58,17 +58,7 @@ const TeamMemberDas = () => {
         </div>
       </div>
 
-      <div className="project-snapshot-section">
-        <h3>Project Snapshot</h3>
-         <p>
-           Project Progress: {projectSnapshot.progress}%
-           <div className="progress-bar-container">
-             <div className="progress-bar" style={progressStyle}></div>
-           </div>
-        </p>
-         {/* <p>Upcoming Milestone: {projectSnapshot.upcomingMilestone}</p> */}
-         <p>Deadline: {projectSnapshot.projectDeadline}</p>
-       </div>
+
 
 
     </div>

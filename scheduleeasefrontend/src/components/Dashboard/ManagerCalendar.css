@@ -1,0 +1,45 @@
+.manager-calendar {
+    max-width: 350px;
+    max-height: 300px;
+    margin: 30px 20px auto auto;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background-color: #fff;
+    box-shadow: 0 0px 5px rgba(0, 0, 0, 0.2);
+}
+
+.cal-container {
+    /* margin-bottom: 125px; */
+    /* margin-right: 19px; */
+    /* margin-right: 200px; */
+    display: flex;
+    /* flex-direction: row-reverse;  */
+    /* border: 2px solid black; */
+}
+
+.event-list {
+    margin-top: 20px;
+}
+
+button.cal-Button {
+    background-color: #006edc;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.event-dot {
+    width: 8px;
+    height: 8px;
+    background-color: #ff0000;
+    border-radius: 50%;
+    margin: 0 auto;
+}
+
+
+
+

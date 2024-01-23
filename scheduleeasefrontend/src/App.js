@@ -27,12 +27,14 @@ import ViewCompany from './components/Company/ViewCompany/ViewCompany';
 import Addtask from './components/addtask/Addtask';
 import ModifyTask from './components/modifytask/Modifytask';
 import Payment from './components/Payment/Payment';
-import Dashboard from './components/Dashboard/Dashboard';
+// import Dashboard from './components/Dashboard/Dashboard';
 import BlockUser from './components/BlockUser/BlockUser';
 import TeamMemberDas from './components/TeamMemberDas/TeamMemberDas';
 import DasNewComp from './components/DasNewComp/DasNewComp';
 
-import ChangePassword from './components/changepassword/ChangePassword'
+import ChangePassword from './components/changepassword/ChangePassword';
+
+import Dashboard from './components/Dasboard1/Dashboard1';
 
 
 
@@ -134,10 +136,19 @@ function App() {
                   </>
                 }>
                 </Route> */}
-                <Route exact path='dashboard' element={
+                <Route exact path='dashnew' element={
                   <>
 
                     < DasNewComp />
+
+
+                  </>
+                }>
+                </Route>
+                <Route exact path='dashboard1' element={
+                  <>
+
+                    < Dashboard />
 
 
                   </>
