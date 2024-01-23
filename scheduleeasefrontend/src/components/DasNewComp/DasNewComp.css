@@ -3,7 +3,7 @@
 .admin-dashboard-container {
     background-color: white;
     color: black;
-    min-height: 100vh;
+    /* min-height: vh; */
     display: flex;
     flex-direction: column;
     /* align-items: center; */
@@ -26,6 +26,7 @@
     transition: transform 0.3s ease-in-out;
     cursor: pointer;
     margin: 10px; /* Adjust spacing between action cards */
+    width: 30%;
   }
   
   .action-card:hover {
@@ -35,7 +36,7 @@
 
 .dashboard-container {
     display: flex;
-    justify-content: space-between;
+    /* justify-content: space-between; */
     padding: 20px;
   }
   
@@ -45,10 +46,12 @@
   }
   
   .dashboard-tables > div {
-    background-color: #f5f5f5;
+    background-color: #ffffff;
     padding: 20px;
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    margin-top: 30px;
+    margin-left: 30px;
   }
   
   .dashboard-tables h3 {
@@ -120,3 +123,6 @@
   }
   
    
+  .payment-delay{
+    max-width: 45vw;
+  }

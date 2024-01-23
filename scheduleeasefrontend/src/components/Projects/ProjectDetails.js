@@ -34,9 +34,20 @@ const ProjectDetails = () => {
             
             <div className="project-header-container">
                 <h2 className="proj-header">{project.name}</h2>
-                <button className="edit-button">
+                {isTeamMember ? (
+                    <>
+                        <button className="edit-button">
                     <FontAwesomeIcon icon={faPencilAlt} /> Edit
                 </button>
+               
+                  </>
+
+                ) : (<>
+                </>
+                    
+               
+                )}
+                
             </div>
             <p className="project-description">{project.projectDescription}</p>
             <span style={{ fontSize: '20px' }}> Progress </span>
