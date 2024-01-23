@@ -1,15 +1,19 @@
 .dashboard-container {
   position: relative;
-  background-color: #ffffff;
+  /* background-color: #ffffff; */
   max-width: auto;
   margin-top: auto auto;
-  padding: 5px 25px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  padding: 5px 10px;
+  /* box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); */
   border-radius: 8px;
   min-height: 83vh; 
   max-height: 83vh;
-  overflow: auto;
+  overflow: hidden;
+  overflow-y: auto;
+  overflow-x: hidden;
   flex-direction: column;
+  display: flex;
+
 }
 
 /* ---------------------------------------------------------------- */
@@ -17,14 +21,16 @@
 .box {
   margin-top: 23px;
   border-radius: 10px;
-  overflow: hidden;
+  /* overflow: hidden; */
 }
 
 .card-box {
-  background-color: #fff;
+  /* background-color: #fff; */
   display: flex;
   flex-wrap: wrap;
   justify-content: space-around;
+  /* z-index: 50; */
+  margin-bottom: 40px;
 }
 
 .button-style {
@@ -154,3 +160,13 @@
   color: #fff;
 }
 
+
+.bottom-two{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+
+}
+.right-das{
+  min-width: 70%;
+}

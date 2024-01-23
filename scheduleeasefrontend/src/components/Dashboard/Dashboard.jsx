@@ -9,7 +9,15 @@ import ManagerCalendar from './ManagerCalendar';
 import Graph from './Graph';
 
 const Dashboard = () => {
-
+    const projectSnapshot = {
+        progress: 75,
+        upcomingMilestone: 'Milestone Name',
+        projectDeadline: '2-05-2024',
+      };
+    
+      const progressStyle = {
+        width: `${projectSnapshot.progress}%`,
+      };
     return (
         <div className="dashboard-container">
             <div className="box card-box">
@@ -53,8 +61,30 @@ const Dashboard = () => {
                     </div>
                 </div>
             </div>
-            <ManagerCalendar/>
-            <Graph/>
+            <div className="project-snapshot-section">
+        <div style={{marginTop:"10px"}}>Project Snapshot</div>
+         <p>
+          
+           <div className="progress-bar-container">
+             <div className="progress-bar" style={progressStyle}></div>
+           </div>
+        </p>
+         {/* <p>Upcoming Milestone: {projectSnapshot.upcomingMilestone}</p> */}
+         <p>Deadline: {projectSnapshot.projectDeadline}</p>
+       </div>
+            <div className='bottom-two'>
+            <div className='right-das'>
+                <Graph/>
+
+                </div>
+                <div className='left-das'>
+                <ManagerCalendar/>
+
+                </div>
+                
+
+            </div>
+      
         </div>
     );
 }

@@ -48,8 +48,8 @@ const Graph = () => {
     };
 
     return (
-        <div style={{ maxWidth: '1000%', margin: 'auto auto auto auto' }}>
-            <div style={{ marginTop: '10%', maxWidth: '600px', margin: 'auto' }}>
+        <div style={{ maxWidth: '10000%', margin: '30px  auto auto 40px' }}>
+            <div style={{ marginTop: '10%',maxHeight:'1000px', maxWidth: '900px', margin: 'auto' }}>
                 <Bar data={data} options={options} />
             </div>
         </div>

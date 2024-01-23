@@ -21,6 +21,7 @@ const UserProfileCard = ({ user }) => {
     } else if (user.role === 3) {
       setRole('Client');
     }
+
   }, [user.role]);
 
   return (
@@ -102,6 +103,7 @@ const Manage_team = () => {
       if (response.data['value']) {
         console.log("settemamember", response.data.data);
         setTeamMemberList(response.data.data);
+        
         console.log('Project component connected');
       } else {
         console.log("error");
@@ -123,7 +125,7 @@ const Manage_team = () => {
     <div className='Manage-team-container'>
       {/* <h5>Select your project</h5> */}
       <select className='select-project' value={selectedProject} onChange={(event) => handleProjectChange(event)}>
-        <option disabled value="">Select a Project</option>
+        <option value="">Select a Project</option>
         {projects && projects.map((project) => (
           <option key={project.projects.id} value={project.projects.id}>{project.projects.name}</option>
         ))}

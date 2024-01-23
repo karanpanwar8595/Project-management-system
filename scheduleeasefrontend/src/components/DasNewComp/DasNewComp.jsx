@@ -1,8 +1,10 @@
 // Dashboard.jsx
 import React from 'react';
 import './DasNewComp.css';
+import ManagerCalendar from '../Dashboard/ManagerCalendar';
 
-const Dashboard = () => {
+
+const DasNewComp = () => {
   const totalProjects = 200;
   const dueProjects = 20;
   const completeProjects = 180;
@@ -27,16 +29,19 @@ const Dashboard = () => {
   ];
 
   const paymentData = [
-    { id: 1, client: 'Client X', amount: 500, status: 'Pending' },
-    { id: 2, client: 'Client Y', amount: 750, status: 'Pending' },
-    { id: 3, client: 'Client Z', amount: 1200, status: 'Pending' },
-    { id: 4, client: 'Client A', amount: 300, status: 'Pending' },
-    { id: 5, client: 'Client B', amount: 900, status: 'Pending' },
-    { id: 6, client: 'Client C', amount: 600, status: 'Pending' },
-    { id: 7, client: 'Client D', amount: 850, status: 'Pending' },
-    { id: 8, client: 'Client E', amount: 1100, status: 'Pending' },
-    { id: 9, client: 'Client F', amount: 400, status: 'Pending' },
-    { id: 10, client: 'Client G', amount: 950, status: 'Pending' },
+    { id: 1, client: 'Rameshchohan', amount: 5000, status: 'Pending' },
+    { id: 2, client: 'suresh', amount: 7500, status: 'Pending' },
+    { id: 3, client: 'MalharPrajapati', amount: 50000, status: 'completed' },
+
+    
+    // { id: 3, client: 'Client Z', amount: 1200, status: 'Pending' },
+    // { id: 4, client: 'Client A', amount: 300, status: 'Pending' },
+    // { id: 5, client: 'Client B', amount: 900, status: 'Pending' },
+    // { id: 6, client: 'Client C', amount: 600, status: 'Pending' },
+    // { id: 7, client: 'Client D', amount: 850, status: 'Pending' },
+    // { id: 8, client: 'Client E', amount: 1100, status: 'Pending' },
+    // { id: 9, client: 'Client F', amount: 400, status: 'Pending' },
+    // { id: 10, client: 'Client G', amount: 950, status: 'Pending' },
   ];
 
   const getStatusDot = (status) => {
@@ -48,7 +53,7 @@ const Dashboard = () => {
       marginRight: '5px',
     };
 
-    if (status === 'Approved') {
+    if (status === 'completed') {
       dotStyle.backgroundColor = 'green';
     } else if (status === 'Pending') {
       dotStyle.backgroundColor = 'red';
@@ -59,6 +64,7 @@ const Dashboard = () => {
 
   return (
     <div className="admin-dashboard-container">
+      <div className="dashboard-container">
       <div className="action-cards-container">
         <div className="action-card create-account" style={{ background: '#3498db' }}>
           <h3>Total projects</h3>
@@ -71,14 +77,16 @@ const Dashboard = () => {
         </div>
 
         <div className="action-card view-projects" style={{ background: '#2ecc71' }}>
-          <h3>Complete Projects</h3>
+          <h3>Completed Projects</h3>
           <p style={{ color: 'white' }}>{completeProjects}</p>
         </div>
       </div>
 
-      <div className="dashboard-container">
-        <div className="dashboard-tables">
-          {activeUsersData.length > 0 && (
+        
+        <div className='bottom-two'>
+            <div className='right-das'>
+            <div className="dashboard-tables">
+          {/* {activeUsersData.length > 0 && (
             <div>
               <h3>Active user</h3>
               <table>
@@ -99,7 +107,7 @@ const Dashboard = () => {
                     <td>{user.name}</td>
                     <td>{user.role}</td>
                     <td>{user.project}</td>
-                    {/* A<td>{getActivityDot(user.activity)}</td> */}
+                    
                     <td>{user.activity}</td>
                     <td>{user.time}</td>
                   </tr>
@@ -107,10 +115,10 @@ const Dashboard = () => {
               </tbody>
               </table>
             </div>
-          )}
+          )} */}
 
           {paymentData.length > 0 && (
-            <div>
+            <div className='payment-delay'>
               <h3>Payments</h3>
               <table>
                 <thead>
@@ -135,12 +143,25 @@ const Dashboard = () => {
             </div>
           )}
         </div>
+
+                </div>
+                <div className='left-das'>
+                <ManagerCalendar/>
+
+                </div>
+                
+
+            </div>
+      <div>
+
+      </div>
+
       </div>
     </div>
   );
 };
 
-export default Dashboard;
+export default DasNewComp;
 
 
 

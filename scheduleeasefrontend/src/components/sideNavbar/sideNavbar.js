@@ -32,7 +32,7 @@ const SideNavbar = () => {
           <img src={logo} alt="Logo" />
         </div>
         <div className='sidenavlist'>
-          <Link to="/dashboard" onClick={() => handleLinkClick('/dashboard')}><div className={`sidenavitem ${activeLink === '/dashboard' ? 'active' : ''}`}>Dashboard</div></Link>
+          <Link to="/dashboard1" onClick={() => handleLinkClick('/dashboard1')}><div className={`sidenavitem ${activeLink === '/dashboard1' ? 'active' : ''}`}>Dashboard</div></Link>
 
 
           <Link to="/project" onClick={() => handleLinkClick('/project')}><div className={`sidenavitem ${activeLink === '/project' ? 'active' : ''}`}>Project</div></Link>
@@ -73,7 +73,7 @@ const SideNavbar = () => {
           <img src={logo} alt="Logo" />
         </div>
         <div className='sidenavlist'>
-          <Link to="/dashboard" onClick={() => handleLinkClick('/dashboard')}><div className={`sidenavitem ${activeLink === '/dashboard' ? 'active' : ''}`}>Dashboard</div></Link>
+          <Link to="/dashboard1" onClick={() => handleLinkClick('/dashboard1')}><div className={`sidenavitem ${activeLink === '/dashboard1' ? 'active' : ''}`}>Dashboard</div></Link>
 
 
           <Link to="/project" onClick={() => handleLinkClick('/project')}><div className={`sidenavitem ${activeLink === '/project' ? 'active' : ''}`}>Project</div></Link>
@@ -121,7 +121,7 @@ const SideNavbar = () => {
         <img src={logo} alt="Logo" />
       </div>
       <div className='sidenavlist'>
-        <Link to="/dashboard" onClick={() => handleLinkClick('/dashboard')}><div className={`sidenavitem ${activeLink === '/dashboard' ? 'active' : ''}`}>Dashboard</div></Link>
+        <Link to="/dashboard1" onClick={() => handleLinkClick('/dashboard1')}><div className={`sidenavitem ${activeLink === '/dashboard1' ? 'active' : ''}`}>Dashboard</div></Link>
 
 
         <Link to="/project" onClick={() => handleLinkClick('/project')}><div className={`sidenavitem ${activeLink === '/project' ? 'active' : ''}`}>Projects</div></Link>
