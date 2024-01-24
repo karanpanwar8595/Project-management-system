@@ -126,6 +126,7 @@ DATABASES = {
     }
 }
 
+<<<<<<< HEAD
 # DATABASES = {
 #     'default': {
 #         'ENGINE': 'django.db.backends.mysql',
@@ -136,6 +137,18 @@ DATABASES = {
 #         'PORT': '3306',  # Change it to your MySQL port if necessary
 # }
 # }
+=======
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'collegeproject',
+        'USER': 'root',
+        'PASSWORD': 'Karan@123',
+        'HOST': 'localhost',
+        'PORT': '3306',  # Change it to your MySQL port if necessary
+}
+}
+>>>>>>> karan
 
 # DATABASES = {
 #     'default': {

@@ -107,6 +107,9 @@ const SideNavbar = () => {
               </div>
 
             )}
+
+          <Link to="/managerreport" onClick={() => handleLinkClick('/managerreport')}><div className={`sidenavitem ${activeLink === '/managerreport' ? 'active' : ''}`}>Report</div></Link>
+
           </div>
 
         </div>

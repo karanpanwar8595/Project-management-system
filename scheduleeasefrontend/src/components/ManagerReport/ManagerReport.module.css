@@ -1,0 +1,31 @@
+.managerReports {
+  display: grid;
+  grid-template-rows: repeat(2, 1fr);
+  gap: 20px;
+}
+
+.upperRow,
+.lowerRow {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+}
+
+.reportBox {
+  border: 1px solid #ddd;
+  padding: 40px;
+  display: flex;
+  flex-direction: column;
+}
+
+.reportTitle {
+  color: #333;
+  font-size: 1.5em;
+  margin-bottom: 10px;
+}
+
+.chartContainer {
+  max-width: 100%;
+  flex-grow: 1;
+  margin: 0 auto;
+}
