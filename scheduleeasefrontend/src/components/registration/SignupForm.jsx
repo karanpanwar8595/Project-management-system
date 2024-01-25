@@ -4,7 +4,7 @@ import axios from 'axios';
 
 
 const SignupForm = () => {
-  const [showPassword, setShowPassword] = useState(false);
+  // const [showPassword, setShowPassword] = useState(false);
   const [isValidEmail, setIsValidEmail] = useState(true);
   const [isValidDob, setIsValidDob] = useState(false);
   const [errors, setErrors] = useState(false);
@@ -41,19 +41,19 @@ const SignupForm = () => {
 
 
   const [stateValue, setStateValue] = useState('');
-  const [stateListItems, setStateListItems] = useState(["No item", "hello"]);
-  const [stateListItemsconst, setStateListItemsconst] = useState(["No item", "hello"]);
+  const [stateListItems, setStateListItems] = useState([]);
+  const [stateListItemsconst, setStateListItemsconst] = useState([]);
   const [stateisListVisible, setStateListVisible] = useState(false);
 
   // const [stateValue, setStateValue] = useState('');
   const [cityValue, setCityValue] = useState('');
-  const [cityListItems, setCityListItems] = useState(["No item", "hello"]);
-  const [cityListItemsconst, setCityListItemsconst] = useState(["No item", "hello"]);
+  const [cityListItems, setCityListItems] = useState([]);
+  const [cityListItemsconst, setCityListItemsconst] = useState([]);
   const [cityisListVisible, setCityListVisible] = useState(false);
   // const [cityValue, setCityValue] = useState('');
   const [GstValue, setGstValue] = useState('');
   const [gstListItems, setGstListItems] = useState(["No item", "hello"]);
-  const [gstnumberListItemsconst, setGstListItemsconst] = useState(["No item", "hello"]);
+  const [gstnumberListItemsconst, setGstListItemsconst] = useState([]);
   const [gstisListVisible, setGstListVisible] = useState(false);
   // const [cityValue, setCityValue] = useState('');
 
@@ -61,14 +61,19 @@ const SignupForm = () => {
 
   // Country function
   const handleCountryChange = (e) => {
+
     const value = e.target.value;
-    setCountryValue(value);
     // Filter the list based on the input value
     const filteredItems = countryListItemsconst.filter((country) =>
       country.name.toLowerCase().includes(value.toLowerCase())
     );
+    if (filteredItems.length == 0) {
+      return;
+    }
     // Update the list with the filtered items
     setCountryListItems(filteredItems);
+    setCountryValue(value);
+
   };
 
   const handleCountryItemClick = (itemName) => {
@@ -106,14 +111,21 @@ const SignupForm = () => {
   // State function 
 
   const handleStateChange = (e) => {
+    if (stateListItemsconst.length == 0) {
+      return;
+    }
     const value = e.target.value;
-    setStateValue(value);
     // Filter the list based on the input value
     const filteredItems = stateListItemsconst.filter((country) =>
       country.name.toLowerCase().includes(value.toLowerCase())
     );
+    if (filteredItems.length == 0) {
+      return;
+    }
     // Update the list with the filtered items
     setStateListItems(filteredItems);
+    setStateValue(value);
+
   };
 
   const handleStateItemClick = (itemName) => {
@@ -143,14 +155,22 @@ const SignupForm = () => {
   // city function 
 
   const handleCityChange = (e) => {
+    if (cityListItemsconst.length == 1) {
+      return;
+    }
     const value = e.target.value;
-    setCityValue(value);
+
     // Filter the list based on the input value
     const filteredItems = cityListItemsconst.filter((city) =>
       city.name.toLowerCase().includes(value.toLowerCase())
     );
+    if (filteredItems.length == 0) {
+      return;
+    }
     // Update the list with the filtered items
     setCityListItems(filteredItems);
+    setCityValue(value);
+
   };
 
   const handleCityItemClick = (itemName) => {
@@ -198,13 +218,19 @@ const SignupForm = () => {
 
   const handleGstChange = (e) => {
     const value = e.target.value;
-    setGstValue(value);
+    console.log()
     // Filter the list based on the input value
     const filteredItems = gstnumberListItemsconst.filter((gstnumber) =>
       gstnumber.name.toLowerCase().includes(value.toLowerCase())
+
     );
+    if (filteredItems.length == 0) {
+      return;
+    }
     // Update the list with the filtered items
-    setCityListItems(filteredItems);
+    setGstListItems(filteredItems);
+    setGstValue(value);
+
   };
 
   const handleGstItemClick = (itemName) => {
@@ -241,13 +267,7 @@ const SignupForm = () => {
 
   };
 
-
-
-
-
   const submitButton = async () => {
-
-
     try {
       var cityId = 0;
       var role_id = 0;
@@ -334,29 +354,102 @@ const SignupForm = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("role",selectedRole);
+    console.log("role", selectedRole);
     const today = new Date();  // Get today's date
     const dobDate = new Date(dob)
-    if (dobDate.getTime() >= today.getTime()) {
-      setMessage("Date must be past date")
-          setErrors(true)
-          setDOB('');
-          return;
+    dobDate.setDate(dobDate.getDate() + 15);
+    const isAllNumbers = (/\d/.test(firstName)) || (/\d/.test(middleName) || (/\d/.test(lastName)));
+    if (firstName && !/^[a-zA-Z0-9 ]*$/.test(firstName)) {
+      setMessage("special character are not allowed in name ")
+      setErrors(true)
+      return;
     }
-    if (email == '' || firstName == "" || gender == "" || selectedRole == '' || dob == '' || address == '' ||countryValue == '' || stateValue == '' || cityValue == '') {
-      
-      console.log("role",selectedRole);
+    if (middleName && !/^[a-zA-Z0-9 ]*$/.test(middleName)) {
+      setMessage("special character are not allowed in name ")
+      setErrors(true)
+      return;
+    }
+    if (lastName && !/^[a-zA-Z0-9 ]*$/.test(lastName)) {
+      setMessage("special character are not allowed in name ")
+      setErrors(true)
+      return;
+    }
+
+
+    if (/^(.)\1+$/.test(firstName)) {
+
+      setMessage("Repeated characters are not allowed in name")
+      setErrors(true)
+      return;
+    }
+    if (/^(.)\1+$/.test(middleName)) {
+      setMessage("Repeated characters are not allowed in name")
+      setErrors(true)
+      return;
+    }
+    if (/^(.)\1+$/.test(lastName)) {
+      setMessage("Repeated characters are not allowed in name")
+      setErrors(true)
+      return;
+    }
+    if (/^(.)\1+$/.test(address)) {
+      setMessage("Repeated characters are not allowed in Address")
+      setErrors(true)
+      return;
+    }
+    const hasMinTwoLetters = /^[a-zA-Z]{2,}$/.test(firstName);
+
+
+
+    if (isAllNumbers) {
+      setMessage("Numbers are not allowed in name ")
+      setErrors(true)
+      console.error("All characters can't be numbers or the name is too short");
+      return;
+
+      // You can also throw an error or handle it according to your needs
+    }
+    else if (!hasMinTwoLetters) {
+      setMessage("The name is too short")
+      setErrors(true)
+      return;
+
+    }
+    const isAllNumbersAdd = /^\d+$/.test(address);
+
+    if (isAllNumbersAdd) {
+      setMessage("All characters should not be number in Address")
+      setErrors(true)
+      console.error("All characters can't be numbers or the name is too short");
+      return;
+
+      // You can also throw an error or handle it according to your needs
+    }
+    // Calculate the minimum allowed date (15 years ago)
+    const minAllowedDate = new Date();
+    minAllowedDate.setFullYear(today.getFullYear() - 15);
+
+    if (dobDate.getTime() >= today.getTime() || dobDate.getTime() >= minAllowedDate.getTime()) {
+      setMessage("Person should be 15 years old");
+      setErrors(true);
+      setDOB('');
+      return;
+    }
+
+    if (email == '' || firstName == "" || gender == "" || selectedRole == '' || dob == '' || address == '' || countryValue == '' || stateValue == '' || cityValue == '') {
+
+      console.log("role", selectedRole);
       setMessage("Please enter all the required fields")
       setErrors(true)
       return;
 
     }
-    if(selectedRole=="Client"){
-      if(GstValue==''){
+    if (selectedRole == "Client") {
+      if (GstValue == '') {
 
-      setMessage("Please enter all the required fields")
-      setErrors(true)
-      return;
+        setMessage("Please enter all the required fields")
+        setErrors(true)
+        return;
       }
     }
 
@@ -389,13 +482,26 @@ const SignupForm = () => {
     fetchData();  // Call the async function immediately
   }, []);
 
+  useEffect(() => {
+    // Check if myState has a specific value
+
+    // Set a timeout to change the state after a certain time (e.g., 2000 milliseconds or 2 seconds)
+    const timeoutId = setTimeout(() => {
+      // Change the state after the specified time
+      setErrors(false);
+    }, 2000);
+
+    // Clean up the timeout when the component unmounts or when myState changes
+    return () => clearTimeout(timeoutId);
+
+  }, [errors]);
 
   return (
     <div className="signup-content">
       <div className="signup-title">
         <form className="signup-form">
           {errors && (
-            <div className='error-box' style={{ }}>
+            <div className='error-box' style={{}}>
               <div className='error-message' style={{ paddingLeft: '20px' }}>{message}</div>
               <div className='closeButton' style={{ paddingRight: '20px' }}
                 onClick={() => setErrors(false)}>
@@ -613,7 +719,7 @@ const SignupForm = () => {
               <div className='addressitem'>
 
                 <label className="signup-label">
-                  Gst Number:<span className='required_tag'>*required</span>
+                  Company Name:<span className='required_tag'>*required</span>
                 </label>
                 <div className='listofaddress'>
                   <input
@@ -622,7 +728,7 @@ const SignupForm = () => {
                     onChange={handleGstChange}
                     onFocus={handleGstInputFocus}
                     onBlur={handleGstInputBlur}
-                    placeholder="Enter Gst Number"
+                    placeholder="Enter Company Name"
                     className='signup-input'
                   />
 

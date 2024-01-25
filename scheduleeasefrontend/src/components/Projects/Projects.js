@@ -37,7 +37,8 @@ const ProjectCard = ({ project }) => {
 
                 }
                 else {
-                    const percentage = response.data.data.totaltask / response.data.data.taskdone
+                    const percentage = response.data.data.taskdone/response.data.data.totaltask*100
+                    console.log(percentage)
                     SetCompletion(percentage);
                     const updatedProject = {
                         ...projects,
@@ -56,7 +57,7 @@ const ProjectCard = ({ project }) => {
     return (
         <Link
             to='/ProjectDetails'
-            state={{ projects, isTeamMember: true }}
+            state={{ projects, isManager: true }}
             style={{ textDecoration: 'none', color: 'black' }}
         >
             <div key={project.id} className="project-card">
@@ -128,7 +129,7 @@ const ProjectCardToMe = ({ project }) => {
     return (
         <Link
             to='/ProjectDetails'
-            state={{ projects, isTeamMember: false }}
+            state={{ projects, isManager: false }}
             style={{ textDecoration: 'none', color: 'black' }}
         >
             <div key={project.id} className="project-card">
@@ -449,7 +450,7 @@ const Projects = () => {
 
     const validateProjectDescription = (desc) => {
         desc = desc.trim();
-    
+
         if (desc) {
             if (desc.length < 20) {
                 return 'Description is too short. Please provide more detail.';
@@ -475,7 +476,7 @@ const Projects = () => {
         }
         return '';
     };
-    
+
     const validateBudget = (budget) => {
         if (budget === '') return 'Budget is required.';
         if (isNaN(budget) || budget <= 0) return 'Please enter a valid budget amount.';
@@ -755,19 +756,28 @@ const Projects = () => {
                                     placeholder='Search Here...'
                                     onChange={handleClientSearchChange}
                                     // required={!selectedClient}
+                                    onFocus={() => {
+                                        setClientResults(clients);  // Assuming 'clients' is the data you want to set
+                                    }}
                                     disabled={!!selectedClient} // Disable when client is selected
                                 />
-                                {clientSearch && clientResults.length === 0 && !selectedClient && (
-                                    <div className="no-match-message">
-                                        No matching clients found.
-                                    </div>
-                                )}
-                                {clientResults.map(client => (
-                                    <div key={client.email} className="client-result">
-                                        {client.name} ({client.email})
-                                        <button className="add-form-btn" type="button" onClick={() => handleAddClient(client)}>Add</button>
-                                    </div>
-                                ))}
+                                <div className='clientlist'>
+
+                                    {clientSearch && clientResults.length === 0 && !selectedClient && (
+                                        <div className="no-match-message">
+                                            No matching clients found.
+                                        </div>
+                                    )}
+                                    {clientResults.map(client => (
+                                        <div key={client.email} className="client-result">
+                                            <div>{client.name} ({client.email}</div>
+                                            )
+                                            <button className="add-form-btn" type="button" onClick={() => handleAddClient(client)}
+
+                                            >Add</button>
+                                        </div>
+                                    ))}
+                                </div>
                             </div>
                             {selectedClient && (
                                 <div className="selected-client">

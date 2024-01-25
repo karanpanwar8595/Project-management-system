@@ -58,6 +58,8 @@ const SideNavbar = () => {
               </div>
 
             )}
+          <Link to="/adminreport" onClick={() => handleLinkClick('/adminreport')}><div className={`sidenavitem ${activeLink === '/adminreport' ? 'active' : ''}`}>Reports</div></Link>
+
           </div>
 
 
@@ -107,6 +109,9 @@ const SideNavbar = () => {
               </div>
 
             )}
+
+          <Link to="/managerreport" onClick={() => handleLinkClick('/managerreport')}><div className={`sidenavitem ${activeLink === '/managerreport' ? 'active' : ''}`}>Report</div></Link>
+
           </div>
 
         </div>
@@ -121,12 +126,12 @@ const SideNavbar = () => {
         <img src={logo} alt="Logo" />
       </div>
       <div className='sidenavlist'>
-        <Link to="/dashboard1" onClick={() => handleLinkClick('/dashboard1')}><div className={`sidenavitem ${activeLink === '/dashboard1' ? 'active' : ''}`}>Dashboard</div></Link>
+        {/* <Link to="/dashboard1" onClick={() => handleLinkClick('/dashboard1')}><div className={`sidenavitem ${activeLink === '/dashboard1' ? 'active' : ''}`}>Dashboard</div></Link> */}
 
 
         <Link to="/project" onClick={() => handleLinkClick('/project')}><div className={`sidenavitem ${activeLink === '/project' ? 'active' : ''}`}>Projects</div></Link>
 
-        <Link to="/manage_team" onClick={() => handleLinkClick('/manage_team')}><div className={`sidenavitem ${activeLink === '/manage_team' ? 'active' : ''}`}>Team</div></Link>
+        <Link to="/manage_team" onClick={() => handleLinkClick('/manage_team')}><div className={`sidenavitem ${activeLink === '/manage_team' ? 'active' : ''}`}>My Team</div></Link>
 
         <Link to="/calendar" onClick={() => handleLinkClick('/calendar')}><div className={`sidenavitem ${activeLink === '/calendar' ? 'active' : ''}`}>Calender</div></Link>
 
@@ -149,7 +154,7 @@ const SideNavbar = () => {
         <img src={logo} alt="Logo" />
       </div>
       <div className='sidenavlist'>
-        <Link to="/dashboard" onClick={() => handleLinkClick('/dashboard')}><div className={`sidenavitem ${activeLink === '/dashboard' ? 'active' : ''}`}>Dashboard</div></Link>
+        {/* <Link to="/dashboard" onClick={() => handleLinkClick('/dashboard')}><div className={`sidenavitem ${activeLink === '/dashboard' ? 'active' : ''}`}>Dashboard</div></Link> */}
 
         <Link to="/project" onClick={() => handleLinkClick('/project')}><div className={`sidenavitem ${activeLink === '/project' ? 'active' : ''}`}>Projects</div></Link>
 

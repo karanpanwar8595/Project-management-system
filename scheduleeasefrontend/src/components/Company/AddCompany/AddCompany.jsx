@@ -16,25 +16,34 @@ const AddCompany = () => {
   // Event handlers for input changes and validation
   const handleCompanyNameChange = (event) => {
     const value = event.target.value;
+    const containsOnlyDigits = /^\d+$/.test(value);
+    const repeated=/^(.)\1+$/.test(companyName);
     setCompanyName(value);
-    setCompanyNameValid(!!value); // Simple validation, ensuring it's not empty
+    setCompanyNameValid(!repeated&&!containsOnlyDigits && !!value); // Simple validation, ensuring it's not empty
   };
 
   const handleGstNumberChange = (event) => {
     const value = event.target.value;
+    
     setGstNumber(value);
-    setGstNumberValid(!!value); // Simple validation, ensuring it's not empty
+
+    setGstNumberValid( gstNumber.length === 14); 
   };
 
   const handleCompanyAddressChange = (event) => {
     const value = event.target.value;
+    const containsOnlyDigits = /^\d+$/.test(value);
+    const repeated=/^(.)\1+$/.test(companyAddress);
+
     setCompanyAddress(value);
-    setCompanyAddressValid(!!value); // Simple validation, ensuring it's not empty
+    setCompanyAddressValid(!repeated && !containsOnlyDigits && !!value); // Simple validation, ensuring it's not empty
   };
 
   const handleCompanyPhoneChange = (event) => {
     const value = event.target.value;
-    setCompanyPhone(value);
+    const numericValue = value.replace(/\D/g, '');
+    setCompanyPhone(numericValue);
+
     setCompanyPhoneValid(/^\d{10}$/.test(value)); // Validation for a 10-digit phone number
   };
 
@@ -92,7 +101,7 @@ const AddCompany = () => {
           onChange={handleCompanyNameChange}
         />
         {!isCompanyNameValid && (
-          <span className="error-message">Company Name is required</span>
+          <span className="error-message">Invalid Company Name</span>
         )}
       </div>
 
@@ -109,7 +118,7 @@ const AddCompany = () => {
           onChange={handleGstNumberChange}
         />
         {!isGstNumberValid && (
-          <span className="error-message">GST Number is required</span>
+          <span className="error-message">Please enter a valid Gst Number</span>
         )}
       </div>
 
@@ -126,7 +135,7 @@ const AddCompany = () => {
           onChange={handleCompanyAddressChange}
         />
         {!isCompanyAddressValid && (
-          <span className="error-message">Company Address is required</span>
+          <span className="error-message">Invalid Company Address</span>
         )}
       </div>
 

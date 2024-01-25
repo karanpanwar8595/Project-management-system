@@ -1,89 +1,84 @@
 import React, { useState, useEffect } from 'react'
 import axios from 'axios';
-import './Modifytask.css';
+import './EditProject.css'
 import { useLocation } from 'react-router-dom';
 
-const ModifyTask = () => {
+const EditProject = () => {
     const location = useLocation();
-    // task_key, title, content, actstatus, duedate, owner, progress, done_key 
-    const task = location.state.tasks;
-    const [taskname, setTaskName] = useState(task.title);
-    const [taskDec, setTaskDesc] = useState(task.content);
 
-    const [startDate, setStartDate] = useState("");
-    const [dueDate, setDueDate] = useState("");
-    const [selectedTeamMember, setSelectedTeamMember] = useState();
-console.log("modifu",task);
-
-
+    const project = location.state.projects;
+    console.log(project);
+    const [projectname, setProjectName] = useState(project.name);
+    const [projectDec, setProjectDesc] = useState(project.projectDescription);
+    const [budget, setBudget] = useState(project.budget);
+    const [startDate, setStartDate] = useState(project.startDate);
+    const [dueDate, setDueDate] = useState(project.dueDate);
+    const [selectedClient, setSelectedClient] = useState(project.client);
 
 
-
-    const [teammembers, setTeamMembers] = useState([
-        { name: 'hello asdf', email: 'cl@mail.com' },
-        { name: 'Ujjwal Bhansali', email: 'ujjwalbhansali@gmail.com' },
-        { name: 'Karan Panwar', email: 'karanpanwar@gmail.com' },
+    const [ongoingProjects, setOngoingProjects] = useState([
+        {
+            id: 1,
+            name: 'InnovateHub',
+            dueDate: '2024-08-18',
+            startDate: '2024-01-12',
+            completion: 72,
+            projectDescription: 'InnovateHub is focused on developing innovative solutions.',
+            budget: '80000',
+            companyName: 'Innovate Inc.',
+            clientName: 'karan Panwar',
+            attachments: ['/project-plan.pdf'],
+            documents: ['/Aadhar.jpg', '/4th sem result.pdf']
+        },
     ]);
 
-    const handleTeamMemberSearchChange = (e) => {
-        setTeamMemberSearch(e.target.value);
-        if (selectedTeamMember) {
-            return;
-        }
-        if (e.target.value) {
-            const searchResults = teammembers.filter(teammember =>
-                teammember.name.toLowerCase().includes(e.target.value.toLowerCase())
-            );
-            setTeamMemberResults(searchResults);
-        } else {
-            setTeamMemberResults([]);
-        }
-    };
-
-    const handleAddTeamMember = (teammember) => {
-        setSelectedTeamMember(teammember);
-        setTeamMemberResults([]);
-        setTeamMemberSearch('');
-    };
-
-    const handleRemoveTeamMember = () => {
-        setSelectedTeamMember(null);
-    };
 
 
+    const [clients, setClients] = useState([]);
+
+    // const clients = [
+    //     { name: 'hello asdf', email: 'cl@mail.com' },
+    //     { name: 'Ujjwal Bhansali', email: 'ujjwalbhansali@gmail.com' },
+    //     { name: 'Karan Panwar', email: 'karanpanwar@gmail.com' },
+    // ];
+    //------------------------------------------------------------------------------------------------------------------------
+
+ 
+
+    // Form Project start date and due date
   
 
-    // Form TeamMember searching and adding
-    const [teammemberSearch, setTeamMemberSearch] = useState('');
-    const [teammemberResults, setTeamMemberResults] = useState([]);
+    // Form Client searching and adding
+    const [clientSearch, setClientSearch] = useState('');
+    const [clientResults, setClientResults] = useState([]);
 
     // Multiple/Delete attachment and document
     const [selectedAttachments, setSelectedAttachments] = useState([]);
-  
+    const [selectedDocuments, setSelectedDocuments] = useState([]);
 
 
     // validation in form
-    const [taskNameError, setTaskNameError] = useState('');
-    const [taskDescriptionError, setTaskDescriptionError] = useState('');
-
+    const [projectNameError, setProjectNameError] = useState('');
+    const [projectDescriptionError, setProjectDescriptionError] = useState('');
+    const [budgetError, setBudgetError] = useState('');
     // not used : const [companyNameError, setCompanyNameError] = useState('');
     const [startDateError, setStartDateError] = useState('');
     const [dueDateError, setDueDateError] = useState('');
 
 
-    const FetchTeamMember = async () => {
+    const FetchClient = async () => {
         try {
 
-            const response = await axios.post('http://127.0.0.1:8000/api/fetchteamMember/');
+            const response = await axios.post('http://127.0.0.1:8000/api/fetchclient/');
 
-            console.log('teamMember', response.data.data)
+            console.log('client', response.data.data)
             if (response.data.value) {
-                setTeamMembers(response.data.data)
-                console.log(teammembers)
+                setClients(response.data.data)
+                console.log(clients)
                 console.log(response.data.data)
 
             } else {
-                console.log('teamMember failed');
+                console.log('client failed');
             }
 
         } catch (error) {
@@ -99,10 +94,8 @@ console.log("modifu",task);
 
         try {
             const role_id = JSON.parse(sessionStorage.getItem('loginData')).profile_data.role;
-         
+            // setUserRole(role_id);
             console.log(role_id);
-
-
 
 
 
@@ -111,8 +104,8 @@ console.log("modifu",task);
             console.log(error);
         }
 
-        // TaskDetails();
-        FetchTeamMember();
+        // ProjectDetails();
+        FetchClient();
 
         console.log("edit projeft open")
     }, []);
@@ -153,6 +146,8 @@ console.log("modifu",task);
         const newFiles = Array.from(e.target.files);
         if (type === 'attachment') {
             setSelectedAttachments(old => [...old, ...newFiles]);
+        } else {
+            setSelectedDocuments(old => [...old, ...newFiles]);
         }
     };
 
@@ -160,12 +155,15 @@ console.log("modifu",task);
         setSelectedAttachments(old => old.filter((_, i) => i !== index));
     };
 
+    const removeDocument = (index) => {
+        setSelectedDocuments(old => old.filter((_, i) => i !== index));
+    };
 
 
     // validation function
-    const validateTaskName = (name) => {
-        if (!name.trim()) return 'Task name is required.';
-        if (name.length < 4) return 'Task name must be at least 4 characters long.';
+    const validateProjectName = (name) => {
+        if (!name.trim()) return 'Project name is required.';
+        if (name.length < 4) return 'Project name must be at least 4 characters long.';
 
         // name = name.replace(/\s+/g, ' ').trim();
 
@@ -193,7 +191,7 @@ console.log("modifu",task);
         return '';
     };
 
-    const validateTaskDescription = (desc) => {
+    const validateProjectDescription = (desc) => {
         desc = desc.trim();
 
         if (desc) {
@@ -222,7 +220,12 @@ console.log("modifu",task);
         return '';
     };
 
-
+    const validateBudget = (budget) => {
+        if (budget === '') return 'Budget is required.';
+        if (isNaN(budget) || budget <= 0) return 'Please enter a valid budget amount.';
+        if (budget < 5000) return `The budget must be at least ₹5000.`;
+        return '';
+    };
 
     // not used : const validateCompanyName = (name) => {
     //     if (!name.trim()) return 'Company name is required.';
@@ -230,19 +233,10 @@ console.log("modifu",task);
     // };
 
     const validateStartDate = (date) => {
-        const today = new Date();
-        
-        // Check if the provided date is a valid Date object
-        if (!(date instanceof Date) || isNaN(date)) {
-          return 'Invalid date.';
-        }
-      
-        if (date < today) {
-          return 'Start date must be today or a future date.';
-        }
-      
+        const today = new Date().toISOString().split('T')[0];
+        if (date < today) return 'Start date must be today or a future date.';
         return '';
-      };
+    };
 
     const validateDueDate = (startDate, dueDate) => {
         if (dueDate <= startDate) return 'Due date must be greater than the start date.';
@@ -253,22 +247,22 @@ console.log("modifu",task);
         event.preventDefault();
 
         // Perform final validation checks
-        const taskName = event.target.taskName.value;
-
-        const projDes = event.target.taskDescription.value
+        const projectName = event.target.projectName.value;
+        const budget = event.target.budget.value;
+        const projDes = event.target.projectDescription.value
         // const companyName = event.target.companyName.value;
 
-        const taskNameError = validateTaskName(taskName);
-        const taskDescriptionError = validateTaskDescription(projDes);
-
+        const projectNameError = validateProjectName(projectName);
+        const projectDescriptionError = validateProjectDescription(projDes);
+        const budgetError = validateBudget(budget);
         // const companyNameError = validateCompanyName(companyName);
         const startDateError = validateStartDate(startDate);
         const dueDateError = validateDueDate(startDate, dueDate);
 
-        if (taskNameError || startDateError || dueDateError) {
-            setTaskNameError(taskNameError);
-            setTaskDescriptionError(taskDescriptionError);
-         
+        if (projectNameError || budgetError || startDateError || dueDateError) {
+            setProjectNameError(projectNameError);
+            setProjectDescriptionError(projectDescriptionError);
+            setBudgetError(budgetError);
             // setCompanyNameError(companyNameError);
             setStartDateError(startDateError);
             setDueDateError(dueDateError);
@@ -276,37 +270,37 @@ console.log("modifu",task);
         }
 
        
-        setSelectedTeamMember(null);
+        setSelectedClient(null);
     };
 
     //------------------------------------------------------------------------------------------------------------------------
 
     return (
-        <div className="tasks-container">
+        <div className="projects-container">
            
-               <h3>Modify Task</h3>
+               <h3>Edit Project</h3>
                   
                         <form onSubmit={handleFormSubmit}>
 
                             <div className="form-row">
-                                <label htmlFor="taskName">Task Name:</label>
+                                <label htmlFor="projectName">Project Name:</label>
                                 <input
                                     className="in-txtarea"
                                     type="text"
-                                    id="taskName"
-                                    name="taskName"
+                                    id="projectName"
+                                    name="projectName"
                                     onChange={(e) => {
                                         // Validation function (replace with your own validation logic)
-                                        const validationError = validateTaskName(e.target.value);
+                                        const validationError = validateProjectName(e.target.value);
 
                                         // Update state with the input value and validation result
-                                        setTaskName(e.target.value);
-                                        setTaskNameError(validationError);
+                                        setProjectName(e.target.value);
+                                        setProjectNameError(validationError);
                                     }}
-                                    value={taskname}
-                                  
+                                    value={projectname}
+                                    required
                                 />
-                                {taskNameError && <span className="error-message">{taskNameError}</span>}
+                                {projectNameError && <span className="error-message">{projectNameError}</span>}
                             </div>
                             <div className="form-row">
                                 <label htmlFor="startDate">Start Date:</label>
@@ -339,17 +333,32 @@ console.log("modifu",task);
                                 {dueDateError && <span className="error-message">{dueDateError}</span>}
                             </div>
                             <div className="form-row">
-                                <label htmlFor="taskDescription">Task Description:</label>
-                                <textarea className="in-txtarea" id="taskDescription" name="taskDescription"
-                                    value={taskDec}
+                                <label htmlFor="projectDescription">Project Description:</label>
+                                <textarea className="in-txtarea" id="projectDescription" name="projectDescription"
+                                    value={projectDec}
                                     onChange={(e) => {
-                                        setTaskDescriptionError(validateTaskDescription(e.target.value))
-                                        setTaskDesc(e.target.value);
+                                        setProjectDescriptionError(validateProjectDescription(e.target.value))
+                                        setProjectDesc(e.target.value);
                                     }}
                                 />
-                                {taskDescriptionError && <span className="error-message">{taskDescriptionError}</span>}
+                                {projectDescriptionError && <span className="error-message">{projectDescriptionError}</span>}
                             </div>
-                   
+                            <div className="form-row">
+                                <label htmlFor="budget">Budget:</label>
+                                <input
+                                    className="in-txtarea"
+                                    type="number"
+                                    id="budget"
+                                    name="budget"
+                                    required
+                                    value={budget}
+                                    onChange={(e) => {
+                                        setBudget(e.target.value);
+                                        setBudgetError(validateBudget(e.target.value));
+                                    }}
+                                />
+                                {budgetError && <span className="error-message">{budgetError}</span>}
+                            </div>
 
                             <div className="form-row">
                                 <label htmlFor="attachment">Attachment:</label>
@@ -371,71 +380,47 @@ console.log("modifu",task);
                                 </div>
                             </div>
 
-                            <div className="form-row teammember-search-row">
-                                <label htmlFor="Add teammember">Add TeamMember:</label>
+                            <div className="form-row">
+                                <label htmlFor="document">Document:</label>
                                 <input
                                     className="in-txtarea"
-                                    type="text"
-                                    id="teammemberSearch"
-                                    value={teammemberSearch}
-                                    placeholder='Search Here...'
-                                    onChange={handleTeamMemberSearchChange}
-                                    // required={!selectedTeamMember}
-                                    onFocus={() => {
-                                        setTeamMemberResults(teammembers);  // Assuming 'teammembers' is the data you want to set
-                                    }} 
-                                    disabled={!!selectedTeamMember} // Disable when teammember is selected
+                                    type="file"
+                                    id="document"
+                                    name="document"
+                                    onChange={(e) => handleFileChange(e, 'document')}
                                 />
-                                {/* <div className='teammemberlist'>
-
-                                    {teammemberSearch && teammemberResults.length === 0 && !selectedTeamMember && (
-                                        <div className="no-match-message">
-                                            No matching teammembers found.
-                                        </div>
-                                    )}
-                                    {teammemberResults.map(teammember => (
-                                        <div key={teammember.email} className="teammember-result">
-                                            <div>{teammember.name} ({teammember.email}</div>
-                                            )
-                                            <button className="add-form-btn" type="button" onClick={() => handleAddTeamMember(teammember)}
-
-                                            >Add</button>
+                                <div>
+                                    {selectedDocuments.map((file, index) => (
+                                        <div key={index} className="file-item">
+                                            {file.name}
+                                            <span className="remove-icon" onClick={() => removeDocument(index)}>×</span>
                                         </div>
                                     ))}
-                                </div> */}
-                            </div>
-                            <div className="selected-teammember">
-                                    Ujjwal ujjwal@mail.com
-                                    <button className="add-form-btn" type="button" onClick={handleRemoveTeamMember}>Remove</button>
                                 </div>
-                            {selectedTeamMember && (
-                                <div className="selected-teammember">
-                                    {selectedTeamMember.name} ({selectedTeamMember.email})
-                                    <button className="add-form-btn" type="button" onClick={handleRemoveTeamMember}>Remove</button>
+                            </div>
+                            <div className="form-row client-search-row">
+                                <label htmlFor="Add client">Client:</label>
+                                
+                               
+                            </div>
+                            {selectedClient && (
+                                <div className="selected-client">
+                                    {selectedClient.name} ({selectedClient.email})
+                                    
                                 </div>
                             )}
-
-                            
-                        </form>
-                        <div className="form-row">
+                            <div className="form-row">
                                 <button className="add-form-btn" type="submit">Submit</button>
                             </div>
+                        </form>
                  
             
             
         </div>
-
+        //         )
+        //     }
+        // </div >
     );
 };
 
-export default ModifyTask;
-
-
-
-
-
-
-
-
-
-
+export default EditProject;

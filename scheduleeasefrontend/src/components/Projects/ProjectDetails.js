@@ -3,15 +3,29 @@ import './ProjectDetails.css';
 import { useLocation } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPencilAlt } from '@fortawesome/free-solid-svg-icons';
-import { useState } from 'react'
+import { useState,useEffect } from 'react';
+import { Link } from 'react-router-dom';
+
 
 const ProjectDetails = () => {
     const location = useLocation();
     // const project1 = JSON.stringify(location.state.project1);
+    useEffect(() => {
+        // Fetch the login data from sessionStorage
+        const loginData = JSON.parse(sessionStorage.getItem('loginData'));
+    
+    
+        if (loginData && loginData.profile_data && loginData.profile_data.role === 0) {
+          setIsAdmin(true);
+        }
+      }, []);
+    const [isAdmin,setIsAdmin]=useState(false);
+
     // const project = JSON.parse(project1).project
+   
     const project = location.state.projects;
     console.log(13,project)  ;
-    const isTeamMember=location.state.isTeamMember;
+    const isManager=location.state.isManager;
  
     const attachments= ['/project-plan.pdf'];
     const documents= ['/Aadhar.jpg', '/4th sem result.pdf'];
@@ -34,15 +48,22 @@ const ProjectDetails = () => {
             
             <div className="project-header-container">
                 <h2 className="proj-header">{project.name}</h2>
-                {isTeamMember ? (
-                    <>
-                        <button className="edit-button">
-                    <FontAwesomeIcon icon={faPencilAlt} /> Edit
-                </button>
+                {isAdmin || !isManager ? (
+                    <>  
+                        
                
                   </>
 
                 ) : (<>
+                 <Link to="/editproject"
+                 state={{projects:project}}
+                 >
+                 <button className="edit-button">
+                    <FontAwesomeIcon icon={faPencilAlt} /> Edit
+                </button>
+                        
+                     </Link>
+               
                 </>
                     
                
@@ -71,9 +92,17 @@ const ProjectDetails = () => {
                     </div>
                 </div>
             </div>
-            {isTeamMember ? (
+            {isManager ? (
                     <>
-                        <div className="section">
+                     
+               
+                  </>
+
+                ) : (
+                
+                    
+                <>
+   <div className="section">
                 <div className="section-title">Company Details</div>
                 <div className="section-content">
                     <div className="start">
@@ -87,14 +116,32 @@ const ProjectDetails = () => {
                 </div>
             </div>
             <div className="budget">Budget  {project.budget}</div>
-               
-                  </>
 
-                ) : (<>
                 </>
                     
                
                 )}
+
+{isAdmin ? (
+                       <>
+                       <div className="section">
+                                    <div className="section-title">Company Details</div>
+                                    <div className="section-content">
+                                        <div className="start">
+                                            <div className="company-name">Company Name</div>
+                                            <div className="client-name">{project.client.gst_no.name}</div>
+                                        </div>
+                                        <div className="start">
+                                            <div className="client-name">Client Name</div>
+                                            <div className="client-name">{project.client.name}</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div className="budget">Budget  {project.budget}</div>
+                    
+                                    </>
+    
+                    ) :(<></>)}
 
             
             <div className="section">

@@ -15,7 +15,10 @@
   Overflow-y: auto;
 
 }
-
+.userprofileimage{
+  height:50px ;
+  margin-right:10px;
+}
 .allmessage::-webkit-scrollbar {
   width: 5px;
   /* Width of the scrollbar */
@@ -80,6 +83,7 @@
   width: 100%;
   overflow: hidden;
   border-left: 1px solid black;
+  min-width: 60vw;
 
 }
 
@@ -116,4 +120,6 @@
 
 .activereciveruser {
   min-height: 8vh;
+  display: flex;
+  flex-direction: row;
 }

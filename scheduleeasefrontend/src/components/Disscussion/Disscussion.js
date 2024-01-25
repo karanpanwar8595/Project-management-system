@@ -3,7 +3,7 @@ import "./Senderbox.css";
 import "./test.css";
 
 import axios from 'axios';
-
+import profile from './profile.png';
 
 import React, { useState, useEffect } from 'react'
 
@@ -28,11 +28,11 @@ const Disscussion = () => {
 
   const onClickSendButton = (event) => {
     event.preventDefault();
-    if (inputValueMessageTextBox==''){
-      return ;
+    if (inputValueMessageTextBox == '') {
+      return;
     }
     if (activereciveruser.length === 0) {
-      return ;
+      return;
     }
     // ... do something with inputValue
     // var inputValueMessageTextBoxStatic = inputValueMessageTextBox
@@ -40,7 +40,7 @@ const Disscussion = () => {
       if (response) {
         console.log(response);
         setMessageList(messagelist)
-        var newMessage=[{'sendertype':1,'messagetxt': inputValueMessageTextBox,'timestamp':"10:20"}]
+        var newMessage = [{ 'sendertype': 1, 'messagetxt': inputValueMessageTextBox, 'timestamp': "10:20" }]
         setMessageList(messagelist => messagelist.concat(newMessage));
         setInputMessageTextBox("");
       }
@@ -64,8 +64,8 @@ const Disscussion = () => {
       console.log(error);
     });
 
-    
-     axios.post('http://127.0.0.1:8000/api/messagesofauser/', { email: email_id }).then((response) => {
+
+    axios.post('http://127.0.0.1:8000/api/messagesofauser/', { email: email_id }).then((response) => {
       setMessageList(response.data);
       console.log(response)
       console.log(messagelist);
@@ -90,6 +90,7 @@ const Disscussion = () => {
 
               {listitem.map((litem) => (
                 <li className="listelement" id={litem.email} onClick={onListElementClick} key={litem.email} >
+                  <div><img src={profile} className="userprofileimage" /></div>
                   <div className="nameandemail">
                     <div className="nametext">{litem.firstname}</div>
                     <div className='emailtext'>{litem.email}</div>
@@ -105,39 +106,46 @@ const Disscussion = () => {
 
 
 
-      <div className="writingandviewingarea ">
-        <div className="activereciveruser">
-          <div className="nametext">{activereciveruser.firstname}</div>
-          <div className='emailtext'>{activereciveruser.email}</div>
-        </div>
 
+
+      <div className="writingandviewingarea ">
+        
+      {activereciveruser.length === 0 ? (
+       <></>
+      ) : (<>
+     
+<div className="activereciveruser">
+       <div className="image"><img src={profile} className="userprofileimage" /></div>
+       <div className="nameandemail">
+         <div className="nametext">{activereciveruser.firstname}</div>
+         <div className='emailtext'>{activereciveruser.email}</div>
+       </div>
+     </div>
+            
+      
         <div className="allmessage ">
 
 
-         
-
-
-{messagelist.map((message) => (
-  <div key={message.id}>
-    {message.sendertype === 0 ? (
-      <div className="Recivedmessages roundedcorner">
-        {/* Content for receiver's message */}
-        <div className="messageContent">{message.messagetxt}</div>
-        <div className="messageTime">{(message.timestamp)}</div>
-      </div>
-    ) : message.sendertype === 1 ? (
-      <div className="sendedmessages roundedcorner">
-        {/* Content for sender's message */}
-        <div className="messageContent">{message.messagetxt}</div>
-        <div className="messageTime">{(message.timestamp)}</div>
-      </div>
-    ) : null}
-  </div>
-))}
 
 
 
-
+          {messagelist.map((message) => (
+            <div key={message.id}>
+              {message.sendertype === 0 ? (
+                <div className="Recivedmessages roundedcorner">
+                  {/* Content for receiver's message */}
+                  <div className="messageContent">{message.messagetxt}</div>
+                  <div className="messageTime">{(message.timestamp)}</div>
+                </div>
+              ) : message.sendertype === 1 ? (
+                <div className="sendedmessages roundedcorner">
+                  {/* Content for sender's message */}
+                  <div className="messageContent">{message.messagetxt}</div>
+                  <div className="messageTime">{(message.timestamp)}</div>
+                </div>
+              ) : null}
+            </div>
+          ))}
 
 
         </div>
@@ -149,7 +157,7 @@ const Disscussion = () => {
 
             </input>
 
-            <button id="sendbuttonformessage"onClick={onClickSendButton}>
+            <button id="sendbuttonformessage" onClick={onClickSendButton}>
               send
             </button>
 
@@ -157,6 +165,7 @@ const Disscussion = () => {
 
 
         </div>
+        </> )}
       </div>
 
     </div>

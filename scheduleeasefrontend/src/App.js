@@ -36,8 +36,10 @@ import ChangePassword from './components/changepassword/ChangePassword';
 
 import Dashboard from './components/Dasboard1/Dashboard1';
 
+ import AdminReport from './components/AdminReport/AdminReport';
 
-
+import ManagerReport from './components/ManagerReport/ManagerReport';
+import EditProject from './components/Projects/EditProject/EditProject';
 function App() {
   const [authenticateddata, setAuthenticateddata] = useState({ 'value': false });
 
@@ -118,6 +120,26 @@ function App() {
                 <Route exact path='disscussion' element={
                   <>
                     < DisscussionBox />
+
+
+                  </>
+                }>
+                </Route>
+                <Route exact path='managerreport' element={
+                  <>
+                    
+                   <ManagerReport />
+                   
+
+
+                  </>
+                }>
+                </Route>
+                <Route exact path='adminreport' element={
+                  <>
+                    
+                   <AdminReport /> 
+                   
 
 
                   </>
@@ -279,6 +301,13 @@ function App() {
                   {
 
                     <ProjectDetails />
+
+                  }>
+                </Route>
+                <Route exact path='editproject' element=
+                  {
+
+                    <EditProject />
 
                   }>
                 </Route>
