@@ -34,7 +34,12 @@ const UserProfileCard = ({ user }) => {
         <div className="team-profile-emal">
           {user.email}
         </div>
-        <div className="removebutton">Remove</div>
+        {JSON.parse(sessionStorage.getItem('loginData')).profile_data.role == 2 ? (
+<></>
+  ) : (
+<><div className="removebutton">Remove</div></>
+  )}
+        
       </div>
     </div>
   );

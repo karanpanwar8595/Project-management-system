@@ -65,7 +65,8 @@ const AccordionItem = ({ task_key, title, content, actstatus, duedate, owner, pr
 
 const Tasklist = () => {
 
-    const [taskList, setTasklist] = useState([{ title: "First task", content: "This  is the second item's accordion body. It is hidden by default, until the collapse pis is the second item's accordion body. It is hidden by default, until the collapse phis is the second item's accordion body. ", status:"Completed", duedate: "12/10/2023", progress: "20%", owner: "Suresh" }, { title: "Second task", content: "This  is the second item's accordion body. It is hidden by default, until the collapse pis is the second item's accordion body. It is hidden by default, until the collapse phis is the second item's accordion body. ", status:"Complete", duedate: "12/10/2023", progress: "20%", owner: "Ramesh" }]);
+    const [taskList, setTasklist] = useState([{ title: "Validation in Edit form", content: "Inside the Project component apply the validation in project edit button", status:"Completed", duedate: "12/10/2023", progress: "20%", owner: "Suresh" }, 
+    { title: "Integration Testing", content: "Consider the different scenario and integrate all the testing", status:"Complete", duedate: "12/10/2023", progress: "20%", owner: "Ramesh" }]);
 
     useEffect(() => {
         fetchalltaskofme();

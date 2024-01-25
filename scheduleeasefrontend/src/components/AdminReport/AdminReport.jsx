@@ -117,12 +117,12 @@ const financialOverviewData = {
           </div>
     
           {/* Bottom Right: Financial Overview Report */}
-          <div className={styles.reportSection}>
+          {/* <div className={styles.reportSection}>
             <h2>Financial Overview</h2>
             <div className={styles.chartContainer}>
               <Doughnut data={financialOverviewData} />
             </div>
-          </div>
+          </div> */}
         </div>
       );
     };

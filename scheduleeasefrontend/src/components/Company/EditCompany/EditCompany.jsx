@@ -22,25 +22,34 @@ const location = useLocation();
   // Event handlers for input changes and validation
   const handleCompanyNameChange = (event) => {
     const value = event.target.value;
+    const containsOnlyDigits = /^\d+$/.test(value);
     setCompanyName(value);
-    setCompanyNameValid(!!value); // Simple validation, ensuring it's not empty
+    setCompanyNameValid(!containsOnlyDigits && !!value); // Simple validation, ensuring it's not empty
   };
 
   const handleGstNumberChange = (event) => {
     const value = event.target.value;
-    // setGstNumber(value);
-    // setGstNumberValid(!!value); // Simple validation, ensuring it's not empty
+    
+    setGstNumber(value);
+
+    setGstNumberValid( gstNumber.length === 14); 
   };
 
   const handleCompanyAddressChange = (event) => {
     const value = event.target.value;
     setCompanyAddress(value);
-    setCompanyAddressValid(!!value); // Simple validation, ensuring it's not empty
+    
+    const containsOnlyDigits = /^\d+$/.test(value);
+
+
+    setCompanyAddressValid(!containsOnlyDigits && !!value); // Simple validation, ensuring it's not empty
   };
 
   const handleCompanyPhoneChange = (event) => {
     const value = event.target.value;
-    setCompanyPhone(value);
+    const numericValue = value.replace(/\D/g, '');
+    setCompanyPhone(numericValue);
+
     setCompanyPhoneValid(/^\d{10}$/.test(value)); // Validation for a 10-digit phone number
   };
 
@@ -96,7 +105,7 @@ const location = useLocation();
           onChange={handleCompanyNameChange}
         />
         {!isCompanyNameValid && (
-          <span className="error-message">Company Name is required</span>
+          <span className="error-message">Enter a valid Company Name</span>
         )}
       </div>
 
@@ -113,7 +122,7 @@ const location = useLocation();
           onChange={handleGstNumberChange}
         />
         {!isGstNumberValid && (
-          <span className="error-message">GST Number is required</span>
+          <span className="error-message">Enter a valid GST Number</span>
         )}
       </div>
 
@@ -130,7 +139,7 @@ const location = useLocation();
           onChange={handleCompanyAddressChange}
         />
         {!isCompanyAddressValid && (
-          <span className="error-message">Company Address is required</span>
+          <span className="error-message">Enter a Valid Company Address</span>
         )}
       </div>
 

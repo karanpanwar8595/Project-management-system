@@ -10,17 +10,17 @@ const CompanyList = ({  }) => {
     const CompanyDetails = [
         {
           id: 1,
-          name: 'ABC Company',
-          gstnumber: 'GST123456789',
+          name: 'Innovate Inc.',
+          gstnumber: 'GST546548324545',
           address: '123 Main Street, Cityville',
-          phonenumber: '123-456-7890',
+          phonenumber: '9585685455',
         },
         {
           id: 2,
-          name: 'XYZ Corporation',
-          gstnumber: 'GST987654321',
+          name: 'Westor',
+          gstnumber: 'GST987654321223',
           address: '456 Oak Avenue, Townsville',
-          phonenumber: '987-654-3210',
+          phonenumber: '9876543210',
         },
         // Add more sample company details as needed
       ];

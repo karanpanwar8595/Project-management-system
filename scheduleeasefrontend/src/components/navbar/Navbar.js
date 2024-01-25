@@ -1,4 +1,4 @@
-import React from 'react';
+import React , {useState,useEffect} from 'react';
 import './Navbar.css'; // Import the CSS file for styling
 import logo from './logo.png';
 import profile from './profile.png';
@@ -9,7 +9,8 @@ import { faDoorOpen } from '@fortawesome/free-solid-svg-icons';
 
 const Navbar = () => {
   const navigate = useNavigate();
-
+const [name, setName] = useState('')
+const [email, setEmail] = useState('')
   const handleLogout = () => {
     sessionStorage.removeItem('loginData');
     sessionStorage.removeItem('profileData');
@@ -18,6 +19,24 @@ const Navbar = () => {
     navigate('/');
     window.location.reload();
   };
+
+  useEffect(() => {
+    const role =JSON.parse(sessionStorage.getItem('loginData')).profile_data.role;
+    if(role == 0){
+      setName("Admin");
+      setEmail("admin@mail.com");
+    }else if(role == 1){
+      setName("Manager");
+      setEmail("manager@mail.com");
+    }else if(role == 2){
+      setName("TeamMember");
+      setEmail("teammember@mail.com");
+    }else if(role == 3){
+      setName("Client");
+      setEmail("client@mail.com");
+    }
+  }, [])
+
   return (
     <nav className="navbar">
 
@@ -26,8 +45,8 @@ const Navbar = () => {
         <div className="navbar-profile" >
           <img src={profile} alt="User Profile Photo" className="profile-photo" />
           <div className="profile-info">
-            <span className="profile-name">Ujjwal</span>
-            <span className="profile-email">john.doe@example.com</span>
+            <span className="profile-name">{name}</span>
+            <span className="profile-email">{email}</span>
           </div>
         </div></Link>
 

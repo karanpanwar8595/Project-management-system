@@ -2,7 +2,7 @@ import format from "date-fns/format";
 import getDay from "date-fns/getDay";
 import parse from "date-fns/parse";
 import startOfWeek from "date-fns/startOfWeek";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Calendar, dateFnsLocalizer } from "react-big-calendar";
 import "react-big-calendar/lib/css/react-big-calendar.css";
 import DatePicker from "react-datepicker";
@@ -13,6 +13,7 @@ import './Cal.css'
 const locales = {
     "en-US": require("date-fns/locale/en-US"),
 };
+
 const localizer = dateFnsLocalizer({
     format,
     parse,
@@ -21,28 +22,52 @@ const localizer = dateFnsLocalizer({
     locales,
 });
 
-const events = [
-    {
-        title: "Big Meeting",
-        allDay: true,
-        start: new Date(2024, 0, 16),
-        end: new Date(2024, 0, 19),
-    },
-    {
-        title: "Vacation",
-        start: new Date(2021, 6, 7),
-        end: new Date(2021, 6, 10),
-    },
-    {
-        title: "Conference",
-        start: new Date(2024, 0, 20),
-        end: new Date(2024, 0, 23),
-    },
-];
-
 function Cal() {
+    const [events, setevents] = useState('')
     const [newEvent, setNewEvent] = useState({ title: "", start: "", end: "" });
     const [allEvents, setAllEvents] = useState(events);
+
+    useEffect(() => {
+        if (JSON.parse(sessionStorage.getItem('loginData')).profile_data.role==1){
+            setAllEvents( [
+                {
+                    title: "Meeting with CEO",
+                    allDay: true,
+                    start: new Date(2024, 0, 16),
+                    end: new Date(2024, 0, 19),
+                },
+                {
+                    title: "Vacation",
+                    start: new Date(2021, 6, 7),
+                    end: new Date(2021, 6, 10),
+                },
+                {
+                    title: "Conference",
+                    start: new Date(2024, 0, 20),
+                    end: new Date(2024, 0, 23),
+                },
+            ])
+        }else if(JSON.parse(sessionStorage.getItem('loginData')).profile_data.role==2){
+            setAllEvents( [
+                {
+                    title: "Customer entity front-end design",
+                    allDay: true,
+                    start: new Date(2024, 0, 15),
+                    end: new Date(2024, 1, 15),
+                },
+                {
+                    title: "Marketing analysis",
+                    start: new Date(2024, 1, 10),
+                    end: new Date(2024, 1 , 25),
+                },
+                {
+                    title: "Meeting with Manager",
+                    start: new Date(2024, 1, 5),
+                    end: new Date(2024, 1, 5),
+                },
+            ])
+        }
+        }, [])
 
     function handleAddEvent() {
         

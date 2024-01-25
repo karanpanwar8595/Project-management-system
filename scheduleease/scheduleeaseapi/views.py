@@ -387,6 +387,8 @@ def projectcompletion(request):
         totaltaskperprofile = Task.objects.filter(project=projectno).count()
         # taskdoneperproject=Task.objects.filter(project=projectno,completion_date !=null).count() 
         task_done_per_project = Task.objects.filter(project=projectno, completion_date__isnull=False).count()
+        print(totaltaskperprofile)
+        print(task_done_per_project)
 
         # profiledetail=profiledetails.to_dict()
         completiondetails={'taskdone':task_done_per_project,'totaltask':totaltaskperprofile}

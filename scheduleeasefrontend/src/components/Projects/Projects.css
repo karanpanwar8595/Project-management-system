@@ -192,6 +192,13 @@ label {
     display: block;
     margin-bottom: 5px;
 }
+.clientlist{
+    overflow: hidden;
+    overflow-y: auto;
+    max-height: 20vh;
+    display: flex;
+    flex-direction: column;
+}
 
 .in-txtarea {
     width: 100%;

@@ -8,7 +8,7 @@ import { faPencilAlt, faDownload } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import axios from 'axios';
 
-const AccordionItem = ({ task_key, title, content, actstatus, duedate, owner, progress, done_key }) => {
+const AccordionItem = ({ task_key, title, content, actstatus, duedate, owner, progress, done_key ,startdate}) => {
     const [isOpen, setIsOpen] = useState(false);
     const [isComplete, setIsComplete] = useState(false);
     console.log("sta", actstatus)
@@ -38,9 +38,16 @@ const AccordionItem = ({ task_key, title, content, actstatus, duedate, owner, pr
                 </div>
 
                 <div className="accordion-edit-button" onClick={(event) => event.stopPropagation()}>
-                    <Link to="/modifytask" state={{ task_id: { task_key } }}>
-                        <FontAwesomeIcon icon={faPencilAlt} style={{ fontSize: '24px' }} />
-                    </Link>
+                    {isComplete ? (
+
+<></>
+                        
+                    ) : (
+                        <Link to="/modifytask" state={{tasks :{ task_key, title, content, actstatus, duedate, owner, progress, done_key }}}>
+                            <FontAwesomeIcon icon={faPencilAlt} style={{ fontSize: '24px' }} />
+                        </Link>
+                    )}
+
                 </div>
 
                 <div className="accordion-download-button" onClick={(event) => event.stopPropagation()}>
@@ -67,12 +74,13 @@ const AccordionItem = ({ task_key, title, content, actstatus, duedate, owner, pr
 };
 
 
-
 const Tasklist = () => {
     useEffect(() => {
         fetchalltasktoother();
-      }, []); 
-    const [taskList, setTasklist] = useState([{ title: "First task", content: "This  is the second item's accordion body. It is hidden by default, until the collapse pis is the second item's accordion body. It is hidden by default, until the collapse phis is the second item's accordion body. ", status: "Completed", duedate: "12/10/2023", progress: "20%", owner: "Suresh" }, { title: "Second task", content: "This  is the second item's accordion body. It is hidden by default, until the collapse pis is the second item's accordion body. It is hidden by default, until the collapse phis is the second item's accordion body. ", status: "Complete", duedate: "12/10/2023", progress: "20%", owner: "Ramesh" }]);
+    }, []);
+
+    const [taskList, setTasklist] = useState([{ title: "Customer entity front-end design", content: "It involves creating a visually appealing and user-friendly interface for managing customer records, including features such as listing, detailed views, and interactive forms, ensuring a seamless and intuitive user experience within the software application.", status: "Completed", duedate: "12/10/2023", startdate: "12-10-2023", progress: "20%", owner: "Suresh" }, 
+    { title: "Feasibilty study", content: "It involves assessing the practicality and viability of a proposed project, evaluating factors such as economic, technical, and operational aspects to determine if the project is achievable and beneficial within given constraints", status: "Complete", duedate: "12-10-2023", startdate: "12/10/2023", progress: "20%", owner: "Ramesh" }]);
 
     const fetchalltasktoother = () => {
         axios.post('http://127.0.0.1:8000/api/taskassigntoother/', { useremail: JSON.parse(sessionStorage.getItem('loginData')).profile_data.email }).then((response) => {
