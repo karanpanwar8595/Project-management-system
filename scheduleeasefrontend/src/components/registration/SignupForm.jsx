@@ -378,17 +378,17 @@ const SignupForm = () => {
 
     if (/^(.)\1+$/.test(firstName)) {
 
-      setMessage("Repeated characters are not allowed in name")
+      setMessage("Digits or Repeated characters are not allowed in First Name")
       setErrors(true)
       return;
     }
     if (/^(.)\1+$/.test(middleName)) {
-      setMessage("Repeated characters are not allowed in name")
+      setMessage("Digits or Repeated characters are not allowed in Middle Name")
       setErrors(true)
       return;
     }
     if (/^(.)\1+$/.test(lastName)) {
-      setMessage("Repeated characters are not allowed in name")
+      setMessage("Digits or Repeated characters are not allowed in Last Name")
       setErrors(true)
       return;
     }
@@ -410,7 +410,7 @@ const SignupForm = () => {
       // You can also throw an error or handle it according to your needs
     }
     else if (!hasMinTwoLetters) {
-      setMessage("The name is too short")
+      setMessage("First name should have atleast two letter")
       setErrors(true)
       return;
 

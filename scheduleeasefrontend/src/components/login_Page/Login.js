@@ -31,7 +31,7 @@ const Login = ({ onDataFromChild }) => {
 
       // Basic validation
       if (!email || !password || !isValidEmail) {
-        setError('Please enter both email and password correctly.');
+        setError('Email and password both field is required');
         setLoading(false);
         return;
       }
@@ -47,7 +47,7 @@ const Login = ({ onDataFromChild }) => {
         setUsername('');
         setPassword('');
         console.log('false');
-        setError('Email does not exist.');
+        setError('User does not exist');
       }
     } catch (error) {
       console.error('Error during login:', error);

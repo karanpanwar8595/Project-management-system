@@ -58,7 +58,7 @@ const SideNavbar = () => {
               </div>
 
             )}
-          <Link to="/adminreport" onClick={() => handleLinkClick('/adminreport')}><div className={`sidenavitem ${activeLink === '/adminreport' ? 'active' : ''}`}>Reports</div></Link>
+          {/* <Link to="/adminreport" onClick={() => handleLinkClick('/adminreport')}><div className={`sidenavitem ${activeLink === '/adminreport' ? 'active' : ''}`}>Reports</div></Link> */}
 
           </div>
 
@@ -110,7 +110,7 @@ const SideNavbar = () => {
 
             )}
 
-          <Link to="/managerreport" onClick={() => handleLinkClick('/managerreport')}><div className={`sidenavitem ${activeLink === '/managerreport' ? 'active' : ''}`}>Report</div></Link>
+          {/* <Link to="/managerreport" onClick={() => handleLinkClick('/managerreport')}><div className={`sidenavitem ${activeLink === '/managerreport' ? 'active' : ''}`}>Report</div></Link> */}
 
           </div>
 
