@@ -33,9 +33,9 @@ const UserCard = ({ user }) => {
 
 const BlockUser = () => {
     const users = [
-        { id: 1, name: 'John Doe', designation: 'Team member', mail_id: 'john.doe@example.com', blocked: false },
-        { id: 2, name: 'Jane Smith', designation: 'Client', mail_id: 'jane.smith@example.com', blocked: true },
-        { id: 3, name: 'Bob Johnson', designation: 'Manager', mail_id: 'bob.johnson@example.com', blocked: false },
+        { id: 1, name: 'Bhavesh singh', designation: 'Manager', mail_id: 'bhaveshkumar@gmail.com', blocked: false },
+        { id: 2, name: 'Arjun Jaiswal', designation: 'Admin', mail_id: 'arjun@gmail.com', blocked: true },
+        { id: 3, name: 'Rajan Sharma', designation: 'Team Member', mail_id: 'rajan@gmail.com', blocked: false },
         // Add more users as needed
     ];
 

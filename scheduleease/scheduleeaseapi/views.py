@@ -182,8 +182,8 @@ def mailsenderapi(inputemail,new_password):
     email_settings = {
         'host': 'smtp.gmail.com',
         'port': 587,
-        'user': 'ujjwalbhansali55@gmail.com',
-        'password': '',
+        'user': '21bca050@sxca.edu.in',
+        'password': 'dryx kjzx nlmu qfuc',
         'use_tls': True,  # Set to True if your email provider requires TLS
     }
     connection = get_connection(
@@ -236,7 +236,7 @@ def forgetpassword(request):
 # Disscussion process
 @api_view(['GET'])
 def listofreciver(request):
-    return Response([{'firstname' :'Ujjwal', 'email':'jujjwa@gmail.com'},{'firstname' :'Rohit', 'email':'rohit@gmail.com'},{'firstname' :'Ramesh', 'email':'ramesh@gmail.com'},{'firstname' :'Suresh', 'email':'suresh@gmail.com'},])
+    return Response([{'firstname' :'Vikas Jaiswal', 'email':'vikas@gmail.com'},{'firstname' :'mitul pipaliya', 'email':'mmitul@gmail.com'},{'firstname' :'Amit Gupta', 'email':'amit@gmail.com'},{'firstname' :'Anita Singh', 'email':'anita@gmail.com'},{'firstname' :'Sunil Srivastava', 'email':'sunil@gmail.com'},{'firstname' :'Ujjwal bhansali', 'email':'tujjwal@gmail.com'},])
 
 @api_view(['post'])
 def activereciveruser(request):

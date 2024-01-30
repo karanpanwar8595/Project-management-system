@@ -23,8 +23,11 @@ const location = useLocation();
   const handleCompanyNameChange = (event) => {
     const value = event.target.value;
     const containsOnlyDigits = /^\d+$/.test(value);
+    const startsWithDigit = /^\d/.test(value);
+    const repeated = /^(.)\1+$/.test(value);
+
     setCompanyName(value);
-    setCompanyNameValid(!containsOnlyDigits && !!value); // Simple validation, ensuring it's not empty
+    setCompanyNameValid(!startsWithDigit && !repeated && !containsOnlyDigits && !!value); // Simple validation, ensuring it's not empty
   };
 
   const handleGstNumberChange = (event) => {
@@ -90,7 +93,7 @@ const location = useLocation();
   return (
     <div className='company-container'>
       <label className="signup-label">
-        <b> Company information </b>{' '}
+        <b> <h2>Edit Company Information</h2>  </b>{' '}
       </label>
       <div className="input-container">
         <label htmlFor="companyName" className="signup-label">
@@ -120,6 +123,7 @@ const location = useLocation();
           placeholder="Gst number"
           value={gstNumber}
           onChange={handleGstNumberChange}
+          disabled
         />
         {!isGstNumberValid && (
           <span className="error-message">Enter a valid GST Number</span>

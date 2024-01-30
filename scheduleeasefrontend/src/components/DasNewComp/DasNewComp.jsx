@@ -29,9 +29,9 @@ const DasNewComp = () => {
   ];
 
   const paymentData = [
-    { id: 1, client: 'Rameshchohan', amount: 5000, status: 'Pending' },
-    { id: 2, client: 'suresh', amount: 7500, status: 'Pending' },
-    { id: 3, client: 'MalharPrajapati', amount: 50000, status: 'completed' },
+    { id: 1, client: 'Aradhya Gupta', amount: 10000, status: 'Pending' },
+    { id: 2, client: 'Akash Jaiswal', amount: 50000, status: 'Pending' },
+    { id: 3, client: 'Mukesh Srivastava', amount: 50000, status: 'completed' },
 
     
     // { id: 3, client: 'Client Z', amount: 1200, status: 'Pending' },

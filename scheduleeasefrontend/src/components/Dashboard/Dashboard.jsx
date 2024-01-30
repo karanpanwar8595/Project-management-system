@@ -10,7 +10,7 @@ import Graph from './Graph';
 
 const Dashboard = () => {
     const projectSnapshot = {
-        progress: 75,
+        progress: 42,
         upcomingMilestone: 'Milestone Name',
         projectDeadline: '2-05-2024',
       };
@@ -62,11 +62,11 @@ const Dashboard = () => {
                 </div>
             </div>
             <div className="project-snapshot-section">
-        <div style={{marginTop:"10px"}}>Project Snapshot</div>
+        <div style={{marginTop:"10px"}}>Mobile App</div>
          <p>
           
            <div className="progress-bar-container">
-             <div className="progress-bar" style={progressStyle}></div>
+             <div className="progress-bar" style={progressStyle} ></div>
            </div>
         </p>
          {/* <p>Upcoming Milestone: {projectSnapshot.upcomingMilestone}</p> */}
@@ -74,7 +74,11 @@ const Dashboard = () => {
        </div>
             <div className='bottom-two'>
             <div className='right-das'>
+                <div className='graphbox'>
+
+
                 <Graph/>
+                </div>
 
                 </div>
                 <div className='left-das'>

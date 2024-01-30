@@ -55,6 +55,11 @@
   .navbar-logo{
     min-width: 80%;
     margin:12px;
+    align-items: center;
+    display: flex;
+    justify-content: space-around
+
+
   }
   .navbar-logo img {
     height: 30px;

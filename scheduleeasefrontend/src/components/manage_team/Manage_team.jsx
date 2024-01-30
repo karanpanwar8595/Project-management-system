@@ -1,16 +1,27 @@
-import React, { useState,useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import './Manage_team.css';
 import plus from './plus.png';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import pic from './profile.png';
-import pic1 from './profile1.webp';
-import pic2 from './profile2.jpg';
-import pic3 from './profile3.jpg';
+import pic1 from './photos/1.jpeg';
+import pic2 from './photos/2.jpeg';
+import pic3 from './photos/3.jpeg';
+import pic4 from './photos/4.jpeg';
+import pic5 from './photos/5.jpeg';
+import pic6 from './photos/6.jpeg';
+import pic7 from './photos/7.jpeg';
+import pic8 from './photos/8.jpeg';
+import pic9 from './photos/9.jpeg';
+import pic10 from './photos/10.jpeg';
+import pic11 from './photos/11.jpg';
+import pic12 from './photos/12.png';
 
-const UserProfileCard = ({ user }) => {
+
+
+
+const UserProfileCard = ({ user, picture }) => {
   const [role, setRole] = useState('');
-
   useEffect(() => {
     if (user.role === 0) {
       setRole('Admin');
@@ -26,7 +37,7 @@ const UserProfileCard = ({ user }) => {
 
   return (
     <div className="team-profile-card">
-      <img src={pic} alt="Profile" className="team-profile-image" />
+      <img src={picture} alt="Profile" className="team-profile-image" />
       <div className="team-profile-info">
         <div className="team-profile-name">{user.name}</div>
         <div className="team-profile-role">{role}</div>
@@ -35,11 +46,11 @@ const UserProfileCard = ({ user }) => {
           {user.email}
         </div>
         {JSON.parse(sessionStorage.getItem('loginData')).profile_data.role == 2 ? (
-<></>
-  ) : (
-<><div className="removebutton">Remove</div></>
-  )}
-        
+          <></>
+        ) : (
+          <><div className="removebutton">Remove</div></>
+        )}
+
       </div>
     </div>
   );
@@ -48,6 +59,8 @@ const UserProfileCard = ({ user }) => {
 
 
 const Manage_team = () => {
+  const profilepic = [pic1, pic2, pic3, pic4, pic8, pic9, pic5, pic6, pic7];
+
   const [isModalOpen, setModalOpen] = useState(false);
 
   const openModal = () => {
@@ -67,8 +80,8 @@ const Manage_team = () => {
   ]);
 
   const handleProjectChange = (event) => {
-    const selectedproject=event.target.value;
-    console.log("eventvalue",event.target.value)
+    const selectedproject = event.target.value;
+    console.log("eventvalue", event.target.value)
     setSelectedProject(event.target.value);
     setSelectedProjectId(event.target.value);
 
@@ -83,7 +96,7 @@ const Manage_team = () => {
 
   const projectuserin = async () => {
     try {
-      const ProjectDetails = { useremail: JSON.parse(sessionStorage.getItem('loginData')).profile_data.email,role: JSON.parse(sessionStorage.getItem('loginData')).profile_data.role};
+      const ProjectDetails = { useremail: JSON.parse(sessionStorage.getItem('loginData')).profile_data.email, role: JSON.parse(sessionStorage.getItem('loginData')).profile_data.role };
 
       const response = await axios.post('http://127.0.0.1:8000/api/userinproject/', ProjectDetails);
       // ye data request me jayega in views.py
@@ -108,7 +121,7 @@ const Manage_team = () => {
       if (response.data['value']) {
         console.log("settemamember", response.data.data);
         setTeamMemberList(response.data.data);
-        
+
         console.log('Project component connected');
       } else {
         console.log("error");
@@ -137,10 +150,33 @@ const Manage_team = () => {
       </select>
 
       <div className="profile-grid">
+
+        {/* {teamMembers.map((teamMember, index) => (
+        <UserProfileCard
+          user={teamMember.member}
+          picture={profilepic[index % profilepic.length]} // Use modulo to cycle through profile pics
+          key={teamMember.email}
+        />
+      ))} */}
+
+
         {Array.isArray(teammemberList) ? (
-          teammemberList.map((teamMember) => (
-            <UserProfileCard user={teamMember['member']} key={teamMember['email']} />
-          ))
+
+          <>
+
+            {teammemberList.map((teamMember, index) => (
+              <UserProfileCard
+                user={teamMember.member}
+                picture={profilepic[index % profilepic.length]} // Use modulo to cycle through profile pics
+                key={teamMember.email}
+              />
+            ))}
+          </>
+
+
+          // teammemberList.map((teamMember) => (
+          //   <UserProfileCard user={teamMember['member'], picture } key={teamMember['email']} />
+          // ))
         ) : (
           <p>No team members available</p>
         )}

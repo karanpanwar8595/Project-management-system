@@ -356,7 +356,7 @@ const SignupForm = () => {
     e.preventDefault();
     console.log("role", selectedRole);
     const today = new Date();  // Get today's date
-    const dobDate = new Date(dob)
+    const dobDate = new Date(dob);
     dobDate.setDate(dobDate.getDate() + 15);
     const isAllNumbers = (/\d/.test(firstName)) || (/\d/.test(middleName) || (/\d/.test(lastName)));
     if (firstName && !/^[a-zA-Z0-9 ]*$/.test(firstName)) {
@@ -540,7 +540,7 @@ const SignupForm = () => {
           />
           {!isValidEmail && <p className="error-message">Please enter a valid email address</p>}
 
-          <span>Name:</span><span className='required_tag'>*required</span>
+          <span><b>Name: </b></span><span className='required_tag'>*required</span>
           <div className="signup-name-column">
 
             <label htmlFor="firstName" className="signup-label"></label>
