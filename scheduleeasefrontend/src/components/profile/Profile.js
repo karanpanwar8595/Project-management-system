@@ -7,6 +7,8 @@ import { faPencilAlt } from '@fortawesome/free-solid-svg-icons';
 import axios from 'axios';
 
 
+
+
 const Profile = () => {
   const [showCompanyInfo, setShowCompanyInfo] = useState(null);
   const [role, setRole] = useState('');

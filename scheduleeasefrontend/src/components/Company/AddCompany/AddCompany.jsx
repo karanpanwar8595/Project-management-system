@@ -17,23 +17,25 @@ const AddCompany = () => {
   const handleCompanyNameChange = (event) => {
     const value = event.target.value;
     const containsOnlyDigits = /^\d+$/.test(value);
-    const repeated=/^(.)\1+$/.test(companyName);
+    const startsWithDigit = /^\d/.test(value);
+    const repeated = /^(.)\1+$/.test(value);
+
     setCompanyName(value);
-    setCompanyNameValid(!repeated&&!containsOnlyDigits && !!value); // Simple validation, ensuring it's not empty
+    setCompanyNameValid(!startsWithDigit && !repeated && !containsOnlyDigits && !!value); // Simple validation, ensuring it's not empty
   };
 
   const handleGstNumberChange = (event) => {
     const value = event.target.value;
-    
+
     setGstNumber(value);
 
-    setGstNumberValid( gstNumber.length === 14); 
+    setGstNumberValid(gstNumber.length === 14);
   };
 
   const handleCompanyAddressChange = (event) => {
     const value = event.target.value;
     const containsOnlyDigits = /^\d+$/.test(value);
-    const repeated=/^(.)\1+$/.test(companyAddress);
+    const repeated = /^(.)\1+$/.test(companyAddress);
 
     setCompanyAddress(value);
     setCompanyAddressValid(!repeated && !containsOnlyDigits && !!value); // Simple validation, ensuring it's not empty
@@ -50,22 +52,22 @@ const AddCompany = () => {
   const handleSubmit = () => {
     // Perform additional validation or submit logic here
     // For example, you can check if all fields are valid before submitting
-    if (companyName==''){
-        setCompanyNameValid(false);
+    if (companyName == '') {
+      setCompanyNameValid(false);
 
     }
-    if (companyPhone==''){
-        setCompanyPhoneValid(false);
-
-
-    }
-    if (companyAddress==''){
-        setCompanyAddressValid(false);
+    if (companyPhone == '') {
+      setCompanyPhoneValid(false);
 
 
     }
-    if (gstNumber==''){
-        setGstNumberValid(false);
+    if (companyAddress == '') {
+      setCompanyAddressValid(false);
+
+
+    }
+    if (gstNumber == '') {
+      setGstNumberValid(false);
 
 
     }
@@ -86,7 +88,7 @@ const AddCompany = () => {
   return (
     <div className='company-container'>
       <label className="signup-label">
-        <b> Company information </b>{' '}
+        <b> <h2>Company Information</h2> </b>{' '}
       </label>
       <div className="input-container">
         <label htmlFor="companyName" className="signup-label">

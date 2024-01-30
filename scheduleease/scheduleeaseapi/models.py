@@ -29,7 +29,7 @@ class Profile(models.Model):
     def project_to_dict(self):
         return {
             'email': self.email,
-            'name':self.fname+self.lname,
+            'name':self.fname+" "+self.lname,
             'gst_no': self.gst_no.to_dict() if self.gst_no else None,
         }
     

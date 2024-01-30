@@ -92,7 +92,7 @@ const ProjectDetails = () => {
                     </div>
                 </div>
             </div>
-            {isManager ? (
+            {!isManager ? (
                     <>
                      
                
@@ -115,14 +115,20 @@ const ProjectDetails = () => {
                     </div>
                 </div>
             </div>
-            <div className="budget">Budget  {project.budget}</div>
+          
+            <div className="section">   
+            <div className="section-title">Financial Details</div>
+             <div className="start ">
+                        <div className="client-name">Budget</div>
+                        <div className="client-name">{project.budget}</div>
+                    </div></div>
 
                 </>
                     
                
                 )}
 
-{isAdmin ? (
+{/* {isAdmin ? (
                        <>
                        <div className="section">
                                     <div className="section-title">Company Details</div>
@@ -141,7 +147,7 @@ const ProjectDetails = () => {
                     
                                     </>
     
-                    ) :(<></>)}
+                    ) :(<></>)} */}
 
             
             <div className="section">

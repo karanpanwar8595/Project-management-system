@@ -39,10 +39,10 @@ const ProjectCard = ({ project }) => {
                 else {
                     const percentage = response.data.data.taskdone/response.data.data.totaltask*100
                     console.log(percentage)
-                    SetCompletion(percentage);
+                    SetCompletion(Math.floor(percentage));
                     const updatedProject = {
                         ...projects,
-                        completion: percentage,
+                        completion: Math.floor(percentage),
                     };
                     setProjects(updatedProject);
 
@@ -110,11 +110,11 @@ const ProjectCardToMe = ({ project }) => {
 
                 }
                 else {
-                    const percentage = response.data.data.totaltask / response.data.data.taskdone
-                    SetCompletion(percentage);
+                    const percentage =  response.data.data.taskdone/response.data.data.totaltask*100
+                    SetCompletion(Math.floor(percentage));
                     const updatedProject = {
                         ...projects,
-                        completion: percentage,
+                        completion: (Math.floor(percentage)),
                     };
                     setProjects(updatedProject);
 

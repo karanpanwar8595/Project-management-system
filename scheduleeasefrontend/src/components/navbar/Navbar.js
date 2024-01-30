@@ -23,8 +23,8 @@ const [email, setEmail] = useState('')
   useEffect(() => {
     const role =JSON.parse(sessionStorage.getItem('loginData')).profile_data.role;
     if(role == 0){
-      setName("Admin");
-      setEmail("admin@mail.com");
+      setName("Ajay Singh");
+      setEmail("ajay@gmail.com");
     }else if(role == 1){
       setName("Manager");
       setEmail("manager@mail.com");
