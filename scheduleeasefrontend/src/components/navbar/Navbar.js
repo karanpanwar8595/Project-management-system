@@ -1,7 +1,7 @@
 import React , {useState,useEffect} from 'react';
 import './Navbar.css'; // Import the CSS file for styling
 import logo from './logo.png';
-import profile from './profile.png';
+import profile from './prof2.jpeg';
 import { Link ,useNavigate} from 'react-router-dom';
 import logouticon from './logout.png'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';

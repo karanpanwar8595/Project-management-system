@@ -331,7 +331,7 @@ const SignupForm = () => {
         setGstValue('');
         setAddress('');
 
-        alert('Registration is done for ' + firstName + " " + middleName + " " + lastName);
+        alert('Registration is successfull for ' + firstName + " " + middleName + " " + lastName);
 
       } else {
         console.log('registration failed');
@@ -360,17 +360,17 @@ const SignupForm = () => {
     dobDate.setDate(dobDate.getDate() + 15);
     const isAllNumbers = (/\d/.test(firstName)) || (/\d/.test(middleName) || (/\d/.test(lastName)));
     if (firstName && !/^[a-zA-Z0-9 ]*$/.test(firstName)) {
-      setMessage("special character are not allowed in name ")
+      setMessage("Digits, special characters and Repeated characters are not allowed in Name ")
       setErrors(true)
       return;
     }
     if (middleName && !/^[a-zA-Z0-9 ]*$/.test(middleName)) {
-      setMessage("special character are not allowed in name ")
+      setMessage("Digits, special characters and Repeated characters are not allowed in Name")
       setErrors(true)
       return;
     }
     if (lastName && !/^[a-zA-Z0-9 ]*$/.test(lastName)) {
-      setMessage("special character are not allowed in name ")
+      setMessage("Digits, special characters and Repeated characters are not allowed in Name")
       setErrors(true)
       return;
     }
@@ -378,17 +378,17 @@ const SignupForm = () => {
 
     if (/^(.)\1+$/.test(firstName)) {
 
-      setMessage("Repeated characters are not allowed in name")
+      setMessage("Digits, special characters and Repeated characters are not allowed in Name")
       setErrors(true)
       return;
     }
     if (/^(.)\1+$/.test(middleName)) {
-      setMessage("Repeated characters are not allowed in name")
+      setMessage("Digits, special characters and Repeated characters are not allowed in Name")
       setErrors(true)
       return;
     }
     if (/^(.)\1+$/.test(lastName)) {
-      setMessage("Repeated characters are not allowed in name")
+      setMessage("Digits, special characters and Repeated characters are not allowed in Name")
       setErrors(true)
       return;
     }
@@ -402,7 +402,7 @@ const SignupForm = () => {
 
 
     if (isAllNumbers) {
-      setMessage("Numbers are not allowed in name ")
+      setMessage("Digits are not allowed in name ")
       setErrors(true)
       console.error("All characters can't be numbers or the name is too short");
       return;
@@ -410,7 +410,7 @@ const SignupForm = () => {
       // You can also throw an error or handle it according to your needs
     }
     else if (!hasMinTwoLetters) {
-      setMessage("The name is too short")
+      setMessage("First name should have atleast two letter")
       setErrors(true)
       return;
 
@@ -489,7 +489,7 @@ const SignupForm = () => {
     const timeoutId = setTimeout(() => {
       // Change the state after the specified time
       setErrors(false);
-    }, 2000);
+    }, 100000);
 
     // Clean up the timeout when the component unmounts or when myState changes
     return () => clearTimeout(timeoutId);
@@ -525,7 +525,7 @@ const SignupForm = () => {
             </div>
           )}
 
-
+          <h2>Registration</h2>
           <label htmlFor="email" className="signup-label">
             Email: <span className='required_tag'>*required</span>
           </label>

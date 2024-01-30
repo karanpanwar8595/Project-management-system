@@ -193,7 +193,8 @@
 }
 
 .error-box {
-    color: black;
+    color: red;
+    font-weight: 600;
     position: fixed;
     top: 10;
     left: 50%;
@@ -208,7 +209,4 @@
     justify-content: space-between;
     margin-left: 100px;
     z-index: 20;
-    color: "black";
- font-weight: bold;
-
 }
