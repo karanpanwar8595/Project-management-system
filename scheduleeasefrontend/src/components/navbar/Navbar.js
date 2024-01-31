@@ -40,7 +40,7 @@ const [email, setEmail] = useState('')
   return (
     <nav className="navbar">
 
-
+ 
       <Link to="/profile" style={{ textDecoration: "none" }}>
         <div className="navbar-profile" >
           <img src={profile} alt="User Profile Photo" className="profile-photo" />

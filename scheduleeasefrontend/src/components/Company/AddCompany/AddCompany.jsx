@@ -83,6 +83,8 @@ const AddCompany = () => {
       // Display an error message or handle invalid form submission
       console.error('Form is not valid. Please check the fields.');
     }
+
+    alert("Company information is added successfully")
   };
 
   return (
@@ -103,7 +105,7 @@ const AddCompany = () => {
           onChange={handleCompanyNameChange}
         />
         {!isCompanyNameValid && (
-          <span className="error-message">Invalid Company Name</span>
+          <span className="error-message">Company Name should not start with digits</span>
         )}
       </div>
 
@@ -120,7 +122,7 @@ const AddCompany = () => {
           onChange={handleGstNumberChange}
         />
         {!isGstNumberValid && (
-          <span className="error-message">Please enter a valid Gst Number</span>
+          <span className="error-message">GST Number must be 15 digits number</span>
         )}
       </div>
 
@@ -137,7 +139,7 @@ const AddCompany = () => {
           onChange={handleCompanyAddressChange}
         />
         {!isCompanyAddressValid && (
-          <span className="error-message">Invalid Company Address</span>
+          <span className="error-message">Repeated characters are not allowed</span>
         )}
       </div>
 

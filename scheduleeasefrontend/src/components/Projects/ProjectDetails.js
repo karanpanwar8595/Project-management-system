@@ -27,8 +27,8 @@ const ProjectDetails = () => {
     console.log(13,project)  ;
     const isManager=location.state.isManager;
  
-    const attachments= ['/project-plan.pdf'];
-    const documents= ['/Aadhar.jpg', '/4th sem result.pdf'];
+    const attachments= ['diagrams.jpg', 'project-plan.pdf'];
+    const documents= ['agreements.pdf'];
 
     const handleDocumentClick = (path) => {
         window.open(path, '_blank');

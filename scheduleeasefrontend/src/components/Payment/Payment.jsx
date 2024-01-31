@@ -89,7 +89,7 @@ const Payment = () => {
   // Assuming 'payments' is an array
   const [payments, setPayments] = useState([
     // Sample data, replace it with your actual data
-    { id: 1, name: 'Infra Upgrade', paymentdone: true, paymentdate: '2024-01-11', completion: 100, amount: 50000 },
+    { id: 1, name: 'Infra Upgrade', paymentdone: true, paymentdate: '2024-01-28', completion: 100, amount: 50000 },
     { id: 2, name: 'Mobile App', paymentdone: false, paymentdate: 'NOT DONE', completion: 42, amount: 50000 },
     { id: 3, name: 'Financial Upgrade', paymentdone: false, paymentdate: 'NOT DONE', completion: 10, amount: 10000 },
 
