@@ -10,17 +10,24 @@ const CompanyList = ({  }) => {
     const CompanyDetails = [
         {
           id: 1,
-          name: 'Innovate Inc.',
-          gstnumber: 'GST546548324545',
-          address: '35 Main Street, Cityville',
+          name: 'Wipro Technologies limited',
+          gstnumber: '32AAHCR7467M1Z5',
+          address: '35 Main Street, Cityville, Delhi',
           phonenumber: '9585685455',
         },
         {
           id: 2,
-          name: 'Westor',
-          gstnumber: 'GST987654321223',
+          name: 'Tech Mahindra',
+          gstnumber: '24AECZQ7019A9Z1',
           address: '96 Oak Avenue, Townsville',
           phonenumber: '9876543210',
+        },
+        {
+          id: 3,
+          name: 'RUV Corporation',
+          gstnumber: '22BNORQ0012D0Z2',
+          address: '55 Maple Street, Riverdale',
+          phonenumber: '9023126728',
         },
         // Add more sample company details as needed
       ];

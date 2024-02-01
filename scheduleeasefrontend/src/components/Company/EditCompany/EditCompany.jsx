@@ -38,14 +38,23 @@ const location = useLocation();
     setGstNumberValid( gstNumber.length === 14); 
   };
 
+  // const handleCompanyAddressChange = (event) => {
+  //   const value = event.target.value;
+  //   setCompanyAddress(value);
+    
+  //   const containsOnlyDigits = /^\d+$/.test(value);
+
+
+  //   setCompanyAddressValid(!containsOnlyDigits && !!value); // Simple validation, ensuring it's not empty
+  // };
+
   const handleCompanyAddressChange = (event) => {
     const value = event.target.value;
-    setCompanyAddress(value);
-    
     const containsOnlyDigits = /^\d+$/.test(value);
+    const repeated = /^(.)\1+$/.test(companyAddress);
 
-
-    setCompanyAddressValid(!containsOnlyDigits && !!value); // Simple validation, ensuring it's not empty
+    setCompanyAddress(value);
+    setCompanyAddressValid(!repeated && !containsOnlyDigits && !!value); // Simple validation, ensuring it's not empty
   };
 
   const handleCompanyPhoneChange = (event) => {
@@ -88,6 +97,8 @@ const location = useLocation();
       // Display an error message or handle invalid form submission
       console.error('Form is not valid. Please check the fields.');
     }
+
+    alert("Company information has been updated successfully")
   };
 
   return (
@@ -108,7 +119,7 @@ const location = useLocation();
           onChange={handleCompanyNameChange}
         />
         {!isCompanyNameValid && (
-          <span className="error-message">Enter a valid Company Name</span>
+          <span className="error-message">Company Name should not start with digits</span>
         )}
       </div>
 
@@ -126,7 +137,7 @@ const location = useLocation();
           disabled
         />
         {!isGstNumberValid && (
-          <span className="error-message">Enter a valid GST Number</span>
+          <span className="error-message">GST Number must be 15 digits number</span>
         )}
       </div>
 
@@ -143,7 +154,7 @@ const location = useLocation();
           onChange={handleCompanyAddressChange}
         />
         {!isCompanyAddressValid && (
-          <span className="error-message">Enter a Valid Company Address</span>
+          <span className="error-message">Repeated characters are not allowed</span>
         )}
       </div>
 
