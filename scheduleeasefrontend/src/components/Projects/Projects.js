@@ -559,7 +559,7 @@ const Projects = () => {
 
             {isManager ? (
                 <>
-                    <h3 style={{ textAlign: 'left', fontFamily: 'Calibri light' }}>Managed by me</h3>
+                    <h3 style={{ textAlign: 'left', fontFamily: 'Calibri light' }}>Manage by me</h3>
                     <div className="project-header">
                         <div className="header-item">Project Name</div>
                         <div className="header-item">Due Date</div>

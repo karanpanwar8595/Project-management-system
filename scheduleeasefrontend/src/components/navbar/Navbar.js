@@ -1,7 +1,7 @@
 import React , {useState,useEffect} from 'react';
 import './Navbar.css'; // Import the CSS file for styling
 import logo from './logo.png';
-import profile from './prof2.jpeg';
+import profile from './Pravatik.jpeg';
 import { Link ,useNavigate} from 'react-router-dom';
 import logouticon from './logout.png'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -26,8 +26,8 @@ const [email, setEmail] = useState('')
       setName("Ajay Singh");
       setEmail("ajay@gmail.com");
     }else if(role == 1){
-      setName("Manager");
-      setEmail("manager@mail.com");
+      setName("Pravatik Pandaya");
+      setEmail("pravatik@gmail.com");
     }else if(role == 2){
       setName("TeamMember");
       setEmail("teammember@mail.com");
@@ -40,7 +40,7 @@ const [email, setEmail] = useState('')
   return (
     <nav className="navbar">
 
-
+ 
       <Link to="/profile" style={{ textDecoration: "none" }}>
         <div className="navbar-profile" >
           <img src={profile} alt="User Profile Photo" className="profile-photo" />

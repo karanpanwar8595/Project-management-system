@@ -31,20 +31,20 @@ function Cal() {
         if (JSON.parse(sessionStorage.getItem('loginData')).profile_data.role==1){
             setAllEvents( [
                 {
-                    title: "Meeting with CEO",
+                    title: "Budget Review Meeting",
                     allDay: true,
-                    start: new Date(2024, 0, 16),
-                    end: new Date(2024, 0, 19),
+                    start: new Date(2024, 1, 8),
+                    end: new Date(2024, 1, 8),
                 },
                 {
-                    title: "Vacation",
-                    start: new Date(2021, 6, 7),
-                    end: new Date(2021, 6, 10),
+                    title: "Personal Branding Workshop",
+                    start: new Date(2024, 1, 18),
+                    end: new Date(2024, 1, 21),
                 },
                 {
-                    title: "Conference",
-                    start: new Date(2024, 0, 20),
-                    end: new Date(2024, 0, 23),
+                    title: "Health Care Duedate",
+                    start: new Date(2024, 1, 28),
+                    end: new Date(2024, 1, 28),
                 },
             ])
         }else if(JSON.parse(sessionStorage.getItem('loginData')).profile_data.role==2){
