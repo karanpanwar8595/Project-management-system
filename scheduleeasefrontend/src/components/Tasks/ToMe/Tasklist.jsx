@@ -65,8 +65,8 @@ const AccordionItem = ({ task_key, title, content, actstatus, duedate, owner, pr
 
 const Tasklist = () => {
 
-    const [taskList, setTasklist] = useState([{ title: "Validation in Edit form", content: "Inside the Project component apply the validation in project edit button", status:"Completed", duedate: "12/1/2024", progress: "20%", owner: "Pooja Singh" }, 
-    { title: "Integration Testing", content: "Consider the different scenario and integrate all the testing", status:"Complete", duedate: "12/2/2024", progress: "20%", owner: "Pooja Singh" }]);
+    const [taskList, setTasklist] = useState([{ title: "Validation in Edit form", content: "Inside the Project component apply the validation in project edit button", status:"Complete", duedate: "12/1/2024", progress: "20%", owner: " Pooja Singh" }, 
+    { title: "Customer entity front-end design", content: "It involves creating a visually appealing and user-friendly interface for managing customer records, including features such as listing, detailed views, and interactive forms, ensuring a seamless and intuitive user experience within the software application.", status:"Completed", duedate: "12/2/2024", progress: "20%", owner: "Pravatik pandaya" }]);
 
     useEffect(() => {
         fetchalltaskofme();

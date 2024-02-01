@@ -49,16 +49,17 @@ function Cal() {
             ])
         }else if(JSON.parse(sessionStorage.getItem('loginData')).profile_data.role==2){
             setAllEvents( [
-                {
-                    title: "Customer entity front-end design",
+                { title: "Validation in Edit form",
+                   
                     allDay: true,
-                    start: new Date(2024, 0, 15),
-                    end: new Date(2024, 1, 15),
+                    start: new Date(2024, 1, 15),
+                    end: new Date(2024, 1, 20),
                 },
                 {
-                    title: "Marketing analysis",
-                    start: new Date(2024, 1, 10),
-                    end: new Date(2024, 1 , 25),
+                    title: "Customer entity front-end design",
+                    start: new Date(2024, 1, 5),
+                    end: new Date(2024, 1 , 10),
+               
                 },
                 {
                     title: "Meeting with Manager",

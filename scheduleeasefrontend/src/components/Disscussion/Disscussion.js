@@ -16,7 +16,7 @@ import pic6 from './photos/6.jpg';
 
 const Disscussion = () => {
 
-  const profilepic = [pic1, pic3, pic4, pic5, pic6];
+  const profilepic = [pic2, pic3, pic4, pic5, pic6];
 
   const [listitem, setListItem] = useState([]);
   const [activereciveruser, setactivereciveruser] = useState([]);
@@ -124,7 +124,7 @@ const Disscussion = () => {
       ) : (<>
      
 <div className="activereciveruser">
-       <div className="image"><img src={pic1} className="userprofileimage" /></div>
+       <div className="image"><img src={pic2} className="userprofileimage" /></div>
        <div className="nameandemail">
          <div className="nametext">{activereciveruser.firstname}</div>
          <div className='emailtext'>{activereciveruser.email}</div>

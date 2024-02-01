@@ -71,7 +71,9 @@ const Profile = () => {
     <div className="profile">
       {/* Navbar top */}
       <div className="profile-navbar-top">
-        <Link to="/updateProfile">
+        <Link to="/updateProfile" 
+            state={{ profiledetails }}
+            >
           <div id='profile-edit-button'>
             <FontAwesomeIcon icon={faPencilAlt} className="edit-icon" />
             EDIT

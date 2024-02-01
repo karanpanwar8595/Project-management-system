@@ -178,9 +178,10 @@ const Manage_team = () => {
       </div>
 
       {isManager ? (
-        <></>
+                <><Link to="/add_team_member" state={{ selectedProject }}><img src={plus} className='plus-symbol' alt="Plus Symbol" /></Link></>
       ):(
-        <><Link to="/add_team_member" state={{ selectedProject }}><img src={plus} className='plus-symbol' alt="Plus Symbol" /></Link></>
+        <></>
+
       )}
       
 
