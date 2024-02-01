@@ -6,22 +6,17 @@ import axios from 'axios';
 import profile from './profile.png';
 
 import React, { useState, useEffect } from 'react'
-import pic1 from './photos/1.jpeg';
-import pic2 from './photos/2.jpeg';
-import pic3 from './photos/3.jpeg';
-import pic4 from './photos/4.jpeg';
-import pic5 from './photos/5.jpeg';
-import pic6 from './photos/6.jpeg';
-import pic7 from './photos/7.jpeg';
-import pic8 from './photos/8.jpeg';
-import pic9 from './photos/9.jpeg';
-import pic10 from './photos/10.jpeg';
-import pic11 from './photos/11.jpg';
-import pic12 from './photos/12.png';
+import pic1 from './photos/1.jpg';
+import pic2 from './photos/2.jpg';
+import pic3 from './photos/3.jpg';
+import pic4 from './photos/4.jpg';
+import pic5 from './photos/5.jpg';
+import pic6 from './photos/6.jpg';
+
 
 const Disscussion = () => {
 
-  const profilepic = [pic1, pic2, pic3, pic4, pic8, pic9, pic5, pic6, pic7];
+  const profilepic = [pic1, pic3, pic4, pic5, pic6];
 
   const [listitem, setListItem] = useState([]);
   const [activereciveruser, setactivereciveruser] = useState([]);
@@ -129,7 +124,7 @@ const Disscussion = () => {
       ) : (<>
      
 <div className="activereciveruser">
-       <div className="image"><img src={profile} className="userprofileimage" /></div>
+       <div className="image"><img src={pic1} className="userprofileimage" /></div>
        <div className="nameandemail">
          <div className="nametext">{activereciveruser.firstname}</div>
          <div className='emailtext'>{activereciveruser.email}</div>

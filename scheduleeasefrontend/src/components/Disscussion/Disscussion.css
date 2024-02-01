@@ -18,6 +18,7 @@
 .userprofileimage{
   height:50px ;
   margin-right:10px;
+  border-radius: 50%;
 }
 .allmessage::-webkit-scrollbar {
   width: 5px;

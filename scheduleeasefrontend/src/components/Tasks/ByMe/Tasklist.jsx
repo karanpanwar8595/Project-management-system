@@ -79,8 +79,8 @@ const Tasklist = () => {
         fetchalltasktoother();
     }, []);
 
-    const [taskList, setTasklist] = useState([{ title: "Customer entity front-end design", content: "It involves creating a visually appealing and user-friendly interface for managing customer records, including features such as listing, detailed views, and interactive forms, ensuring a seamless and intuitive user experience within the software application.", status: "Completed", duedate: "12/10/2023", startdate: "12-10-2023", progress: "20%", owner: "Suresh" }, 
-    { title: "Feasibilty study", content: "It involves assessing the practicality and viability of a proposed project, evaluating factors such as economic, technical, and operational aspects to determine if the project is achievable and beneficial within given constraints", status: "Complete", duedate: "12-10-2023", startdate: "12/10/2023", progress: "20%", owner: "Ramesh" }]);
+    const [taskList, setTasklist] = useState([{ title: "Customer entity front-end design", content: "It involves creating a visually appealing and user-friendly interface for managing customer records, including features such as listing, detailed views, and interactive forms, ensuring a seamless and intuitive user experience within the software application.", status: "Completed", duedate: "12/10/2023", startdate: "12-10-2023", progress: "20%", owner: "Vikas Jaiswal" }, 
+    { title: "Feasibilty study", content: "It involves assessing the practicality and viability of a proposed project, evaluating factors such as economic, technical, and operational aspects to determine if the project is achievable and beneficial within given constraints", status: "Complete", duedate: "12-10-2023", startdate: "12/10/2023", progress: "20%", owner: "Sunil Srivastava" }]);
 
     const fetchalltasktoother = () => {
         axios.post('http://127.0.0.1:8000/api/taskassigntoother/', { useremail: JSON.parse(sessionStorage.getItem('loginData')).profile_data.email }).then((response) => {
