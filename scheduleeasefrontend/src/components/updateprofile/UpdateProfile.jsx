@@ -357,12 +357,107 @@ useEffect(() => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (email == '' && firstName == "" && gender == "" && selectedRole == '' && dob == '' && address == '' && countryValue == '' && stateValue == '' && cityValue == '') {
-      setMessage("Please enter all the required fields")
+    console.log("role", selectedRole);
+    const today = new Date();  // Get today's date
+    const dobDate = new Date(dob);
+    dobDate.setDate(dobDate.getDate() + 15);
+    const isAllNumbers = (/\d/.test(firstName)) || (/\d/.test(middleName) || (/\d/.test(lastName)));
+    if (firstName && !/^[a-zA-Z0-9 ]*$/.test(firstName)) {
+      setMessage("Digits, special characters and Repeated characters are not allowed in Name ")
       setErrors(true)
-      return
+      return;
+    }
+    if (middleName && !/^[a-zA-Z0-9 ]*$/.test(middleName)) {
+      setMessage("Digits, special characters and Repeated characters are not allowed in Name")
+      setErrors(true)
+      return;
+    }
+    if (lastName && !/^[a-zA-Z0-9 ]*$/.test(lastName)) {
+      setMessage("Digits, special characters and Repeated characters are not allowed in Name")
+      setErrors(true)
+      return;
+    }
+
+
+    if (/^(.)\1+$/.test(firstName)) {
+
+      setMessage("Digits, special characters and Repeated characters are not allowed in Name")
+      setErrors(true)
+      return;
+    }
+    if (/^(.)\1+$/.test(middleName)) {
+      setMessage("Digits, special characters and Repeated characters are not allowed in Name")
+      setErrors(true)
+      return;
+    }
+    if (/^(.)\1+$/.test(lastName)) {
+      setMessage("Digits, special characters and Repeated characters are not allowed in Name")
+      setErrors(true)
+      return;
+    }
+    if (/^(.)\1+$/.test(address)) {
+      setMessage("Repeated characters are not allowed in Address")
+      setErrors(true)
+      return;
+    }
+    const hasMinTwoLetters = /^[a-zA-Z]{2,}$/.test(firstName);
+
+
+
+    if (isAllNumbers) {
+      setMessage("Digits are not allowed in name ")
+      setErrors(true)
+      console.error("All characters can't be numbers or the name is too short");
+      return;
+
+      // You can also throw an error or handle it according to your needs
+    }
+    else if (!hasMinTwoLetters) {
+      setMessage("First name should have atleast two letter")
+      setErrors(true)
+      return;
 
     }
+    const isAllNumbersAdd = /^\d+$/.test(address);
+
+    if (isAllNumbersAdd) {
+      setMessage("All characters should not be number in Address")
+      setErrors(true)
+      console.error("All characters can't be numbers or the name is too short");
+      return;
+
+      // You can also throw an error or handle it according to your needs
+    }
+    // Calculate the minimum allowed date (15 years ago)
+    const minAllowedDate = new Date();
+    minAllowedDate.setFullYear(today.getFullYear() - 15);
+
+    if (dobDate.getTime() >= today.getTime() || dobDate.getTime() >= minAllowedDate.getTime()) {
+      setMessage("Person should be 15 years old");
+      setErrors(true);
+      setDOB('');
+      return;
+    }
+
+    if (email == '' || firstName == "" || gender == "" || selectedRole == '' || dob == '' || address == '' || countryValue == '' || stateValue == '' || cityValue == '') {
+
+      console.log("role", selectedRole);
+      setMessage("Please enter all the required fields")
+      setErrors(true)
+      return;
+
+    }
+    if (selectedRole == "Client") {
+      if (GstValue == '') {
+
+        setMessage("Please enter all the required fields")
+        setErrors(true)
+        return;
+      }
+    }
+
+
+
     if (!isValidEmail || !selectedRole || !firstName || !gender) {
 
       return;
@@ -465,6 +560,7 @@ useEffect(() => {
                 Gender:<span className='required_tag'>*required</span>
               </label>
               <select value={gender} id="gender" className="signup-select" onChange={(e) => setGender(e.target.value)}
+              disabled
               >
                 <option>choose gender</option>
                 <option>Male</option>
@@ -497,7 +593,12 @@ useEffect(() => {
           <label htmlFor="dob" className="signup-label">
             Date of Birth:<span className='required_tag'>*required</span>
           </label>
-          <input value={dob} type="date" id="dob" className="signup-input" onChange={(e) => setDOB(e.target.value)}
+          <input value={dob} 
+          type="date"
+           id="dob" 
+          className="signup-input" 
+          onChange={(e) => setDOB(e.target.value)   
+        } disabled
           />
 
           <label htmlFor="addressline" className="signup-label">
