@@ -236,7 +236,7 @@ def forgetpassword(request):
 # Disscussion process
 @api_view(['GET'])
 def listofreciver(request):
-    return Response([{'firstname' :'Vikas Jaiswal', 'email':'vikas@gmail.com'},{'firstname' :'Amit Gupta', 'email':'amit@gmail.com'},{'firstname' :'Sunil Srivastava', 'email':'sunil@gmail.com'},])
+    return Response([{'firstname' :'Pravatik Pandaya', 'email':'pravatik@gmail.com'},{'firstname' :'Amit Gupta', 'email':'amit@gmail.com'},{'firstname' :'Sunil Srivastava', 'email':'sunil@gmail.com'},])
 
 @api_view(['post'])
 def activereciveruser(request):
