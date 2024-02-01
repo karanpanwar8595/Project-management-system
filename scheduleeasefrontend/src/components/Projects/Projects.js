@@ -37,7 +37,7 @@ const ProjectCard = ({ project }) => {
 
                 }
                 else {
-                    const percentage = response.data.data.taskdone/response.data.data.totaltask*100
+                    const percentage = response.data.data.taskdone / response.data.data.totaltask * 100
                     console.log(percentage)
                     SetCompletion(Math.floor(percentage));
                     const updatedProject = {
@@ -110,7 +110,7 @@ const ProjectCardToMe = ({ project }) => {
 
                 }
                 else {
-                    const percentage =  response.data.data.taskdone/response.data.data.totaltask*100
+                    const percentage = response.data.data.taskdone / response.data.data.totaltask * 100
                     SetCompletion(Math.floor(percentage));
                     const updatedProject = {
                         ...projects,
@@ -144,6 +144,35 @@ const ProjectCardToMe = ({ project }) => {
 };
 
 const Projects = () => {
+    const data = [{
+        'budget': 50000,
+        'client': {
+            'name': 'Tech Mahindra',
+            'email': 'akash@gmail.com',
+            'phone': '2109876547',
+            'address': '678 Maple Road, Downtown',
+            'gst_no': 3210987653
+        },
+
+        'id': 5,
+        'name': 'Health Care',
+        'projectDescription': 'Health Care: Your comprehensive mobile solution for managing personal wellness and accessing medical resources on the go',
+        'startDate': '2024-05-20',
+        'dueDate': '2024-11-30',
+
+        'email': {
+            'email': {
+                'id': 5,
+                'email': 'pravatik@gmail.com',
+                'photo': 'photo',
+                'lname': 'Pandaya',
+                'fname': 'Pravatik',
+                'mname': ''
+            }
+
+        }
+    }];
+
     const [projectname, setProjectName] = useState('');
     const [projectDec, setProjectDesc] = useState('');
     const [budget, setBudget] = useState('');
@@ -255,7 +284,7 @@ const Projects = () => {
                 // ye data request me jayega in views.py
                 if (response.data['value']) {
                     console.log(response.data.projectdetails);
-                    setOngoingProjects(response.data.projectdetails)
+                    setOngoingProjects(response.data.projectdetails);
                     console.log('Project component connected');
                 } else {
                     console.log("error")
@@ -596,13 +625,13 @@ const Projects = () => {
                         ))}
                     </>
                 ) : (<>
-                    <h3 style={{ textAlign: 'left', fontFamily: 'Calibri light' }}>Assign to me</h3>
+                    <h3 style={{ textAlign: 'left', fontFamily: 'Calibri light' }}>Projects</h3>
                     <div className="project-header">
                         <div className="header-item">Project Name</div>
                         <div className="header-item">Due Date</div>
                         <div className="header-item">Project Manager</div>
                     </div>
-                    {assignedProjects.map((project) => (
+                    {data.map((project) => (
                         <ProjectCardToMe key={project.id} project={project} />
 
                     ))}

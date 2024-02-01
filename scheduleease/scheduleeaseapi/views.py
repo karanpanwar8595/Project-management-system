@@ -175,7 +175,7 @@ def generate_random_password(length=12):
     return password
 
 def mailsenderapi(inputemail,new_password):
-    subject = 'Hello from Django'
+    subject = 'Forgot Password Request'
     message = 'New password for your login to Schedule Ease website for the account '+inputemail+" is " + new_password
     from_email = "ujjwalbhansal55@gmail.com"
     recipient_list = [inputemail]
@@ -236,7 +236,7 @@ def forgetpassword(request):
 # Disscussion process
 @api_view(['GET'])
 def listofreciver(request):
-    return Response([{'firstname' :'Pravatik Pandaya', 'email':'pravatik@gmail.com'},{'firstname' :'Sunil Srivastava', 'email':'sunil@gmail.com'},{'firstname' :'Amit Gupta', 'email':'amit@gmail.com'},])
+    return Response([{'firstname' :'Pravatik Pandaya', 'email':'pravatik@gmail.com'}])
 
 @api_view(['post'])
 def activereciveruser(request):
@@ -255,16 +255,17 @@ def messagesofauser(request):
 
 
 
-  return Response([
-    {'sendertype': 0, 'messagetxt': "Do you have completed the design?", 'timestamp': "10:20"},
-    {'sendertype': 0, 'messagetxt': "Thanks for checking in. I reviewed the design, and it looks good overall. However, we need to make a few adjustments to align it with the project requirements.", 'timestamp': "10:21"},
-    {'sendertype': 1, 'messagetxt': "Sure, I'm open to feedback. What specific adjustments do you have in mind?", 'timestamp': "10:22"},
-    {'sendertype': 0, 'messagetxt': "Firstly, we need to incorporate the latest feedback from the client regarding the color scheme. Additionally, please ensure that the design is responsive for different screen sizes.", 'timestamp': "10:23"},
-    {'sendertype': 1, 'messagetxt': "Got it. I'll implement the client's feedback and make the design responsive. When do you need the revised version?", 'timestamp': "10:24"},
-    {'sendertype': 0, 'messagetxt': "We have a client presentation scheduled for Thursday, so I'd appreciate it if you could have the revisions ready by Wednesday end of day.", 'timestamp': "10:25"},
-    {'sendertype': 1, 'messagetxt': "Understood. I'll prioritize these changes and ensure the updated design is ready by Wednesday. If there are any other specific requirements, please let me know.", 'timestamp': "10:26"},
-    {'sendertype': 0, 'messagetxt': "Great. Thank you for your prompt response and commitment to meeting the deadline. Let me know if you encounter any challenges or need further clarification.", 'timestamp': "10:27"},
-])
+    return Response([
+        {'sendertype': 1, 'messagetxt': "Hello! I hope you're doing well. I wanted to provide an update on the design progress.", 'timestamp': "10:20"},
+
+        {'sendertype': 0, 'messagetxt': "Sure, I'm open to feedback. What specific adjustments do you have in mind?", 'timestamp': "10:22"},
+        {'sendertype': 1, 'messagetxt': "Firstly, we need to incorporate the latest feedback from you regarding the color scheme. Additionally, please ensure that the design is responsive for different screen sizes.", 'timestamp': "10:23"},
+        {'sendertype': 0, 'messagetxt': "Got it. I'll implement your feedback and make the design responsive. When do you need the revised version?", 'timestamp': "10:24"},
+        {'sendertype': 1, 'messagetxt': "We have a client presentation scheduled for Thursday, so I'd appreciate it if you could have the revisions ready by Wednesday end of day.", 'timestamp': "10:25"},
+        {'sendertype': 0, 'messagetxt': "Understood. I'll prioritize these changes and ensure the updated design is ready by Wednesday. If there are any other specific requirements, please let me know.", 'timestamp': "10:26"},
+        {'sendertype': 1, 'messagetxt': "Great. Thank you for your prompt response and commitment to meeting the deadline. Let me know if you encounter any challenges or need further clarification.", 'timestamp': "10:27"},
+    ])
+
 
 # Project Component
 @api_view(['post'])

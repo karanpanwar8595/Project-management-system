@@ -38,8 +38,8 @@ const [email, setEmail] = useState('')
       setName("Vikas Jaiswal");
       setEmail("vikas@gmail.com");
     }else if(role == 3){
-      setName("Client");
-      setEmail("client@mail.com");
+      setName("Akash Jaiswal");
+      setEmail("akash@gmail.com");
     }
   }, [])
 
