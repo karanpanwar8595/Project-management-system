@@ -228,22 +228,11 @@ console.log("modifu",task);
     //     if (!name.trim()) return 'Company name is required.';
     //     return '';
     // };
-
     const validateStartDate = (date) => {
-        const today = new Date();
-        
-        // Check if the provided date is a valid Date object
-        if (!(date instanceof Date) || isNaN(date)) {
-          return 'Invalid date.';
-        }
-      
-        if (date < today) {
-          return 'Start date must be today or a future date.';
-        }
-      
+        const today = new Date().toISOString().split('T')[0];
+        if (date < today) return 'Start date must be today or a future date.';
         return '';
-      };
-
+    };
     const validateDueDate = (startDate, dueDate) => {
         if (dueDate <= startDate) return 'Due date must be greater than the start date.';
         return '';
@@ -275,7 +264,7 @@ console.log("modifu",task);
             return;
         }
 
-       
+        alert("Task details modified")
         setSelectedTeamMember(null);
     };
 
@@ -405,7 +394,7 @@ console.log("modifu",task);
                                 </div> */}
                             </div>
                             <div className="selected-teammember">
-                                    Ujjwal ujjwal@mail.com
+                                    Amit gupta (amit@mail.com)
                                     <button className="add-form-btn" type="button" onClick={handleRemoveTeamMember}>Remove</button>
                                 </div>
                             {selectedTeamMember && (
@@ -414,12 +403,12 @@ console.log("modifu",task);
                                     <button className="add-form-btn" type="button" onClick={handleRemoveTeamMember}>Remove</button>
                                 </div>
                             )}
-
-                            
-                        </form>
-                        <div className="form-row">
+                            <div className="form-row">
                                 <button className="add-form-btn" type="submit">Submit</button>
                             </div>
+                            
+                        </form>
+                        
                  
             
             

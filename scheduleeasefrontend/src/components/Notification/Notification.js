@@ -6,11 +6,10 @@ import { faBell } from '@fortawesome/free-solid-svg-icons';
 const Notification = () => {
 
     const notifications = [
-        { id: 1, message: "'GreenTech Revamp' project phase 1 must be completed by 2024-09-05. Please ensure all related tasks are on track." },
-        { id: 2, message: "Received a payment of $5,000 from 'EcoSolutions Ltd.' for the 'Urban Renewal' project." },
-        { id: 3, message: "Alex Reynolds has completed the 'Market Analysis' task for the 'InnovateHub' project. " },
-        { id: 4, message: "'User Interface Overhaul' for the 'Retail E-commerce' project was completed ahead of schedule." },
-        { id: 5, message: "'Project Bluesky' must be completed by 2024-09-05." },
+        { id: 1, message: "'Health Care' project phase 1 must be completed by 2024-09-20. Please ensure all related tasks are on track." },
+        { id: 2, message: "Received a payment of 67000 from 'EcoSolutions Ltd.' for the 'Urban Renewal' project." },
+        { id: 3, message: "Sunil Srivastava has completed the 'Customer entity front-end design' task for the 'Sign Companion' project. " },
+        { id: 4, message: "'Validation in edit form' task of 'Event manage app' must be completed by 2024-2-25." },
     ];
 
     return (

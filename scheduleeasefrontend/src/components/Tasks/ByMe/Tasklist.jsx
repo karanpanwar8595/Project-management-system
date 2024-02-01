@@ -79,8 +79,10 @@ const Tasklist = () => {
         fetchalltasktoother();
     }, []);
 
-    const [taskList, setTasklist] = useState([{ title: "Customer entity front-end design", content: "It involves creating a visually appealing and user-friendly interface for managing customer records, including features such as listing, detailed views, and interactive forms, ensuring a seamless and intuitive user experience within the software application.", status: "Completed", duedate: "12/10/2023", startdate: "12-10-2023", progress: "20%", owner: "Vikas Jaiswal" }, 
-    { title: "Feasibilty study", content: "It involves assessing the practicality and viability of a proposed project, evaluating factors such as economic, technical, and operational aspects to determine if the project is achievable and beneficial within given constraints", status: "Complete", duedate: "12-10-2023", startdate: "12/10/2023", progress: "20%", owner: "Sunil Srivastava" }]);
+    const [taskList, setTasklist] = useState([{ title: "Customer entity front-end design", content: "It involves creating a visually appealing and user-friendly interface for managing customer records, including features such as listing, detailed views, and interactive forms, ensuring a seamless and intuitive user experience within the software application.", status: "Completed", duedate: "10/03/2024", startdate: "01/01/2024", progress: "20%", owner: "Vikas Jaiswal" }, 
+    { title: "Feasibilty study", content: "It involves assessing the practicality and viability of a proposed project, evaluating factors such as economic, technical, and operational aspects to determine if the project is achievable and beneficial within given constraints", status: "Complete", duedate: "15/03/2024", startdate: "10/01/2024", progress: "20%", owner: "Sunil Srivastava" },
+    { title: "Responsive Design for the application", content: "Apply responsive design for the seamless performance in all the device", status: "Complete", duedate: "29/02/2024", startdate: "01/02/2024", progress: "0%", owner: "Amit Gupta" },
+    ]);
 
     const fetchalltasktoother = () => {
         axios.post('http://127.0.0.1:8000/api/taskassigntoother/', { useremail: JSON.parse(sessionStorage.getItem('loginData')).profile_data.email }).then((response) => {
@@ -99,6 +101,11 @@ const Tasklist = () => {
 
 
         <div className="accordion taskconcontainer">
+            <select className='select-project'>
+                <option value="">Select a Project</option>
+                <option value="">Health Care</option>
+                <option value="">Sign Companion 02</option>
+            </select> 
             <div className='tasklist'>
 
 

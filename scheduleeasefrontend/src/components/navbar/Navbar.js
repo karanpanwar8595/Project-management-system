@@ -8,7 +8,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faDoorOpen } from '@fortawesome/free-solid-svg-icons';
 
 const Navbar = () => {
-  const navigate = useNavigate();
+const navigate = useNavigate();
 const [name, setName] = useState('')
 const [email, setEmail] = useState('')
   const handleLogout = () => {

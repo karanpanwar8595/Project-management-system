@@ -18,7 +18,7 @@ const AddTask = () => {
 
 
     const [teammembers, setTeamMembers] = useState([
-        { name: 'hello asdf', email: 'cl@mail.com' },
+        { name: 'Amit Gupta', email: 'amit@mail.com' },
         { name: 'Ujjwal Bhansali', email: 'ujjwalbhansali@gmail.com' },
         { name: 'Karan Panwar', email: 'karanpanwar@gmail.com' },
     ]);
@@ -265,7 +265,7 @@ const AddTask = () => {
             return;
         }
 
-       
+       alert("Task added successfully")
         setSelectedTeamMember(null);
     };
 
@@ -400,12 +400,12 @@ const AddTask = () => {
                                     <button className="add-form-btn" type="button" onClick={handleRemoveTeamMember}>Remove</button>
                                 </div>
                             )}
-
-                            
-                        </form>
-                        <div className="form-row">
+                            <div className="form-row">
                                 <button className="add-form-btn" type="submit">Submit</button>
                             </div>
+                            
+                        </form>
+                        
                  
             
             

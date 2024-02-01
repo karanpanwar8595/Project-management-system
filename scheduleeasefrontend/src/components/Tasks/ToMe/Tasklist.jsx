@@ -7,15 +7,15 @@ import editicon from './editicon.png';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import axios from 'axios';
 
-import { faDownload  } from '@fortawesome/free-solid-svg-icons';
+import { faDownload } from '@fortawesome/free-solid-svg-icons';
 
 const AccordionItem = ({ task_key, title, content, actstatus, duedate, owner, progress, done_key }) => {
     const [isOpen, setIsOpen] = useState(false);
     const [isComplete, setIsComplete] = useState(false);
-    console.log("sta",actstatus)
-    const [status,setStatus]=useState(actstatus);
+    console.log("sta", actstatus)
+    const [status, setStatus] = useState(actstatus);
     // const [addButtonintask, setAddButtonInTask] = useState(false);
-    console.log("status",status)
+    console.log("status", status)
     useEffect(() => {
         if (status == 'Completed') {
             setIsComplete(true)
@@ -39,9 +39,9 @@ const AccordionItem = ({ task_key, title, content, actstatus, duedate, owner, pr
                 </div>
 
                 <div className="accordion-download-button" onClick={(event) => event.stopPropagation()}>
-                  
-                        <FontAwesomeIcon icon={faDownload} style={{ fontSize: '24px' }}/>
-                    
+
+                    <FontAwesomeIcon icon={faDownload} style={{ fontSize: '24px' }} />
+
                 </div>
 
                 {/* <div className='accordion-status'>{status}</div> */}
@@ -65,26 +65,26 @@ const AccordionItem = ({ task_key, title, content, actstatus, duedate, owner, pr
 
 const Tasklist = () => {
 
-    const [taskList, setTasklist] = useState([{ title: "Validation in Edit form", content: "Inside the Project component apply the validation in project edit button", status:"Completed", duedate: "12/1/2024", progress: "20%", owner: "Pooja Singh" }, 
-    { title: "Integration Testing", content: "Consider the different scenario and integrate all the testing", status:"Complete", duedate: "12/2/2024", progress: "20%", owner: "Pooja Singh" }]);
+    const [taskList, setTasklist] = useState([{ title: "Validation in Edit form", content: "Inside the Project component apply the validation in project edit button", status: "Completed", duedate: "15/3/2024", progress: "20%", owner: "Pooja Singh" },
+    { title: "Integration Testing", content: "Consider the different scenario and integrate all the testing", status: "Complete", duedate: "25/2/2024", progress: "20%", owner: "Pooja Singh" }]);
 
     useEffect(() => {
         fetchalltaskofme();
-      }, []); 
+    }, []);
     const fetchalltaskofme = (event) => {
 
-        axios.post('http://127.0.0.1:8000/api/taskassigntome/', { useremail:JSON.parse(sessionStorage.getItem('loginData')).profile_data.email }).then((response) => {
-          if (response) {
-            console.log(response.data);
-            // setMessageList(messagelist)
-            // var newMessage=[{'sendertype':1,'messagetxt': inputValueMessageTextBox,'timestamp':"10:20"}]
-            // setMessageList(messagelist => messagelist.concat(newMessage));
-            // setInputMessageTextBox("");
-          }
+        axios.post('http://127.0.0.1:8000/api/taskassigntome/', { useremail: JSON.parse(sessionStorage.getItem('loginData')).profile_data.email }).then((response) => {
+            if (response) {
+                console.log(response.data);
+                // setMessageList(messagelist)
+                // var newMessage=[{'sendertype':1,'messagetxt': inputValueMessageTextBox,'timestamp':"10:20"}]
+                // setMessageList(messagelist => messagelist.concat(newMessage));
+                // setInputMessageTextBox("");
+            }
         }, (error) => {
-          console.log(error);
+            console.log(error);
         });
-      }
+    }
 
 
 
@@ -94,6 +94,7 @@ const Tasklist = () => {
 
 
         <div className="accordion taskconcontainer">
+            
             <div className='tasklist'>
 
 
