@@ -2,7 +2,12 @@ import React, { useState, useEffect } from 'react';
 import './modal.css'; // Make sure to create a CSS file for your styles
 import axios from 'axios';
 import { useLocation } from 'react-router-dom';
-
+import pic1 from './photos/1.jpg';
+import pic2 from './photos/2.jpg';
+import pic3 from './photos/3.jpg';
+import pic4 from './photos/4.jpg';
+import pic5 from './photos/5.jpg';
+import pic6 from './photos/6.jpg';
 
 // Sample data representing persons
 // const personsData = [
@@ -126,7 +131,7 @@ const Modal = () => {
                         <div className='addteammemberlistcard'>
                             {searchResults.map(person => (
                                 <div key={person.email} className='person-item'>
-                                    <img className='person-image' src="https://randomuser.me/api/portraits/men/4.jpg" alt={person.name} />
+                                    <img className='person-image' src={pic4} alt={person.name} />
                                     <div className='person-details'>
                                         <h3 className='person-name'>{person.name}</h3>
                                         <p className='person-email'>{person.email}</p>
@@ -159,7 +164,7 @@ const Modal = () => {
 
                             {selectedPersons.map(person => (
                                 <div key={person.email} className='person-item'>
-                                    <img src="https://randomuser.me/api/portraits/men/4.jpg" alt={person.name} className='person-image' />
+                                    <img src={pic4} alt={person.name} className='person-image' />
                                     <div className='person-details'>
                                         <h3 className='person-name'>{person.name}</h3>
                                         <p className='person-email'>{person.email}</p>

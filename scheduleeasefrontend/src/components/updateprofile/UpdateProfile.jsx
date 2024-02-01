@@ -1,22 +1,27 @@
 import React, { useEffect, useState } from 'react';
 import './UpdateProfile.css';
 import axios from 'axios';
+import { useLocation } from 'react-router-dom';
 
 
 const SignupForm = () => {
+  const location = useLocation();
+
+  const profiledetails = location.state.profiledetails;
+
   const [showPassword, setShowPassword] = useState(false);
   const [isValidEmail, setIsValidEmail] = useState(true);
   const [isValidDob, setIsValidDob] = useState(false);
   const [errors, setErrors] = useState(false);
 
-  const [email, setEmail] = useState('');
+  const [email, setEmail] = useState(profiledetails.email);
   const [selectedRole, setSelectedRole] = useState('');
-  const [firstName, setFirstName] = useState('');
-  const [middleName, setMiddleName] = useState('');
-  const [lastName, setLastName] = useState('');
+  const [firstName, setFirstName] = useState(profiledetails.fname);
+  const [middleName, setMiddleName] = useState(profiledetails.mname);
+  const [lastName, setLastName] = useState(profiledetails.lname);
   const [gender, setGender] = useState('');
-  const [address, setAddress] = useState('');
-  const [dob, setDOB] = useState('');
+  const [address, setAddress] = useState("401");
+  const [dob, setDOB] = useState(profiledetails.dob);
   const [message, setMessage] = useState('');
   const [gstno, setGstNo] = useState('');
 
@@ -30,7 +35,28 @@ const SignupForm = () => {
     setAddress(e.target.value);
   };
 
+useEffect(() => {
+ 
+    if (profiledetails.role === 0) {
+      setSelectedRole("Admin");
+    } else if (profiledetails.role === 1) {
+      setSelectedRole("Manager");
 
+    } else if (profiledetails.role === 2) {
+      setSelectedRole("Team Member");
+
+    } else if (profiledetails.role === 3) {
+      setSelectedRole("Client");
+
+    }
+
+    
+    if (profiledetails.gender === 0) {
+      setGender("Male");
+    } else if (profiledetails.gender === 1) {
+      setGender("Female");
+    }
+}, [])
 
 
   // countrydata

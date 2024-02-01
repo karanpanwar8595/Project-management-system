@@ -16,6 +16,7 @@ import pic6 from './photos/6.jpg';
 
 const UserProfileCard = ({ user, picture }) => {
   const [role, setRole] = useState('');
+
   useEffect(() => {
     if (user.role === 0) {
       setRole('Admin');
@@ -54,7 +55,7 @@ const UserProfileCard = ({ user, picture }) => {
 
 const Manage_team = () => {
   const profilepic = [pic1, pic2, pic3, pic4, pic6];
-
+  const isManager =JSON.parse(sessionStorage.getItem('loginData')).profile_data.role;
   const [isModalOpen, setModalOpen] = useState(false);
 
   const openModal = () => {
@@ -175,7 +176,14 @@ const Manage_team = () => {
           <p>No team members available</p>
         )}
       </div>
-      <Link to="/add_team_member" state={{ selectedProject }}><img src={plus} className='plus-symbol' alt="Plus Symbol" /></Link>
+
+      {isManager ? (
+                <><Link to="/add_team_member" state={{ selectedProject }}><img src={plus} className='plus-symbol' alt="Plus Symbol" /></Link></>
+      ):(
+        <></>
+
+      )}
+      
 
     </div>
 

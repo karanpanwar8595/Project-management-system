@@ -6,6 +6,12 @@ import { Link ,useNavigate} from 'react-router-dom';
 import logouticon from './logout.png'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faDoorOpen } from '@fortawesome/free-solid-svg-icons';
+import pic1 from './photos/1.jpg';
+import pic2 from './photos/2.jpg';
+import pic3 from './photos/3.jpg';
+import pic4 from './photos/4.jpg';
+import pic5 from './photos/5.jpg';
+import pic6 from './photos/6.jpg';
 
 const Navbar = () => {
 const navigate = useNavigate();
@@ -29,8 +35,8 @@ const [email, setEmail] = useState('')
       setName("Pravatik Pandaya");
       setEmail("pravatik@gmail.com");
     }else if(role == 2){
-      setName("TeamMember");
-      setEmail("teammember@mail.com");
+      setName("Vikas Jaiswal");
+      setEmail("vikas@gmail.com");
     }else if(role == 3){
       setName("Client");
       setEmail("client@mail.com");
@@ -43,7 +49,7 @@ const [email, setEmail] = useState('')
  
       <Link to="/profile" style={{ textDecoration: "none" }}>
         <div className="navbar-profile" >
-          <img src={profile} alt="User Profile Photo" className="profile-photo" />
+          <img src={pic1} alt="User Profile Photo" className="profile-photo" />
           <div className="profile-info">
             <span className="profile-name">{name}</span>
             <span className="profile-email">{email}</span>
