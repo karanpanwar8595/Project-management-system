@@ -43,7 +43,11 @@ const UserProfileCard = ({ user, picture }) => {
         {JSON.parse(sessionStorage.getItem('loginData')).profile_data.role == 2 ? (
           <></>
         ) : (
-          <><div className="removebutton">Remove</div></>
+          <><div
+            className="removebutton"
+            onClick={() => { alert("Team Member removed") }}>
+            Remove
+          </div></>
         )}
 
       </div>
@@ -55,7 +59,7 @@ const UserProfileCard = ({ user, picture }) => {
 
 const Manage_team = () => {
   const profilepic = [pic1, pic2, pic3, pic4, pic6];
-  const isManager =JSON.parse(sessionStorage.getItem('loginData')).profile_data.role;
+  const isManager = JSON.parse(sessionStorage.getItem('loginData')).profile_data.role;
   const [isModalOpen, setModalOpen] = useState(false);
 
   const openModal = () => {
@@ -178,12 +182,12 @@ const Manage_team = () => {
       </div>
 
       {isManager ? (
-                <><Link to="/add_team_member" state={{ selectedProject }}><img src={plus} className='plus-symbol' alt="Plus Symbol" /></Link></>
-      ):(
+        <><Link to="/add_team_member" state={{ selectedProject }}><img src={plus} className='plus-symbol' alt="Plus Symbol" /></Link></>
+      ) : (
         <></>
 
       )}
-      
+
 
     </div>
 

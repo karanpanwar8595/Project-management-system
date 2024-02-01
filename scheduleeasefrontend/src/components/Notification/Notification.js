@@ -10,7 +10,7 @@ const Notification = () => {
         // { id: 2, message: "Received a payment of $5,000 from 'EcoSolutions Ltd.' for the 'Urban Renewal' project." },
         // { id: 3, message: "Alex Reynolds has completed the 'Market Analysis' task for the 'InnovateHub' project. " },
         { id: 4, message: "'Customer entity front-end design' for the 'Health Care' project was completed ahead of schedule." },
-        { id: 5, message: "'Validation in Edit form' must be completed by 2024-02-05." },
+        { id: 5, message: "'Validation in Edit form' must be completed by 2024-02-19." },
     ];
 
     return (
