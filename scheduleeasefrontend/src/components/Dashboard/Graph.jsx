@@ -8,18 +8,19 @@ import 'chart.js/auto'; // Import this line to include all chart types
 
 const Graph = () => {
     const data = {
-        labels: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saterday', 'Sunday'],
+        labels : [ 'August', 'September', 'October', 'November', 'December','January'],
+
         datasets: [
             {
                 label: 'Tasks Given',
-                data: [5, 9, 8, 1, 5, 5, 4],
+                data: [15, 19, 18, 11, 15, 15, 14],
                 backgroundColor: 'rgba(173, 216, 230, 0.7)', // Light Blue with 20% opacity
                 borderColor: 'rgba(173, 216, 230, 1)',       // Light Blue with 100% opacity
                 borderWidth: 1,
             },
             {
                 label: 'Tasks Completed',
-                data: [4, 2, 5, 1, 3, 4, 2],
+                data: [14, 12, 15, 11, 13, 14, 12],
                 backgroundColor: 'rgba(173, 216, 100, 0.7)', // Light Blue with 20% opacity
                 borderColor: 'rgba(173, 216, 100, 1)',       // Light Blue with 100% opacity
                 borderWidth: 1,

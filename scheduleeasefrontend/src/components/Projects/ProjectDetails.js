@@ -24,6 +24,11 @@ const ProjectDetails = () => {
     // const project = JSON.parse(project1).project
 
     const project = location.state.projects;
+    
+    
+   
+
+
     console.log(13, project);
     const isManager = location.state.isManager;
 
