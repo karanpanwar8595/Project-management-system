@@ -29,6 +29,8 @@ const ForgotPassword = () => {
       .catch((error) => {
         console.error(error);
       });
+
+    alert("Temporary password has been sent to the specified email")
   };
 
   const buttonStyle = {

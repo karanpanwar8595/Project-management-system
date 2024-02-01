@@ -105,8 +105,15 @@ const Modal = () => {
         console.log("Add members button clicked!");
         // You can call your function to handle the submission here
         AddTeamMember();
+        if (selectedPersons == '')
+        {
+            alert("Please select the team member")
+        } 
+        else
+        {
+            alert("Team member added successfully")
+        }
         setSelectedPersons([])
-
     };
     return (
         <div>
@@ -118,7 +125,7 @@ const Modal = () => {
             <div className="teammember-modal">
 
                 <div className="teammember-modal-content">
-                    <h2>Search and Add Persons</h2>
+                    <h2>Add Team member</h2>
                     <input
                         type="text"
                         placeholder="Search by Name"
