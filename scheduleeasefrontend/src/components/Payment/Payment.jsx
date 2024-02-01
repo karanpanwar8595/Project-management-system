@@ -90,7 +90,7 @@ const Payment = () => {
   const [payments, setPayments] = useState([
     // Sample data, replace it with your actual data
     { id: 1, name: 'Health Care', paymentdone: false, paymentdate: 'NOT DONE', completion: 42, amount: 50000 },
-    { id: 2, name: 'Sign Companion 02', paymentdone: false, paymentdate: 'NOT DONE', completion: 10, amount: 68000 },
+    // { id: 2, name: 'Sign Companion 02', paymentdone: false, paymentdate: 'NOT DONE', completion: 10, amount: 68000 },
     // { id: 3, name: 'Financial Upgrade', paymentdone: false, paymentdate: 'NOT DONE', completion: 10, amount: 10000 },
 
 

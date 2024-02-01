@@ -431,6 +431,7 @@ useEffect(() => {
             placeholder="Email"
             value={email}
             onChange={handleEmailChange}
+            disabled
 
           />
           {!isValidEmail && <p className="error-message">Please enter a valid email address</p>}
@@ -481,6 +482,7 @@ useEffect(() => {
                 className="signup-select"
                 onChange={(e) => setSelectedRole(e.target.value)}
                 value={selectedRole}
+                disabled
 
               >
                 <option value="">Choose role</option>
