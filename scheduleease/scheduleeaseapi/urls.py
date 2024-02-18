@@ -27,7 +27,7 @@ urlpatterns = [
 
     # Discussion process
     path('listofreciver/', views.listofreciver, name='hello'),
-    path('activereciveruser/', views.activereciveruser, name='activereciveruser'),
+    # path('activereciveruser/', views.activereciveruser, name='activereciveruser'),
     path('messagesendertoreciver/', views.messagesendertoreciver, name='messagesendertoreciver'),
     path('messagesofauser/', views.messagesofauser, name='messagesofauser'),
 
@@ -40,7 +40,13 @@ urlpatterns = [
     path('projectdetailsadmin/', views.projectdetailsadmin, name='projectdetailsadmin'),
 
     path('projectdetailsteam/', views.projectdetailsteam, name='projectdetailsteam'),
+    path('projectdetailsclient/', views.projectdetailsclient, name='projectdetailsclient'),
+
+
+
     path('fetchclient/', views.fetchclient, name='fetchclient'),
+    path('projectmanager/', views.projectmanager, name='projectmanager'),
+
     path('projectcompletion/', views.projectcompletion, name='projectcompletion'),
 
 
@@ -50,6 +56,8 @@ urlpatterns = [
     path('addteammembers/', views.addteammembers, name='addteammembers'),
     path('userinproject/', views.userinproject, name='userinproject'),
     path('projectmembers/', views.projectmembers, name='projectmembers'),
+    path('removeteammember/', views.removeteammember, name='removeteammember'),
+
 
 #tasks
 

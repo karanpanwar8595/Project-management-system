@@ -1,5 +1,5 @@
 # from django.shortcuts import render
-from scheduleeaseapi.models import Profile,Country,State,City,ProjectMember,Project,ProjectDocument,Payment,Task,TaskDocument,ProfileDocument,CompanyDetails
+from scheduleeaseapi.models import Profile,Country,State,City,ProjectMember,Project,ProjectDocument,Payment,Task,TaskDocument,MesgMaster,MesgTran,ProfileDocument,CompanyDetails
 from django.core.mail import send_mail
 # from django.http import HttpResponse
 from rest_framework.decorators import api_view
@@ -234,37 +234,89 @@ def forgetpassword(request):
 
 
 # Disscussion process
-@api_view(['GET'])
+@api_view(['POST'])
 def listofreciver(request):
-    return Response([{'firstname' :'Pravatik Pandaya', 'email':'pravatik@gmail.com'}])
+    try:
+        data = json.loads(request.body)
+        inputemail = data.get('useremail')
+        projects = ProjectMember.objects.filter(email = inputemail)
+        projectlist = [inproject.to_project_dict()['project'].project_id for inproject in projects]
+        projectmembers = ProjectMember.objects.filter(project__in=projectlist)
+        memberlist = [projectmember.to_projectmember_dict() for projectmember in projectmembers]
+        unique_memberlist=[]
+        unique_emaillist=[]
+        for member in memberlist:
+            print("hello",member['member']['email'])
+            # print(member['email'])
+            email=member['member']['email']
+            print(unique_emaillist)
+            if not (email in unique_emaillist):
+                unique_emaillist.append(email)
+                unique_memberlist.append(member)
+        return Response({'data':unique_memberlist,'processcompleted':True})
 
-@api_view(['post'])
-def activereciveruser(request):
-    return Response([{'firstname' :'Pravatik Pandaya', 'email':'pravatik@gmail.com'}])
+    except Exception as e:
+        print(e)
+        return Response({"message":"Email not found" ,'processcompleted':False })
+
+
 
 # store a single message into the database and send if the message is stored or not
 @api_view(['post'])
 def messagesendertoreciver(request):
-    return Response(True)
+    try:
+        data=json.loads(request.body)
+        sender=data.get('sender')
+        reciver=data.get('reciver')
+        message=data.get('textmessage')
+
+
+        print(sender,reciver)
+        existing_entry = MesgMaster.objects.filter(sender__email=sender, receiver__email=reciver).first()
+        if not existing_entry:
+            sender_profile=Profile.objects.get(email=sender)
+            receiver_profile=Profile.objects.get(email=reciver)
+            message_id_entry = MesgMaster.objects.create(sender=sender_profile, receiver=receiver_profile)
+        comm_id=MesgMaster.objects.get(sender =sender,receiver=reciver)
+        message_entry = MesgTran.objects.create(message=comm_id, mesg=message)
+        return Response({'value':True})
+    
+    except Exception as e:
+        print(e)
 
 # give all the messages related to a perticular person
 @api_view(['post'])
 def messagesofauser(request):
+    try:
+        print("start message of user")
+        data=json.loads(request.body)
+        sender=data.get('sender')
+        reciver=data.get('reciver')
+        # message=data.get('textmessage')
+        comm_id=[]
+        try:
+            mesg_master_1 = MesgMaster.objects.get(sender=sender, receiver=reciver)
+            comm_id.append(mesg_master_1)
+        except MesgMaster.DoesNotExist:
+            pass
 
+        try:
+            mesg_master_2 = MesgMaster.objects.get(sender=reciver, receiver=sender)
+            comm_id.append(mesg_master_2)
+        except MesgMaster.DoesNotExist:
+            pass
+        print(comm_id)
+        messages_obj = MesgTran.objects.filter(message__in=comm_id)
+        allmessage = [messages.to_dict() for messages in messages_obj]
 
+        print("sendmessage",allmessage)      
+        return Response({'data':allmessage,'value':True})
+    
+    except Exception as e:
+        print(e)
+        return Response({'value':False})
 
-
-
-    return Response([
-        {'sendertype': 1, 'messagetxt': "Hello! I hope you're doing well. I wanted to provide an update on the design progress.", 'timestamp': "10:20"},
-
-        {'sendertype': 0, 'messagetxt': "Sure, I'm open to feedback. What specific adjustments do you have in mind?", 'timestamp': "10:22"},
-        {'sendertype': 1, 'messagetxt': "Firstly, we need to incorporate the latest feedback from you regarding the color scheme. Additionally, please ensure that the design is responsive for different screen sizes.", 'timestamp': "10:23"},
-        {'sendertype': 0, 'messagetxt': "Got it. I'll implement your feedback and make the design responsive. When do you need the revised version?", 'timestamp': "10:24"},
-        {'sendertype': 1, 'messagetxt': "We have a client presentation scheduled for Thursday, so I'd appreciate it if you could have the revisions ready by Wednesday end of day.", 'timestamp': "10:25"},
-        {'sendertype': 0, 'messagetxt': "Understood. I'll prioritize these changes and ensure the updated design is ready by Wednesday. If there are any other specific requirements, please let me know.", 'timestamp': "10:26"},
-        {'sendertype': 1, 'messagetxt': "Great. Thank you for your prompt response and commitment to meeting the deadline. Let me know if you encounter any challenges or need further clarification.", 'timestamp': "10:27"},
-    ])
+    
 
 
 # Project Component
@@ -306,8 +358,6 @@ def projectdetailsadmin(request):
     try:
         all_project = Project.objects.all()
         projectslist = [project.to_projectadmin_dict() for project in all_project]
-        print("")
-        print("hellooooo", projectslist)
         return Response({"projectdetails":projectslist, "value":True})
     except Exception as e:
         print(e)
@@ -340,17 +390,31 @@ def projectdetailsteam(request):
             inprojects = ProjectMember.objects.get(project=project_id,role=1)
             print('projectmanager' ,inprojects.project_detail_team_to_dict())
             project['email']=inprojects.project_detail_team_to_dict()
-            
 
-
-
-        print("")
-        print("hellooooo", projectslist)
         return Response({"projectdetails":projectslist, "value":True})
     except Exception as e:
         print(e)
         return Response({"projectdetails":False, "value":False})
     
+
+@api_view(['post'])
+def projectdetailsclient(request):
+    # request : data came from
+    try:
+        print("clientprojectdetails")
+        data = json.loads(request.body)
+
+        useremail = data.get('useremail')
+        print(useremail)
+        # Filter the Project queryset based on the client id
+        projects = Project.objects.filter(client=useremail)
+        projectslist = [project.to_projectteam_dict() for project in projects]
+        print('clientprojects',projectslist)
+
+        return Response({"projectdetails":projectslist, "value":True})
+    except Exception as e:
+        print(e)
+        return Response({"projectdetails":False, "value":False})
 
 @api_view(['post'])
 def addingproject(request):
@@ -412,7 +476,26 @@ def projectcompletion(request):
         print(e)
         return Response({"data":"no data","value":False})
 
+    
+@api_view(['post'])
+def projectmanager(request):
+    try:
+        data = json.loads(request.body)
+        print(data)
+        projectno = data.get('projectno')
+        # print('hii',useremail)
+        ProjectManager = ProjectMember.objects.get(project=projectno,role=1)
+        ProjectManagertodic= ProjectManager.to_projectmember_dict() 
+        print(ProjectManagertodic)
 
+
+        # profiledetail=profiledetails.to_dict()
+        completiondetails={'data':ProjectManagertodic,'value':True}
+        # print(completiondetails)
+        return Response({"data":completiondetails,"value":True})
+    except Exception as e:
+        print(e)
+        return Response({"data":"no data","value":False})
 
 
 @api_view(['POST'])
@@ -454,6 +537,26 @@ def uploaddocumentss(request, *args, **kwargs):
 
 
 #Team  member
+    
+@api_view(['post'])
+def removeteammember(request):
+    try:
+        data = json.loads(request.body)
+        print(data)
+        project_no = data.get('project_id')
+        email=data.get('usertoremove')
+        print(project_no,email)
+        ProjectMember_to_update = ProjectMember.objects.get(project=project_no,email=email) 
+        ProjectMember_to_update.removed_on =  timezone.now()
+        ProjectMember_to_update.save()
+
+        return Response({"value":True})
+    except Exception as e:
+        print(e)
+        return Response({"data":"no data","value":False})
+    
+
+
 @api_view(['post'])
 def fetchclient(request):
     try:
@@ -497,8 +600,6 @@ def userinproject(request):
         role = data.get('role')
         if (role==2):
             role=0
-        
-        
         projectmembers = ProjectMember.objects.filter(email=useremail,role=role)
         allpojectinwhichthisuseris = [projectmember.to_projectuserin_dict() for projectmember in projectmembers]
         print(allpojectinwhichthisuseris)
@@ -516,9 +617,7 @@ def projectmembers(request):
         user_project_id=data.get('project_id')
         print(user_project_id)
         project_id = get_object_or_404(Project, project_id=user_project_id)
-        projectmembers = ProjectMember.objects.filter(project=project_id)
-
-        
+        projectmembers = ProjectMember.objects.filter(project=project_id,removed_on=None)
         allprojectmembers = [projectmember.to_projectmember_dict() for projectmember in projectmembers]
 
         print(allprojectmembers)
@@ -618,3 +717,6 @@ def taskassigntoother(request):
     except Exception as e:
         print(e)
         return Response({"data":"no data","value":False})
+
+
+

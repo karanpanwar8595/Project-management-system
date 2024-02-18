@@ -40,6 +40,8 @@ import Dashboard from './components/Dasboard1/Dashboard1';
 
 import ManagerReport from './components/ManagerReport/ManagerReport';
 import EditProject from './components/Projects/EditProject/EditProject';
+
+import AddProject from './components/Projects/AddProject/AddProject';
 function App() {
   const [authenticateddata, setAuthenticateddata] = useState({ 'value': false });
 
@@ -180,6 +182,16 @@ function App() {
                   <>
 
                     < TeamMemberDas />
+
+
+                  </>
+                }>
+                </Route>
+
+                <Route exact path='addproject' element={
+                  <>
+
+                    < AddProject />
 
 
                   </>

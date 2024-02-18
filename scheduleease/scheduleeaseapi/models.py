@@ -154,6 +154,9 @@ class ProjectMember(models.Model):
     def to_projectmember_dict(self):
         return{
             'member': self.email.to_dict(),
+            'role': self.role,
+            'joined_on': str(self.joined_on),
+            'removed_on': str(self.removed_on) if self.removed_on else None,
         }
     def to_project_dict(self):
         return{
@@ -209,17 +212,29 @@ class Task(models.Model):
 class MesgMaster(models.Model):
     class Meta:
         db_table = 'MesgMaster'
-    message_id = models.IntegerField(primary_key=True)
-    mesg_date = models.DateField()
+    message_id = models.AutoField(primary_key=True)
+    # mesg_date = models.DateField()
     sender = models.ForeignKey(Profile, on_delete=models.CASCADE, related_name='sent_messages')
     receiver = models.ForeignKey(Profile, on_delete=models.CASCADE, related_name='received_messages')
+    def to_dict(self):
+        return {
+            'message_id': self.message_id,
+            'sender': self.sender.to_dict(),
+            'receiver': self.receiver.to_dict(),
+        }
+
 
 class MesgTran(models.Model):
     class Meta:
         db_table = 'MesgTran'
     message = models.ForeignKey(MesgMaster, on_delete=models.CASCADE)
-    sender_mesg = models.CharField(max_length=500, null=True)
-    receiver_mesg = models.CharField(max_length=500, null=True)
+    # sender_mesg = models.CharField(max_length=500, null=True)
+    mesg = models.CharField(max_length=500, null=True)
+    def to_dict(self):
+        return {
+            'message': self.message.to_dict(),
+            'mesg': self.mesg,
+        }
 
 class Payment(models.Model):
     class Meta:

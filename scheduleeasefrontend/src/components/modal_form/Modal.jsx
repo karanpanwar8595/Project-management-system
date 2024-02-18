@@ -20,11 +20,12 @@ const Modal = () => {
     const location = useLocation();
     // const project1 = JSON.stringify(location.state.project1);
     // const project = JSON.parse(project1).project
-    const selectedproject = location.state.selectedProject
-    console.log(13, selectedproject)
+    const selectedproject = location.state.selectedProject;
+    console.log(13, selectedproject);
+    const TeamMemberList = location.state.teammember;
     const [personsData, setPersonsData] = useState([]);
 
-    
+
     const [modalVisible, setModalVisible] = useState(false);
     const [searchTerm, setSearchTerm] = useState('');
     const [searchResults, setSearchResults] = useState([]);
@@ -39,7 +40,22 @@ const Modal = () => {
             // ye data request me jayega in views.py
             if (response.data['value']) {
                 console.log(response.data);
-                setPersonsData(response.data.data)
+                const personDataArray = response.data.data;
+                for (let i = 0; i < personDataArray.length; i++) {
+                    const persondata = personDataArray[i];
+                    for (let j=0;j<TeamMemberList.length;j++){
+                        const memberinteam=TeamMemberList[j];
+                        if (persondata.email===memberinteam.member.email){
+                            personDataArray.splice(i, 1);
+                        }
+
+                        console.log(persondata.email);
+                        console.log(memberinteam.member.email);
+
+                    }
+                }
+
+                setPersonsData(personDataArray);
                 // setOngoingProjects(response.data.projectdetails)
                 console.log('Project component connected');
             } else {
@@ -51,7 +67,7 @@ const Modal = () => {
     };
     const AddTeamMember = async () => {
         try {
-            
+
             const UserDetails = { useremail: JSON.parse(sessionStorage.getItem('loginData')).profile_data.email, selecteduser: selectedPersons, project_id: selectedproject };
             const response = await axios.post('http://127.0.0.1:8000/api/addteammembers/', UserDetails);
             // ye data request me jayega in views.py
@@ -105,12 +121,10 @@ const Modal = () => {
         console.log("Add members button clicked!");
         // You can call your function to handle the submission here
         AddTeamMember();
-        if (selectedPersons == '')
-        {
+        if (selectedPersons == '') {
             alert("Please select the team member")
-        } 
-        else
-        {
+        }
+        else {
             alert("Team member added successfully")
         }
         setSelectedPersons([])

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect,useCallback } from 'react';
 import './Manage_team.css';
 import plus from './plus.png';
 import axios from 'axios';
@@ -14,20 +14,73 @@ import pic6 from './photos/6.jpg';
 
 
 
-const UserProfileCard = ({ user, picture }) => {
+const UserProfileCard = ({ user,roleNo, picture, projectid, teammemberList, onTeamMemberListChange }) => {
   const [role, setRole] = useState('');
+  // const RemoveTeamMember = async () => {
+  //   try {
+  //     const TeamDetails = { useremail: JSON.parse(sessionStorage.getItem('loginData')).profile_data.email, project_id: projectid, usertoremove: user.email };
 
-  useEffect(() => {
-    if (user.role === 0) {
-      setRole('Admin');
-    } else if (user.role === 1) {
-      setRole('Manager');
-    } else if (user.role === 2) {
-      setRole('Team Member');
-    } else if (user.role === 3) {
-      setRole('Client');
+  //     const response = await axios.post('http://127.0.0.1:8000/api/removeteammember/', TeamDetails);
+  //     // ye data request me jayega in views.py
+  //     let teamMemberList = teammemberList;
+  //     if (response.data['value']) {
+  //       for (let i = 0; i < teamMemberList.length; i++) {
+  //         const persondata = teamMemberList[i];
+  //         console.log(persondata.member.email, user.email);
+  //         if (persondata.member.email == user.email) {
+  //           console.log("if condition true")
+  //           teamMemberList.splice(i, 1);
+  //           console.log("parent state after change1", teamMemberList);
+
+  //         }
+
+
+  //       }
+  //       onTeamMemberListChange(teamMemberList);
+  //       console.log("parent state after change", teammemberList);
+  //       console.log('Project component connected');
+  //     } else {
+  //       console.log("error");
+  //     }
+  //   } catch (error) {
+  //     console.error('Error during login:', error);
+  //   }
+
+
+
+  // }
+
+
+  const RemoveTeamMember = async () => {
+    try {
+      const TeamDetails = {
+        useremail: JSON.parse(sessionStorage.getItem('loginData')).profile_data.email,
+        project_id: projectid,
+        usertoremove: user.email
+      };
+  
+      const response = await axios.post('http://127.0.0.1:8000/api/removeteammember/', TeamDetails);
+  
+      if (response.data['value']) {
+        const updatedTeamMemberList = teammemberList.filter(persondata => persondata.member.email !== user.email);
+  
+        onTeamMemberListChange(updatedTeamMemberList);
+        console.log("parent state after change", updatedTeamMemberList);
+        console.log('Project component connected');
+      } else {
+        console.log("error");
+      }
+    } catch (error) {
+      console.error('Error during login:', error);
     }
-
+  };
+  
+  useEffect(() => {
+    if (roleNo === 0) {
+      setRole('Team Member');
+    } else if (roleNo === 1) {
+      setRole('Manager');
+    }
   }, [user.role]);
 
   return (
@@ -36,18 +89,24 @@ const UserProfileCard = ({ user, picture }) => {
       <div className="team-profile-info">
         <div className="team-profile-name">{user.name}</div>
         <div className="team-profile-role">{role}</div>
-
         <div className="team-profile-emal">
           {user.email}
         </div>
         {JSON.parse(sessionStorage.getItem('loginData')).profile_data.role == 2 ? (
           <></>
         ) : (
-          <><div
-            className="removebutton"
-            onClick={() => { alert("Team Member removed") }}>
-            Remove
-          </div></>
+          <>
+
+          {roleNo === 1 ? (
+            <></>  // Render nothing if roleNo is 1
+          ) : (
+           
+              <div className="removebutton" onClick={RemoveTeamMember}>
+                Remove
+              </div>
+          )}
+          </>
+          
         )}
 
       </div>
@@ -120,7 +179,6 @@ const Manage_team = () => {
       if (response.data['value']) {
         console.log("settemamember", response.data.data);
         setTeamMemberList(response.data.data);
-
         console.log('Project component connected');
       } else {
         console.log("error");
@@ -130,6 +188,13 @@ const Manage_team = () => {
     }
   };
 
+
+  const handleTeamMemberListChange = useCallback((newValue) => {
+    console.log(teammemberList);
+    console.log("new value",newValue);
+    setTeamMemberList(newValue);
+    console.log("handleTeamMemberListChange")
+  });
 
   useEffect(() => {
     projectuserin();
@@ -150,23 +215,19 @@ const Manage_team = () => {
 
       <div className="profile-grid">
 
-        {/* {teamMembers.map((teamMember, index) => (
-        <UserProfileCard
-          user={teamMember.member}
-          picture={profilepic[index % profilepic.length]} // Use modulo to cycle through profile pics
-          key={teamMember.email}
-        />
-      ))} */}
 
 
         {Array.isArray(teammemberList) ? (
 
           <>
-
             {teammemberList.map((teamMember, index) => (
               <UserProfileCard
                 user={teamMember.member}
+                roleNo={teamMember.role}
                 picture={profilepic[index % profilepic.length]} // Use modulo to cycle through profile pics
+                projectid={selectedProjectId}
+                teammemberList={teammemberList}
+                onTeamMemberListChange={handleTeamMemberListChange}
                 key={teamMember.email}
               />
             ))}
@@ -182,7 +243,7 @@ const Manage_team = () => {
       </div>
 
       {isManager ? (
-        <><Link to="/add_team_member" state={{ selectedProject }}><img src={plus} className='plus-symbol' alt="Plus Symbol" /></Link></>
+        <><Link to="/add_team_member" state={{ selectedProject: selectedProject, teammember: teammemberList }}><img src={plus} className='plus-symbol' alt="Plus Symbol" /></Link></>
       ) : (
         <></>
 

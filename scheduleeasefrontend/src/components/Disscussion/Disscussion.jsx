@@ -25,9 +25,11 @@ const Disscussion = () => {
   const [messagelist, setMessageList] = useState([]);
 
   useEffect(() => {
-    axios.get('http://127.0.0.1:8000/api/listofreciver/').then((response) => {
-      setListItem(response.data);
-      console.log(response);
+
+    axios.post('http://127.0.0.1:8000/api/listofreciver/',{ useremail:JSON.parse(sessionStorage.getItem('loginData')).profile_data.email}).then((response) => {
+      console.log(response.data.data);
+
+      setListItem(response.data.data);
     }, (error) => {
       console.log(error);
     });
@@ -45,11 +47,16 @@ const Disscussion = () => {
     }
     // ... do something with inputValue
     // var inputValueMessageTextBoxStatic = inputValueMessageTextBox
-    axios.post('http://127.0.0.1:8000/api/messagesendertoreciver/', { sender: 'karan', reciver: activereciveruser.email, textmessage: inputValueMessageTextBox }).then((response) => {
+    axios.post('http://127.0.0.1:8000/api/messagesendertoreciver/', { sender:JSON.parse(sessionStorage.getItem('loginData')).profile_data.email , reciver: activereciveruser.email, textmessage: inputValueMessageTextBox }).then((response) => {
       if (response) {
         console.log(response);
-        setMessageList(messagelist)
-        var newMessage = [{ 'sendertype': 1, 'messagetxt': inputValueMessageTextBox, 'timestamp': "10:20" }]
+        setMessageList(messagelist);
+        var newMessage = [{
+          mesg:inputValueMessageTextBox, 
+          message:{
+            sender:{email:JSON.parse(sessionStorage.getItem('loginData')).profile_data.email},
+            receiver:{email:activereciveruser.email}
+        }}]
         setMessageList(messagelist => messagelist.concat(newMessage));
         setInputMessageTextBox("");
       }
@@ -64,19 +71,14 @@ const Disscussion = () => {
   }
 
 
-  const onListElementClick = (event) => {
-    var email_id = event.target.closest('li').id;
-    console.log(email_id);
-    axios.post('http://127.0.0.1:8000/api/activereciveruser/', { email: email_id }).then((response) => {
-      setactivereciveruser(response.data[0]);
-    }, (error) => {
-      console.log(error);
-    });
+  const onListElementClick = (email,name) => {
+    console.log("value of  email and name",email,name);
+    setactivereciveruser({name:name,email:email})
+    axios.post('http://127.0.0.1:8000/api/messagesofauser/', {sender:JSON.parse(sessionStorage.getItem('loginData')).profile_data.email , reciver:email }).then((response) => {
+      console.log(response.data.data)
 
-
-    axios.post('http://127.0.0.1:8000/api/messagesofauser/', { email: email_id }).then((response) => {
-      setMessageList(response.data);
-      console.log(response)
+      setMessageList(response.data.data);
+      console.log(response.data)
       console.log(messagelist);
     }, (error) => {
       console.log(error);
@@ -98,11 +100,16 @@ const Disscussion = () => {
 
 
               {listitem.map((litem,index) => (
-                <li className="listelement" id={litem.email} onClick={onListElementClick} key={litem.email} >
+                <li
+                className="listelement"
+                id={litem.member.email}
+                onClick={() => onListElementClick(litem.member.email, litem.member.name)}
+                key={litem.member.email}
+              >
                   <div><img src={profilepic[index % profilepic.length]} className="userprofileimage" /></div>
                   <div className="nameandemail">
-                    <div className="nametext">{litem.firstname}</div>
-                    <div className='emailtext'>{litem.email}</div>
+                    <div className="nametext">{litem.member.name}</div>
+                    <div className='emailtext'>{litem.member.email}</div>
                   </div>
                 </li>
               ))}
@@ -126,7 +133,7 @@ const Disscussion = () => {
 <div className="activereciveruser">
        <div className="image"><img src={pic2} className="userprofileimage" /></div>
        <div className="nameandemail">
-         <div className="nametext">{activereciveruser.firstname}</div>
+         <div className="nametext">{activereciveruser.name}</div>
          <div className='emailtext'>{activereciveruser.email}</div>
        </div>
      </div>
@@ -140,19 +147,24 @@ const Disscussion = () => {
 
           {messagelist.map((message) => (
             <div key={message.id}>
-              {message.sendertype === 0 ? (
-                <div className="Recivedmessages roundedcorner">
-                  {/* Content for receiver's message */}
-                  <div className="messageContent">{message.messagetxt}</div>
-                  <div className="messageTime">{(message.timestamp)}</div>
-                </div>
-              ) : message.sendertype === 1 ? (
+              { message.message.sender.email === JSON.parse(sessionStorage.getItem('loginData')).profile_data.email ?(
+                <>
                 <div className="sendedmessages roundedcorner">
                   {/* Content for sender's message */}
-                  <div className="messageContent">{message.messagetxt}</div>
+                  <div className="messageContent">{message.mesg}</div>
                   <div className="messageTime">{(message.timestamp)}</div>
                 </div>
-              ) : null}
+                </>
+              ) :(
+                
+
+
+<div className="Recivedmessages roundedcorner">
+                  {/* Content for receiver's message */}
+                  <div className="messageContent">{message.mesg}</div>
+                  <div className="messageTime">{(message.timestamp)}</div>
+                </div>
+              )}
             </div>
           ))}
 
