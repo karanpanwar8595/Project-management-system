@@ -9,7 +9,7 @@ import axios from 'axios';
 
 import { faDownload } from '@fortawesome/free-solid-svg-icons';
 
-const AccordionItem = ({ task_key, title, content, actstatus, duedate, owner, progress, done_key }) => {
+const AccordionItem = ({ task_id, title, content, actstatus, duedate, owner, progress, done_key,completion_date }) => {
     const [isOpen, setIsOpen] = useState(false);
     const [isComplete, setIsComplete] = useState(false);
     console.log("sta", actstatus)
@@ -24,15 +24,26 @@ const AccordionItem = ({ task_key, title, content, actstatus, duedate, owner, pr
     const handleTaskboxToggle = () => {
         setIsOpen(!isOpen);
     };
+    const TaskCompleted = () => {
+        axios.post('http://127.0.0.1:8000/api/taskcompleted/', { useremail: JSON.parse(sessionStorage.getItem('loginData')).profile_data.email ,taskid:task_id}).then((response) => {
+            if (response.data.value) {
+                console.log(response.data);
+                setStatus("Completed")
+                setIsComplete(true)
+            }
+        }, (error) => {
+            console.log(error);
+        });
+    };
     const addButtonHandle = () => {
-        setStatus("Completed")
-        setIsComplete(true)
+
         console.log("add button click")
+        TaskCompleted()
 
     };
 
     return (
-        <div className="accordion-item" key={task_key}>
+        <div className="accordion-item" key={task_id}>
             <div className={`task-item `} >
                 <div className="accordion-button" onClick={handleTaskboxToggle}>
                     {title}
@@ -47,11 +58,12 @@ const AccordionItem = ({ task_key, title, content, actstatus, duedate, owner, pr
                 {/* <div className='accordion-status'>{status}</div> */}
                 <div className='accordion-duedate'>{duedate}</div>
 
+
                 <div className='accordion-owner'>{owner}</div>
                 <div
                     className={`accordion-add-button ${done_key} ${isComplete ? 'complete' : 'notcomplete'}`} key={done_key}
                     onClick={(event) => { event.stopPropagation(); addButtonHandle(); }}
-                > {status}
+                > {status}<br/>{completion_date}
                 </div>
             </div>
             <div className={`accordion-content ${isOpen ? 'open' : ''}`}>
@@ -65,11 +77,8 @@ const AccordionItem = ({ task_key, title, content, actstatus, duedate, owner, pr
 
 const Tasklist = () => {
 
-    // const [taskList, setTasklist] = useState([{ title: "Validation in Edit form", content: "Inside the Project component apply the validation in project edit button", status: "Completed", duedate: "15/3/2024", progress: "20%", owner: "Pooja Singh" },
-    // { title: "Integration Testing", content: "Consider the different scenario and integrate all the testing", status: "Complete", duedate: "25/2/2024", progress: "20%", owner: "Pooja Singh" }]);
 
-    const [taskList, setTasklist] = useState([{ title: "Validation in Edit form", content: "Inside the Project component apply the validation in project edit button", status:"Complete", duedate: "19/02/2024", progress: "20%", owner: " Pooja Singh" }, 
-    { title: "Customer entity front-end design", content: "It involves creating a visually appealing and user-friendly interface for managing customer records, including features such as listing, detailed views, and interactive forms, ensuring a seamless and intuitive user experience within the software application.", status:"Completed", duedate: "09/02/2024", progress: "20%", owner: "Pravatik pandaya" }]);
+    const [taskList, setTasklist] = useState(null);
 
     useEffect(() => {
         fetchalltaskofme();
@@ -79,10 +88,8 @@ const Tasklist = () => {
         axios.post('http://127.0.0.1:8000/api/taskassigntome/', { useremail: JSON.parse(sessionStorage.getItem('loginData')).profile_data.email }).then((response) => {
             if (response) {
                 console.log(response.data);
-                // setMessageList(messagelist)
-                // var newMessage=[{'sendertype':1,'messagetxt': inputValueMessageTextBox,'timestamp':"10:20"}]
-                // setMessageList(messagelist => messagelist.concat(newMessage));
-                // setInputMessageTextBox("");
+                setTasklist(response.data.data);
+                console.log(taskList)
             }
         }, (error) => {
             console.log(error);
@@ -97,7 +104,7 @@ const Tasklist = () => {
 
 
         <div className="accordion taskconcontainer">
-            
+
             <div className='tasklist'>
 
 
@@ -110,14 +117,16 @@ const Tasklist = () => {
                     <div className='accordion-owner'>Status</div>
                 </div>
                 <div className='task-row'>
-                    {taskList.map(task => (
+                    {taskList && Array.isArray(taskList) && taskList.map(task => (
                         <AccordionItem
-                            title={task.title}
-                            content={task.content}
-                            actstatus={task.status}
-                            duedate={task.duedate}
-                            progress={task.progress}
-                            owner={task.owner}
+                            title={task.task_title}
+                            content={task.task_desc}
+                            actstatus={task.completion_date === null ? "Complete" : "Completed"}
+                            completion_date={task.completion_date}
+                            startdate={task.start_date}
+                            duedate={task.deadline}
+                            owner={task.manager_id && task.manager_id.name}
+                            task_id={task.task_id}
                         />
                     ))}
                 </div>

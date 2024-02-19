@@ -63,6 +63,14 @@ urlpatterns = [
 
     path('taskassigntome/', views.taskassigntome, name='taskassigntome'),
     path('taskassigntoother/', views.taskassigntoother, name='taskassigntoother'),
+    path('addtaskdetails/', views.addtaskdetails, name='addtaskdetails'),
+    path('teammembers/', views.teammembers, name='teammembers'),
+    path('modifytask/', views.modifytask, name='modifytask'),
+    path('taskcompleted/', views.taskcompleted, name='taskcompleted'),
+
+
+
+
 
 
     

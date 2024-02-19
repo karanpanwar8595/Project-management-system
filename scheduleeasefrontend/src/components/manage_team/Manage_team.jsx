@@ -134,7 +134,6 @@ const Manage_team = () => {
 
 
   const [projects, setProjects] = useState([
-
   ]);
 
   const handleProjectChange = (event) => {

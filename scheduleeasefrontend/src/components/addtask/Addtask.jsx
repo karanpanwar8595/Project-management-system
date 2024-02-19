@@ -4,23 +4,37 @@ import './Addtask.css';
 import { useLocation } from 'react-router-dom';
 
 const AddTask = () => {
+    const location = useLocation();
 
+    const projectno = location.state.selectedProjectId;
     const [taskname, setTaskName] = useState();
     const [taskDec, setTaskDesc] = useState();
 
-    const [startDate, setStartDate] = useState();
-    const [dueDate, setDueDate] = useState();
-    const [selectedTeamMember, setSelectedTeamMember] = useState([]);
+    const [startDate, setStartDate] = useState(null);
+    const [dueDate, setDueDate] = useState(null);
+    const [selectedTeamMember, setSelectedTeamMember] = useState();
+    const [teammemberSearch, setTeamMemberSearch] = useState('');
+    const [teammemberResults, setTeamMemberResults] = useState([]);
 
+    // Multiple/Delete attachment and document
+    const [selectedAttachments, setSelectedAttachments] = useState([]);
+
+
+
+    // validation in form
+    const [taskNameError, setTaskNameError] = useState('');
+    const [taskDescriptionError, setTaskDescriptionError] = useState('');
+
+    // not used : const [companyNameError, setCompanyNameError] = useState('');
+    const [startDateError, setStartDateError] = useState('');
+    const [dueDateError, setDueDateError] = useState('');
 
 
 
 
 
     const [teammembers, setTeamMembers] = useState([
-        { name: 'Amit Gupta', email: 'amit@mail.com' },
-        { name: 'Ujjwal Bhansali', email: 'ujjwalbhansali@gmail.com' },
-        { name: 'Karan Panwar', email: 'karanpanwar@gmail.com' },
+
     ]);
 
     const handleTeamMemberSearchChange = (e) => {
@@ -49,36 +63,22 @@ const AddTask = () => {
     };
 
 
-  
+
 
     // Form TeamMember searching and adding
-    const [teammemberSearch, setTeamMemberSearch] = useState('');
-    const [teammemberResults, setTeamMemberResults] = useState([]);
 
-    // Multiple/Delete attachment and document
-    const [selectedAttachments, setSelectedAttachments] = useState([]);
-  
-
-
-    // validation in form
-    const [taskNameError, setTaskNameError] = useState('');
-    const [taskDescriptionError, setTaskDescriptionError] = useState('');
-
-    // not used : const [companyNameError, setCompanyNameError] = useState('');
-    const [startDateError, setStartDateError] = useState('');
-    const [dueDateError, setDueDateError] = useState('');
 
 
     const FetchTeamMember = async () => {
         try {
+            console.log(projectno)
+            const response = await axios.post('http://127.0.0.1:8000/api/teammembers/', { project_no: projectno });
 
-            const response = await axios.post('http://127.0.0.1:8000/api/fetchteamMember/');
-
-            console.log('teamMember', response.data.data)
+            // console.log('teamMember', response.data.data)
             if (response.data.value) {
                 setTeamMembers(response.data.data)
                 console.log(teammembers)
-                console.log(response.data.data)
+                console.log("fetch team member of a project", response.data.data)
 
             } else {
                 console.log('teamMember failed');
@@ -90,20 +90,49 @@ const AddTask = () => {
 
     };
 
-  
-  
+
+    const AddTaskDetails = async () => {
+        try {
+            const taskDetails = {
+                username: JSON.parse(sessionStorage.getItem('loginData')).profile_data.email,
+                title: taskname,
+                description: taskDec,
+                taskstartdate: startDate,
+                taskDueDate: dueDate,
+                teammemberid: selectedTeamMember.member.email,
+                project_id:projectno,
+
+            }
+            const response = await axios.post('http://127.0.0.1:8000/api/addtaskdetails/', taskDetails);
+            console.log("add task details",response.data.value);
+            if (response.data.value) {
+                alert("Task has been assigned")
+                setTaskName("");
+                setTaskDesc("");
+                setStartDate(null);
+                setDueDate(null);
+                setSelectedTeamMember(null);
+                return true;
+            } else {
+                return false;
+            }
+
+        } catch (error) {
+            console.error(error);
+            return false;
+
+        }
+
+    };
+
 
     useEffect(() => {//this help in seting authentication to false when we relode
+        FetchTeamMember();
 
         try {
             const role_id = JSON.parse(sessionStorage.getItem('loginData')).profile_data.role;
-         
+
             console.log(role_id);
-
-
-
-
-
 
         } catch (error) {
             console.log(error);
@@ -112,7 +141,7 @@ const AddTask = () => {
         // TaskDetails();
         FetchTeamMember();
 
-        console.log("edit projeft open")
+
     }, []);
 
 
@@ -138,7 +167,7 @@ const AddTask = () => {
         }
 
     };
-    
+
 
 
 
@@ -258,157 +287,152 @@ const AddTask = () => {
         if (taskNameError || startDateError || dueDateError) {
             setTaskNameError(taskNameError);
             setTaskDescriptionError(taskDescriptionError);
-         
+
             // setCompanyNameError(companyNameError);
             setStartDateError(startDateError);
             setDueDateError(dueDateError);
             return;
         }
 
-       alert("Task added successfully")
-        setSelectedTeamMember(null);
+        AddTaskDetails();
     };
 
     //------------------------------------------------------------------------------------------------------------------------
 
     return (
         <div className="tasks-container">
-           
-               <h3>Add Task</h3>
-                  
-                        <form onSubmit={handleFormSubmit}>
 
-                            <div className="form-row">
-                                <label htmlFor="taskName">Task Name:</label>
-                                <input
-                                    className="in-txtarea"
-                                    type="text"
-                                    id="taskName"
-                                    name="taskName"
-                                    onChange={(e) => {
-                                        // Validation function (replace with your own validation logic)
-                                        const validationError = validateTaskName(e.target.value);
+            <h3>Add Task</h3>
 
-                                        // Update state with the input value and validation result
-                                        setTaskName(e.target.value);
-                                        setTaskNameError(validationError);
-                                    }}
-                                    value={taskname}
-                                  
-                                />
-                                {taskNameError && <span className="error-message">{taskNameError}</span>}
-                            </div>
-                            <div className="form-row">
-                                <label htmlFor="startDate">Start Date:</label>
-                                <input
-                                    className="in-txtarea"
-                                    type="date"
-                                    id="startDate"
-                                    name="startDate"
-                                    value={startDate}
-                                    onChange={(e) => {
-                                        setStartDateError(validateStartDate(e.target.value));
-                                        setStartDate(e.target.value);
-                                    }}
-                                />
-                                {startDateError && <span className="error-message">{startDateError}</span>}
-                            </div>
-                            <div className="form-row">
-                                <label htmlFor="dueDate">Due Date:</label>
-                                <input
-                                    className="in-txtarea"
-                                    type="date"
-                                    id="dueDate"
-                                    name="dueDate"
-                                    value={dueDate}
-                                    onChange={(e) => {
-                                        setDueDateError(validateDueDate(startDate, e.target.value));
-                                        setDueDate(e.target.value);
-                                    }}
-                                />
-                                {dueDateError && <span className="error-message">{dueDateError}</span>}
-                            </div>
-                            <div className="form-row">
-                                <label htmlFor="taskDescription">Task Description:</label>
-                                <textarea className="in-txtarea" id="taskDescription" name="taskDescription"
-                                    value={taskDec}
-                                    onChange={(e) => {
-                                        setTaskDescriptionError(validateTaskDescription(e.target.value))
-                                        setTaskDesc(e.target.value);
-                                    }}
-                                />
-                                {taskDescriptionError && <span className="error-message">{taskDescriptionError}</span>}
-                            </div>
-                   
+            <form onSubmit={handleFormSubmit}>
 
-                            <div className="form-row">
-                                <label htmlFor="attachment">Attachment:</label>
-                                <input
-                                    className="in-txtarea"
-                                    type="file"
-                                    id="attachment"
-                                    name="attachment"
-                                    onChange={(e) => handleFileChange(e, 'attachment')}
-                                    multiple
-                                />
-                                <div>
-                                    {selectedAttachments.map((file, index) => (
-                                        <div key={index} className="file-item">
-                                            {file.name}
-                                            <span className="remove-icon" onClick={() => removeAttachment(index)}>×</span>
-                                        </div>
-                                    ))}
-                                </div>
-                            </div>
+                <div className="form-row">
+                    <label htmlFor="taskName">Task Name:</label>
+                    <input
+                        className="in-txtarea"
+                        type="text"
+                        id="taskName"
+                        name="taskName"
+                        onChange={(e) => {
+                            // Validation function (replace with your own validation logic)
+                            const validationError = validateTaskName(e.target.value);
 
-                            <div className="form-row teammember-search-row">
-                                <label htmlFor="Add teammember">Add TeamMember:</label>
-                                <input
-                                    className="in-txtarea"
-                                    type="text"
-                                    id="teammemberSearch"
-                                    value={teammemberSearch}
-                                    placeholder='Search Here...'
-                                    onChange={handleTeamMemberSearchChange}
-                                    // required={!selectedTeamMember}
-                                    onFocus={() => {
-                                        setTeamMemberResults(teammembers);  // Assuming 'teammembers' is the data you want to set
-                                    }} 
-                                    disabled={!!selectedTeamMember} // Disable when teammember is selected
-                                />
-                                <div className='teammemberlist'>
+                            // Update state with the input value and validation result
+                            setTaskName(e.target.value);
+                            setTaskNameError(validationError);
+                        }}
+                        value={taskname}
 
-                                    {teammemberSearch && teammemberResults.length === 0 && !selectedTeamMember && (
-                                        <div className="no-match-message">
-                                            No matching teammembers found.
-                                        </div>
-                                    )}
-                                    {teammemberResults.map(teammember => (
-                                        <div key={teammember.email} className="teammember-result">
-                                            <div>{teammember.name} ({teammember.email}</div>
-                                            )
-                                            <button className="add-form-btn" type="button" onClick={() => handleAddTeamMember(teammember)}
+                    />
+                    {taskNameError && <span className="error-message">{taskNameError}</span>}
+                </div>
+                <div className="form-row">
+                    <label htmlFor="startDate">Start Date:</label>
+                    <input
+                        className="in-txtarea"
+                        type="date"
+                        id="startDate"
+                        name="startDate"
+                        value={startDate}
+                        onChange={(e) => {
+                            setStartDateError(validateStartDate(e.target.value));
+                            setStartDate(e.target.value);
+                        }}
+                    />
+                    {startDateError && <span className="error-message">{startDateError}</span>}
+                </div>
+                <div className="form-row">
+                    <label htmlFor="dueDate">Due Date:</label>
+                    <input
+                        className="in-txtarea"
+                        type="date"
+                        id="dueDate"
+                        name="dueDate"
+                        value={dueDate}
+                        onChange={(e) => {
+                            setDueDateError(validateDueDate(startDate, e.target.value));
+                            setDueDate(e.target.value);
+                        }}
+                    />
+                    {dueDateError && <span className="error-message">{dueDateError}</span>}
+                </div>
+                <div className="form-row">
+                    <label htmlFor="taskDescription">Task Description:</label>
+                    <textarea className="in-txtarea" id="taskDescription" name="taskDescription"
+                        value={taskDec}
+                        onChange={(e) => {
+                            setTaskDescriptionError(validateTaskDescription(e.target.value))
+                            setTaskDesc(e.target.value);
+                        }}
+                    />
+                    {taskDescriptionError && <span className="error-message">{taskDescriptionError}</span>}
+                </div>
 
-                                            >Add</button>
-                                        </div>
-                                    ))}
-                                </div>
+
+                <div className="form-row">
+                    <label htmlFor="attachment">Attachment:</label>
+                    <input
+                        className="in-txtarea"
+                        type="file"
+                        id="attachment"
+                        name="attachment"
+                        onChange={(e) => handleFileChange(e, 'attachment')}
+                        multiple
+                    />
+                    <div>
+                        {selectedAttachments.map((file, index) => (
+                            <div key={index} className="file-item">
+                                {file.name}
+                                <span className="remove-icon" onClick={() => removeAttachment(index)}>×</span>
                             </div>
-                            {selectedTeamMember && (
-                                <div className="selected-teammember">
-                                    {selectedTeamMember.name} ({selectedTeamMember.email})
-                                    <button className="add-form-btn" type="button" onClick={handleRemoveTeamMember}>Remove</button>
-                                </div>
-                            )}
-                            <div className="form-row">
-                                <button className="add-form-btn" type="submit">Submit</button>
+                        ))}
+                    </div>
+                </div>
+
+                <div className="form-row teammember-search-row">
+                    <label htmlFor="Add teammember">Add TeamMember:</label>
+                    <input
+                        className="in-txtarea"
+                        type="text"
+                        id="teammemberSearch"
+                        value={teammemberSearch}
+                        placeholder='Search Here...'
+                        onChange={handleTeamMemberSearchChange}
+                        // required={!selectedTeamMember}
+                        onFocus={() => {
+                            setTeamMemberResults(teammembers);  // Assuming 'teammembers' is the data you want to set
+                        }}
+                        disabled={!!selectedTeamMember} // Disable when teammember is selected
+                    />
+                    <div className='teammemberlist'>
+
+                        {teammemberSearch && teammemberResults.length === 0 && !selectedTeamMember && (
+                            <div className="no-match-message">
+                                No matching teammembers found.
                             </div>
-                            
-                        </form>
-                        
-                 
-            
-            
+                        )}
+                        {teammemberResults.map(teammember => (
+                            <div key={teammember.member.email} className="teammember-result">
+                                <div>{teammember.member.name} {teammember.member.email}</div>
+                                
+                                <button className="add-form-btn" type="button" onClick={() => handleAddTeamMember(teammember)}
+
+                                >Add</button>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+                {selectedTeamMember && (
+                    <div className="selected-teammember">
+                        {selectedTeamMember.member.name} ({selectedTeamMember.member.email})
+                        <button className="add-form-btn" type="button" onClick={handleRemoveTeamMember}>Remove</button>
+                    </div>
+                )}
+                <div className="form-row">
+                    <button className="add-form-btn" type="submit">Submit</button>
+                </div>
+
+            </form>
         </div>
         //         )
         //     }
@@ -419,156 +443,3 @@ const AddTask = () => {
 export default AddTask;
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// import React, { useState } from 'react';
-// import './Addtask.css';
-
-// const YourFormComponent = () => {
-//     const [title, setTitle] = useState('');
-//     const [description, setDescription] = useState('');
-//     const [startDate, setStartDate] = useState('');
-//     const [endDate, setEndDate] = useState('');
-
-//     const [teamMemberValue, setteamMemberValue] = useState('');
-//     const [dropdownInput, setDropdownInput] = useState('');
-//     const [submissionMessage, setSubmissionMessage] = useState('');
-//     const [inputValue, setInputValue] = useState('');
-//     const teamMemberListItemsConst = ['Apple', 'Banana', 'Orange'];
-//     const [teamMemberListItems, setTeamMemberListItems] = useState(['Apple', 'Banana', 'Orange']);
-//     const [isListVisible, setListVisible] = useState(false);
-//     const [selectedAttachments, setSelectedAttachments] = useState([]);
-
-
-//     const handleSubmit = (e) => {
-//         e.preventDefault();
-//         setSubmissionMessage('Form submitted successfully!');
-//     };
-
-//     const handleteammemberChange = (e) => {
-//         const value = e.target.value;
-//         setteamMemberValue(value);
-//         // Filter the list based on the input value
-//         const filteredItems = teamMemberListItems.filter((item) =>
-//             item.toLowerCase().includes(value.toLowerCase())
-//         );
-//         // Update the list with the filtered items
-//         setTeamMemberListItems(filteredItems);
-//     };
-
-//     const handleTeamMemberItemClick = (itemName) => {
-//         setteamMemberValue(itemName);
-//     };
-//     const handleTeamMemberInputFocus = () => {
-//         setListVisible(true);
-//     };
-
-//     const handleTeamMemberInputBlur = () => {
-//         // Adding a slight delay to prevent the list from disappearing before the click on list item is registered
-//         setTimeout(() => setListVisible(false), 200);
-//     };
-//     const handleFileChange = (e, type) => {
-//         const newFiles = Array.from(e.target.files);
-//         if (type === 'attachment') {
-//             setSelectedAttachments(old => [...old, ...newFiles]);
-//         } else {
-//             setSelectedDocuments(old => [...old, ...newFiles]);
-//         }
-//     };
-//     return (
-//         <div id="addtask-form-container">
-//             <form onSubmit={handleSubmit}>
-//                 <div className='task-title'>
-//                     <label className='form-label'>Title:</label>
-//                     <input type="text" className='form-input' value={title} onChange={(e) => setTitle(e.target.value)} />
-//                 </div>
-//                 <div className='task-description'>
-//                     <label className='form-label'>Description:</label>
-//                     <textarea className='form-input' value={description} onChange={(e) => setDescription(e.target.value)} />
-//                 </div>
-//                 <div className='task-startdate'>
-//                     <label className='form-label'>Start Date:</label>
-//                     <input type="date" className='form-input' value={startDate} onChange={(e) => setStartDate(e.target.value)} />
-//                 </div>
-//                 <div className='task-enddate'>
-//                     <label className='form-label'>End Date:</label>
-//                     <input type="date" className='form-input' value={endDate} onChange={(e) => setEndDate(e.target.value)} />
-//                 </div>
-
-//                 <div className="attach-container">
-//                     <label htmlFor="taskattachment" className='form-label'>Attachment:</label>
-//                     <input
-//                         className="in-txtarea"
-//                         type="file"
-//                         id="taskattachment"
-//                         name="taskattachment"
-//                         onChange={(e) => handleFileChange(e, 'taskattachment')}
-//                     />
-//                     <div>
-//                         {selectedAttachments.map((file, index) => (
-//                             <div key={index}>{file.name}</div>
-//                         ))}
-//                     </div>
-//                 </div>
-
-//                 <div className='listofteammember'>
-//                     <input
-//                         type="text"
-//                         value={teamMemberValue}
-//                         onChange={handleteammemberChange}
-//                         onFocus={handleTeamMemberInputFocus}
-//                         onBlur={handleTeamMemberInputBlur}
-//                         placeholder="Enter team member"
-//                         className='form-input'
-//                     />
-//                     {isListVisible && (
-//                         <div className='teammemberlist'>
-//                             {teamMemberListItems.map((item, index) => (
-//                                 <div
-//                                     className="teammemberlistitem"
-//                                     key={index}
-//                                     onClick={() => handleTeamMemberItemClick(item)}
-//                                 >
-//                                     {item}
-//                                 </div>
-//                             ))}
-//                         </div>
-//                     )}
-//                 </div>
-
-//                 <button className='submit-button' type="submit">Submit</button>
-//             </form>
-//             {submissionMessage && <div className='submission-message'>{submissionMessage}</div>}
-//         </div>
-//     );
-// };
-
-// export default YourFormComponent;

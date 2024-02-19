@@ -171,7 +171,7 @@ class ProjectMember(models.Model):
 class Task(models.Model):
     class Meta:
         db_table = 'Task'
-    task_id = models.IntegerField(primary_key=True)
+    task_id = models.AutoField(primary_key=True)
     task_title = models.CharField(max_length=20)
     task_desc = models.CharField(max_length=50)
     start_date = models.DateField()

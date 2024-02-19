@@ -707,9 +707,10 @@ def taskassigntoother(request):
         data = json.loads(request.body)
         print(data)
         useremail = data.get('useremail')
-
+        projectid=data.get('projectid')
+        print(projectid)
         profile_instance= get_object_or_404(Profile, email=useremail)
-        tasks_of_users = Task.objects.filter(manager = profile_instance)
+        tasks_of_users = Task.objects.filter(manager = profile_instance,project=get_object_or_404(Project, project_id=projectid))
         alltasks = [tasks_of_user.task_to_dict() for tasks_of_user in tasks_of_users]
 
         print(alltasks)
@@ -717,6 +718,87 @@ def taskassigntoother(request):
     except Exception as e:
         print(e)
         return Response({"data":"no data","value":False})
+    
+
+@api_view(['post'])
+def addtaskdetails(request):
+    try:
+        data = json.loads(request.body)
+        print(data)
+        # useremail = 
+        task_instance = Task.objects.create(
+        task_title=data.get('title'),
+        task_desc=data.get('description'),
+        start_date=data.get('taskstartdate'),
+        completion_date=None,  # Assuming the task is not completed yet
+        deadline=data.get('taskDueDate'),
+        project=get_object_or_404(Project, project_id=data.get('project_id')),
+        manager=get_object_or_404(Profile, email=data.get('username')),
+        team_member=get_object_or_404(Profile, email=data.get('teammemberid'))
+        )
+
+        return Response({"value":True})
+    except Exception as e:
+        print(e)
+        return Response({"data":"no data","value":False})
 
 
 
+@api_view(['post'])
+def teammembers(request):
+    try:
+        data = json.loads(request.body)
+        print(data)
+        useremail = data.get('useremail')
+        user_project_id=data.get('project_no')
+        print(user_project_id)
+        project_id = get_object_or_404(Project, project_id=user_project_id)
+        projectmembers = ProjectMember.objects.filter(project=project_id,removed_on=None,role=0)
+        allprojectmembers = [projectmember.to_projectmember_dict() for projectmember in projectmembers]
+
+        print(allprojectmembers)
+        return Response({"data":allprojectmembers,"value":True})
+    except Exception as e:
+        print(e)
+        return Response({"data":"no data","value":False})
+
+
+@api_view(['post'])
+def modifytask(request):
+    try:
+        data = json.loads(request.body)
+
+        task_id = data.get('taskid')  # Assuming 'task_id' is present in the data
+        task_instance = get_object_or_404(Task, task_id=task_id)
+        # Update the task fields
+        task_instance.task_title = data.get('title')
+        task_instance.task_desc = data.get('description')
+        task_instance.start_date = data.get('taskstartdate')
+        task_instance.deadline = data.get('taskDueDate')
+        # Save the modified task instance
+        task_instance.save()
+
+        return Response({"value":True})
+    except Exception as e:
+        print(e)
+        return Response({"data":"no data","value":False})
+    
+
+
+
+@api_view(['post'])
+def taskcompleted(request):
+    try:
+        data = json.loads(request.body)
+
+        task_id = data.get('taskid')  # Assuming 'task_id' is present in the data
+        task_instance = get_object_or_404(Task, task_id=task_id)
+        # Update the task fields
+        task_instance.completion_date = timezone.now()
+        # Save the modified task instance
+        task_instance.save()
+
+        return Response({"value":True})
+    except Exception as e:
+        print(e)
+        return Response({"data":"no data","value":False})

@@ -1,17 +1,18 @@
 import React, { useState, useEffect } from 'react'
 import axios from 'axios';
 import './Modifytask.css';
-import { useLocation } from 'react-router-dom';
+import {useNavigate,useLocation } from 'react-router-dom';
 
 const ModifyTask = () => {
-    const location = useLocation();
+    const navigate = useNavigate();
+        const location = useLocation();
     // task_key, title, content, actstatus, duedate, owner, progress, done_key 
     const task = location.state.tasks;
     const [taskname, setTaskName] = useState(task.title);
     const [taskDec, setTaskDesc] = useState(task.content);
 
-    const [startDate, setStartDate] = useState("");
-    const [dueDate, setDueDate] = useState("");
+    const [startDate, setStartDate] = useState(task.startdate);
+    const [dueDate, setDueDate] = useState(task.duedate);
     const [selectedTeamMember, setSelectedTeamMember] = useState();
 console.log("modifu",task);
 
@@ -263,11 +264,39 @@ console.log("modifu",task);
             setDueDateError(dueDateError);
             return;
         }
-
+        ModifyTask();
         alert("Task details modified")
-        setSelectedTeamMember(null);
-    };
 
+    };
+    const ModifyTask = async () => {
+        try {
+            const taskDetails = {
+                username: JSON.parse(sessionStorage.getItem('loginData')).profile_data.email,
+                taskid:task.task_id,
+                title: taskname,
+                description: taskDec,
+                taskstartdate: startDate,
+                taskDueDate: dueDate,
+             
+            }
+            const response = await axios.post('http://127.0.0.1:8000/api/modifytask/', taskDetails);
+            console.log("modify task details",response.data.value);
+            if (response.data.value) {
+                alert("Task has been modify")
+                
+                navigate('/taskbyme');
+                return true;
+            } else {
+                return false;
+            }
+
+        } catch (error) {
+            console.error(error);
+            return false;
+
+        }
+
+    };
     //------------------------------------------------------------------------------------------------------------------------
 
     return (
