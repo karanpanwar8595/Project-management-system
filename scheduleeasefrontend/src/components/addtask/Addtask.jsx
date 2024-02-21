@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react'
 import axios from 'axios';
 import './Addtask.css';
-import { useLocation } from 'react-router-dom';
+import { useLocation,useNavigate } from 'react-router-dom';
 
 const AddTask = () => {
     const location = useLocation();
+    const navigate = useNavigate();
 
     const projectno = location.state.selectedProjectId;
     const [taskname, setTaskName] = useState();
@@ -112,6 +113,7 @@ const AddTask = () => {
                 setStartDate(null);
                 setDueDate(null);
                 setSelectedTeamMember(null);
+                navigate('/taskbyme')
                 return true;
             } else {
                 return false;

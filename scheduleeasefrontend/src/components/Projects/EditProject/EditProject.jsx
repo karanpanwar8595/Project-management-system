@@ -5,7 +5,6 @@ import { useLocation } from 'react-router-dom';
 
 const EditProject = () => {
     const location = useLocation();
-
     const project = location.state.projects;
     console.log(project);
     const [projectname, setProjectName] = useState(project.name);

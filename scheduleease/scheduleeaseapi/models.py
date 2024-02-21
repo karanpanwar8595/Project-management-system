@@ -25,6 +25,7 @@ class Profile(models.Model):
             'email': self.email,
             'role': self.role,
             'user_status': self.user_status,
+            'name':self.fname +" "+self.lname,
         }
     def project_to_dict(self):
         return {
@@ -244,6 +245,14 @@ class Payment(models.Model):
     project = models.ForeignKey(Project, on_delete=models.CASCADE)
     client = models.ForeignKey(Profile, on_delete=models.CASCADE)
     date_time = models.DateTimeField()
+    def to_dict(self):
+        return {
+            'transaction_id': self.transaction_id,
+            'amount': self.amount,
+            'project': self.project.to_projectuserin_dict(),  # Assuming Project also has a to_dict method
+            'client': self.client.client_to_dict(),    # Assuming Profile also has a to_dict method
+            'date_time': self.date_time.isoformat(),
+        }
 
 class ProfileDocument(models.Model):
     class Meta:

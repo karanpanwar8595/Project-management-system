@@ -230,13 +230,13 @@ console.log("modifu",task);
     //     return '';
     // };
     const validateStartDate = (date) => {
-        const today = new Date().toISOString().split('T')[0];
-        if (date < today) return 'Start date must be today or a future date.';
-        return '';
+        // const today = new Date().toISOString().split('T')[0];
+        // if (date < today) return 'Start date must be today or a future date.';
+        // return '';
     };
     const validateDueDate = (startDate, dueDate) => {
-        if (dueDate <= startDate) return 'Due date must be greater than the start date.';
-        return '';
+        // if (dueDate <= startDate) return 'Due date must be greater than the start date.';
+        // return '';
     };
 
     const handleFormSubmit = (event) => {
@@ -265,7 +265,7 @@ console.log("modifu",task);
             return;
         }
         ModifyTask();
-        alert("Task details modified")
+        
 
     };
     const ModifyTask = async () => {

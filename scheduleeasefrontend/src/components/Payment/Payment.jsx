@@ -1,10 +1,34 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import './Payment.css';
-import { faL } from '@fortawesome/free-solid-svg-icons';
+// import { faL } from '@fortawesome/free-solid-svg-icons';
+import axios from 'axios';
 
 
 const PaymentCard = ({ project }) => {
+  const [completion, setCompletion] = useState(0);
+  const ProjectCompletion = async (projectNo) => {
+
+    try {
+      const ProjectDetails = { projectno: projectNo }
+      const response = await axios.post('http://127.0.0.1:8000/api/projectcompletion/', ProjectDetails);
+      // ye data request me jayega in views.py
+
+      if (response.data['value']) {
+        if (response.data.data.totaltask == 0) {
+          setCompletion(0);
+        }
+        else {
+          const percentage = response.data.data.taskdone / response.data.data.totaltask * 100
+          setCompletion(Math.floor(percentage));
+        }
+      } else {
+        console.log("error")
+      }
+    } catch (error) {
+      console.error('Error during login:', error);
+    }
+  };
 
 
   const [isClient, setIsClient] = useState(false);
@@ -27,39 +51,45 @@ const PaymentCard = ({ project }) => {
     } catch (error) {
       console.log(error);
     }
+    ProjectCompletion(project.project_id);
   }, []);
-  const getProgressClass = (completion) => {
-    // Implement your logic to determine the appropriate class based on completion
-    // For example, you might return 'low', 'medium', 'high' based on different ranges
-    return completion < 30 ? 'low' : completion < 70 ? 'medium' : 'high';
-  };
+  const getProgressClass = (percentage) => {
+    if (percentage < 25) return 'low';
+    if (percentage < 50) return 'medium';
+    if (percentage < 75) return 'high';
+    return 'very-high';
+};
 
   return (
     <div key={project.id} className="payment-card">
       <div className="payment-details">
-        <div className="payment-detail-item">{project.name}</div>
+        <div className="payment-detail-item">{project.project_name}</div>
 
-        <div className="payment-detail-item">{project.amount}</div>
+        <div className="payment-detail-item">{project.budget}</div>
 
         <div className="payment-detail-item">
-          <div className="project-progress-container">
-            <div
-              className={`payment-progress-filler ${getProgressClass(project.completion)}`}
-              style={{ width: `${project.completion}%` }}
-            >
-              <span className="payment-progress-label">{`${project.completion}%`}</span>
+          
+            <div className="progress-container">
+              <div
+                className={`progress-filler ${getProgressClass(completion)}`}
+                style={{ width: `${completion}%` }}
+              >
+                <span className="progress-label">{`${completion}%`}</span>
+              </div>
             </div>
 
-          </div>
+          
         </div>
         <div className="payment-detail-item paybuttonbox">
-          {project.paymentdone ? (
+          {project.payment_info ? (
             <div className='paidinfo'>
               <div className='paid-text'>Paid</div>
-              <div className='paid-date'>{project.paymentdate}</div>
+              <div className='paid-date'>{project.paymentdate}
+                {/* <br/>{new Date(project.date_time).toLocaleDateString()} */}
+              </div>
             </div>
           ) : (
-            userrole==3 ? (
+            userrole == 3 ? (
               <>
                 <button className={`paybutton`}>
                   Pay Now
@@ -85,17 +115,33 @@ const PaymentCard = ({ project }) => {
 
 
 const Payment = () => {
+  const [payments, setPayments] = useState(null);
+
+  useEffect(() => {
+    PaymentDetails()
+  }, [])
+  const PaymentDetails = async () => {
+    try {
+      const paymentDetails = {
+        username: JSON.parse(sessionStorage.getItem('loginData')).profile_data.email, role: JSON.parse(sessionStorage.getItem('loginData')).profile_data.role
+      }
+      const response = await axios.post('http://127.0.0.1:8000/api/viewpayment/', paymentDetails);
+
+      if (response.data.value) {
+        console.log("payments", response.data);
+
+        setPayments(response.data.data);
+        console.log(payments);
+
+      }
+    } catch (error) {
+      console.error(error);
+    }
+
+  };
+
 
   // Assuming 'payments' is an array
-  const [payments, setPayments] = useState([
-    // Sample data, replace it with your actual data
-    { id: 1, name: 'Health Care', paymentdone: false, paymentdate: 'NOT DONE', completion: 42, amount: 50000 },
-    // { id: 2, name: 'Sign Companion 02', paymentdone: false, paymentdate: 'NOT DONE', completion: 10, amount: 68000 },
-    // { id: 3, name: 'Financial Upgrade', paymentdone: false, paymentdate: 'NOT DONE', completion: 10, amount: 10000 },
-
-
-    // ... add more project objects as needed
-  ]);
 
 
   // Function to get progress class based on completion percentage
@@ -117,9 +163,8 @@ const Payment = () => {
       <div className='payment-card-list'>
 
         {/* Use map to iterate over 'payments' array */}
-        {payments.map((project1) => (
+        {payments && payments.map((project1) => (
           <PaymentCard project={project1} />
-
         ))}
       </div>
     </div>

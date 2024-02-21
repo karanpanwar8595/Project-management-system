@@ -12,6 +12,7 @@ urlpatterns = [
     path('state/', views.state, name='state'),
     path('city/', views.city, name='city'),
     path('allcompanydata/', views.allcompanydata,name='allcompanydata'),
+    path('uploadprofilepic/', views.uploadprofilepic,name='uploadprofilepic'),
 
 
     # Login process
@@ -22,18 +23,29 @@ urlpatterns = [
 
 #profile process
     path('profileinfo/', views.profileinfo, name='profileinfo'),
+    path('allusers/', views.allusers, name='allusers'),
+    path('blockuser/', views.blockuser, name='blockuser'),
+
+
 
 
 
     # Discussion process
     path('listofreciver/', views.listofreciver, name='hello'),
+    path('listofreciverformanager/', views.listofreciverformanager, name='listofreciverformanager'),
+    path('listofreciverforclient/', views.listofreciverforclient, name='listofreciverforclient'),
+
+
     # path('activereciveruser/', views.activereciveruser, name='activereciveruser'),
+    
     path('messagesendertoreciver/', views.messagesendertoreciver, name='messagesendertoreciver'),
     path('messagesofauser/', views.messagesofauser, name='messagesofauser'),
 
     # Project Component
     path('addingproject/', views.addingproject, name='addingproject'),
     path('uploadattachments/', views.uploadattachments, name='uploadattachments'),
+    path('uploaddocument/', views.uploaddocument, name='uploaddocument'),
+
 
     path('projectdetailsmanager/', views.projectdetailsmanager, name='projectdetailsmanager'),
     
@@ -68,6 +80,10 @@ urlpatterns = [
     path('modifytask/', views.modifytask, name='modifytask'),
     path('taskcompleted/', views.taskcompleted, name='taskcompleted'),
 
+
+#payment process
+
+    path('viewpayment/', views.viewpayment, name='viewpayment'),
 
 
 

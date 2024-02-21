@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import './SignupForm.css';
 import axios from 'axios';
-
+// import imageType from 'image-type';/
 
 const SignupForm = () => {
   // const [showPassword, setShowPassword] = useState(false);
@@ -236,6 +236,30 @@ const SignupForm = () => {
   const handleGstItemClick = (itemName) => {
     setGstValue(itemName);
   };
+
+  const handleProfilePicUpload = async (email) => {
+
+    const formData = new FormData();
+    // const formData = new FormData();
+    // selectedDocuments.forEach((file, _index) => {
+    formData.append(`photo`, image);
+    // });
+    // formData.append('project_no', project_no);
+    formData.append('useremail',email);
+
+    try {
+      await axios.post('http://127.0.0.1:8000/api/uploadprofilepic/', formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      });
+      console.log('File uploaded successfully');
+    } catch (error) {
+      console.error('Error uploading file:', error);
+    }
+
+  };
+
   const gstfetchData = async () => {
     // console.log(state_id)
     try {
@@ -259,6 +283,7 @@ const SignupForm = () => {
 
 
   };
+
 
   const handleGstInputBlur = () => {
     // Adding a slight delay to prevent the list from disappearing before the click on list item is registered
@@ -318,6 +343,8 @@ const SignupForm = () => {
       }
       const response = await axios.post('http://127.0.0.1:8000/api/registration/', regdata);
       if (response.data.value) {
+        handleProfilePicUpload(email);
+
         setEmail('');
         setFirstName('');
         setMiddleName('');
@@ -330,9 +357,8 @@ const SignupForm = () => {
         setDOB("");
         setGstValue('');
         setAddress('');
-
+        fetchData();
         alert('Registration is successfull for ' + firstName + " " + middleName + " " + lastName);
-
       } else {
         console.log('registration failed');
       }
@@ -466,22 +492,22 @@ const SignupForm = () => {
 
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await axios.post('http://127.0.0.1:8000/api/country/');
-        if (response.data.value) {
-          setCountryListItemsconst(response.data.data);
-          setCountryListItems(response.data.data);
-        } else {
-          console.log('Country loading failed');
-        }
-      } catch (error) {
-        console.error('Error during login:', error);
-      }
-    };
+    
     fetchData();  // Call the async function immediately
   }, []);
-
+  const fetchData = async () => {
+    try {
+      const response = await axios.post('http://127.0.0.1:8000/api/country/');
+      if (response.data.value) {
+        setCountryListItemsconst(response.data.data);
+        setCountryListItems(response.data.data);
+      } else {
+        console.log('Country loading failed');
+      }
+    } catch (error) {
+      console.error('Error during login:', error);
+    }
+  };
   useEffect(() => {
     // Check if myState has a specific value
 
@@ -495,7 +521,25 @@ const SignupForm = () => {
     return () => clearTimeout(timeoutId);
 
   }, [errors]);
+  const [image, setImage] = useState(null);
 
+  const handleImageChange = (event) => {
+    event.preventDefault();
+    const selectedImage = event.target.files[0];
+
+    // Validate image format
+    const allowedFormats = ['image/jpeg', 'image/png', 'image/gif', 'image/jpg'];
+
+    if (selectedImage && allowedFormats.includes(selectedImage.type)) {
+      setImage(selectedImage);
+    } else {
+      // Reset the image state and show an error message
+      setImage(null);
+
+      alert('Invalid image format. Please select a JPEG, PNG, or GIF file.');
+
+    }
+  }
   return (
     <div className="signup-content">
       <div className="signup-title">
@@ -554,10 +598,20 @@ const SignupForm = () => {
             <label htmlFor="lastName" className="signup-label"></label>
             <input value={lastName} type="text" id="lastName" className="signup-input " placeholder="Last name" onChange={(e) => setLastName(e.target.value)} />
           </div>
-          <label htmlFor="image" className="signup-label">
-            Photo:
-          </label>
-          <input type="file" id="image" className="signup-input" placeholder="photo" />
+          <div>
+            <label htmlFor="image" className="signup-label">
+              Photo:
+            </label>
+            <input
+              type="file"
+              id="image"
+              className="signup-input"
+              placeholder="photo"
+              onChange={handleImageChange}
+            // value={image}
+            />
+
+          </div>
 
 
 

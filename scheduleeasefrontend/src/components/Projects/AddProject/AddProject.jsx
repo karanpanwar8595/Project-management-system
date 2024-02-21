@@ -71,6 +71,8 @@ const AddProject = () => {
             if (response.data['value']) {
                 console.log('projecadded', response.data);
                 console.log('Project component connected');
+                handleAttachmentUpload(response.data.projectadded.project_id);
+                handleDocumentUpload(response.data.projectadded.project_id);
             } else {
                 console.log("error")
             }
@@ -79,13 +81,15 @@ const AddProject = () => {
         }
     };
 
-    const handleAttachmentUpload = async () => {
+    const handleAttachmentUpload = async (project_no) => {
 
         const formData = new FormData();
         // const formData = new FormData();
         selectedAttachments.forEach((file, _index) => {
             formData.append(`attachment`, file);
         });
+        formData.append('project_no', project_no);
+        formData.append('useremail', JSON.parse(sessionStorage.getItem('loginData')).profile_data.email );
 
         try {
             await axios.post('http://127.0.0.1:8000/api/uploadattachments/', formData, {
@@ -99,6 +103,30 @@ const AddProject = () => {
         }
 
     };
+    const handleDocumentUpload = async (project_no) => {
+
+        const formData = new FormData();
+        // const formData = new FormData();
+        selectedDocuments.forEach((file, _index) => {
+            formData.append(`attachment`, file);
+        });
+        formData.append('project_no', project_no);
+        formData.append('useremail', JSON.parse(sessionStorage.getItem('loginData')).profile_data.email );
+
+        try {
+            await axios.post('http://127.0.0.1:8000/api/uploaddocument/', formData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data',
+                },
+            });
+            console.log('File uploaded successfully');
+        } catch (error) {
+            console.error('Error uploading file:', error);
+        }
+
+    };
+
+
     const handleFormSubmit = (event) => {
         event.preventDefault();
 
@@ -142,7 +170,7 @@ const AddProject = () => {
             probudget: budget,
         };
         AddingProject(newProject);
-        handleAttachmentUpload();
+        
         // Add the new project to the newProjects state
         setNewProjects([...newProjects, newProject]);
 

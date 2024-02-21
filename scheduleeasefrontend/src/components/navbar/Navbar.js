@@ -15,33 +15,17 @@ import pic6 from './photos/6.jpg';
 
 const Navbar = () => {
 const navigate = useNavigate();
-const [name, setName] = useState('')
-const [email, setEmail] = useState('')
+const [name, setName] = useState(JSON.parse(sessionStorage.getItem('loginData')).profile_data.name)
+const [email, setEmail] = useState(JSON.parse(sessionStorage.getItem('loginData')).profile_data.email)
   const handleLogout = () => {
     sessionStorage.removeItem('loginData');
     sessionStorage.removeItem('profileData');
-    
     // Navigating to the login page
     navigate('/');
     window.location.reload();
   };
 
-  useEffect(() => {
-    const role =JSON.parse(sessionStorage.getItem('loginData')).profile_data.role;
-    if(role == 0){
-      setName("Ajay Singh");
-      setEmail("ajay@gmail.com");
-    }else if(role == 1){
-      setName("Pravatik Pandaya");
-      setEmail("pravatik@gmail.com");
-    }else if(role == 2){
-      setName("Vikas Jaiswal");
-      setEmail("vikas@gmail.com");
-    }else if(role == 3){
-      setName("Akash Jaiswal");
-      setEmail("akash@gmail.com");
-    }
-  }, [])
+
 
   return (
     <nav className="navbar">

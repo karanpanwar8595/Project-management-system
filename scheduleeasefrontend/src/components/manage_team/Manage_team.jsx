@@ -16,40 +16,7 @@ import pic6 from './photos/6.jpg';
 
 const UserProfileCard = ({ user,roleNo, picture, projectid, teammemberList, onTeamMemberListChange }) => {
   const [role, setRole] = useState('');
-  // const RemoveTeamMember = async () => {
-  //   try {
-  //     const TeamDetails = { useremail: JSON.parse(sessionStorage.getItem('loginData')).profile_data.email, project_id: projectid, usertoremove: user.email };
-
-  //     const response = await axios.post('http://127.0.0.1:8000/api/removeteammember/', TeamDetails);
-  //     // ye data request me jayega in views.py
-  //     let teamMemberList = teammemberList;
-  //     if (response.data['value']) {
-  //       for (let i = 0; i < teamMemberList.length; i++) {
-  //         const persondata = teamMemberList[i];
-  //         console.log(persondata.member.email, user.email);
-  //         if (persondata.member.email == user.email) {
-  //           console.log("if condition true")
-  //           teamMemberList.splice(i, 1);
-  //           console.log("parent state after change1", teamMemberList);
-
-  //         }
-
-
-  //       }
-  //       onTeamMemberListChange(teamMemberList);
-  //       console.log("parent state after change", teammemberList);
-  //       console.log('Project component connected');
-  //     } else {
-  //       console.log("error");
-  //     }
-  //   } catch (error) {
-  //     console.error('Error during login:', error);
-  //   }
-
-
-
-  // }
-
+ 
 
   const RemoveTeamMember = async () => {
     try {

@@ -9,6 +9,14 @@ import { Link } from 'react-router-dom';
 
 const ProjectDetails = () => {
     const location = useLocation();
+    const [isAdmin, setIsAdmin] = useState(false);
+    const [isManager, setIsManger] = useState(false);
+
+    const [isTeamMember, setIsTeamMember] = useState(false);
+
+    const [isClient, setIsClient] = useState(false);
+
+
     // const project1 = JSON.stringify(location.state.project1);
     useEffect(() => {
         // Fetch the login data from sessionStorage
@@ -18,19 +26,27 @@ const ProjectDetails = () => {
         if (loginData && loginData.profile_data && loginData.profile_data.role === 0) {
             setIsAdmin(true);
         }
+        if (loginData && loginData.profile_data && loginData.profile_data.role === 1) {
+            setIsManger(true);
+        }
+        if (loginData && loginData.profile_data && loginData.profile_data.role === 2) {
+            setIsTeamMember(true);
+        }
+        if (loginData && loginData.profile_data && loginData.profile_data.role === 3) {
+            setIsClient(true);
+        }
+
     }, []);
-    const [isAdmin, setIsAdmin] = useState(false);
 
     // const project = JSON.parse(project1).project
 
     const project = location.state.projects;
-    
-    
-   
+
+
+
 
 
     console.log(13, project);
-    const isManager = location.state.isManager;
 
     const attachments = ['diagrams.jpg', 'project-plan.pdf'];
     const documents = ['agreements.pdf'];
@@ -52,21 +68,21 @@ const ProjectDetails = () => {
         <div className="project-details-container">
             <div className="project-header-container">
                 <h2 className="proj-header">{project.name}</h2>
-                {isAdmin || !isManager ? (
+                {isManager ? (
                     <>
+                        <Link to="/editproject"
+                            state={{ projects: project }}
+                        >
+                            <button className="edit-button">
+                                <FontAwesomeIcon icon={faPencilAlt} /> Edit
+                            </button>
 
+                        </Link>
 
                     </>
 
                 ) : (<>
-                    <Link to="/editproject"
-                        state={{ projects: project }}
-                    >
-                        <button className="edit-button">
-                            <FontAwesomeIcon icon={faPencilAlt} /> Edit
-                        </button>
 
-                    </Link>
 
                 </>
 
@@ -96,17 +112,9 @@ const ProjectDetails = () => {
                     </div>
                 </div>
             </div>
-            {!isManager ? (
+            {isManager|| isAdmin||isClient ? (
                 <>
-
-
-                </>
-
-            ) : (
-
-
-                <>
-                    <div className="section">
+<div className="section">
                         <div className="section-title">Company Details</div>
                         <div className="section-content">
                             <div className="start">
@@ -127,8 +135,10 @@ const ProjectDetails = () => {
                             <div className="client-name">{project.budget}</div>
                         </div>
                     </div>
+{!isClient?(
 
-                    <div className="section">
+    <>
+    <div className="section">
                         <div className="section-title">Documents</div>
                         <div className="documents">
                             {documents.map((document, index) => (
@@ -136,6 +146,17 @@ const ProjectDetails = () => {
                             ))}
                         </div>
                     </div>
+    </>
+):(<></>)}
+                    
+
+                </>
+
+            ) : (
+
+
+                <>
+                    
 
                 </>
 
@@ -163,8 +184,10 @@ const ProjectDetails = () => {
     
                     ) :(<></>)} */}
 
+{!isClient?(
 
-            <div className="section">
+<>
+<div className="section">
                 <div className="section-title">Attachments</div>
                 <div className="attachments">
                     {attachments.map((attachment, index) => (
@@ -172,6 +195,9 @@ const ProjectDetails = () => {
                     ))}
                 </div>
             </div>
+</>
+):(<></>)}
+            
         </div>
     );
 };

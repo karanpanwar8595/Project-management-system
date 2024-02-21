@@ -26,7 +26,7 @@ def registration(request):
             data = json.loads(request.body)
             print(data)
             inputemail = data.get('inputemail')
-            inputpassword = generate_random_password(12)
+            inputpassword = "S@123456"
             usergst_no=data.get('gst_no')
             address=data.get('address')
             # photo=data.get('photo')
@@ -138,7 +138,33 @@ def allcompanydata(request):
         print(e)
         return Response({"data":"no data","value":False})
 
+@api_view(['POST'])
+def uploadprofilepic(request):
+    try:
 
+        username = request.data.get('useremail')
+        
+        clean_username = ''.join(char for char in username if char.isalnum())
+
+        if request.method == 'POST':
+            attachments = request.FILES.getlist('photo')
+            for attachment in attachments:
+                folder_path = f'media/{clean_username}/Profile/Picture/'
+                print("upload pic")
+                # Check if the folder exists, and create it if not
+                if not os.path.exists(folder_path):
+                    os.makedirs(folder_path)
+                
+                with open(os.path.join(folder_path, attachment.name), 'wb') as file:
+                    for chunk in attachment.chunks():
+                        file.write(chunk)
+
+            return Response({'message': 'File uploaded successfully', 'value': True})
+        else:
+            return Response({'message': 'Invalid request method'}, status=405)
+    except Exception as e:
+        print(e)
+        return Response({'message': str(e)}, status=500)
 
 # Login Process
 @api_view(['post'])
@@ -260,6 +286,65 @@ def listofreciver(request):
         return Response({"message":"Email not found" ,'processcompleted':False })
 
 
+
+@api_view(['POST'])
+def listofreciverformanager(request):
+    try:
+        data = json.loads(request.body)
+        inputemail = data.get('useremail')
+        projects = ProjectMember.objects.filter(email = inputemail,role=1)
+        clientlist = [inproject.to_dict()['project']['client'] for inproject in projects]
+        print("")
+        print("client list",clientlist)
+
+        unique_clientlist=[]
+        unique_emaillist=[]
+        for client in clientlist:
+
+            email=client['email']
+            # print(unique_emaillist)
+            if not (email in unique_emaillist):
+                unique_emaillist.append(email)
+                unique_clientlist.append(client)
+        return Response({'data':unique_clientlist,'processcompleted':True})
+
+    except Exception as e:
+        print(e)
+        return Response({"message":"Email not found" ,'processcompleted':False })
+    
+
+
+@api_view(['POST'])
+def listofreciverforclient(request):
+    try:
+        data = json.loads(request.body)
+        inputemail = data.get('useremail')
+        client_id_obj = get_object_or_404(Profile, email=inputemail)
+        clientsprojects = Project.objects.filter(client = client_id_obj)
+
+
+
+        projects = ProjectMember.objects.filter(project__in=clientsprojects,role=1)
+        managerlist = [inproject.to_dict()['email'] for inproject in projects]
+        print("")
+        print("manager list",managerlist)
+
+        unique_managerlist=[]
+        unique_emaillist=[]
+        for manager in managerlist:
+
+            email=manager['email']
+            # print(unique_emaillist)
+            if not (email in unique_emaillist):
+                unique_emaillist.append(email)
+                unique_managerlist.append(manager)
+        return Response({'data':unique_managerlist,'processcompleted':True})
+
+    except Exception as e:
+        print(e)
+        return Response({"message":"Email not found" ,'processcompleted':False })
+    
+   
 
 # store a single message into the database and send if the message is stored or not
 @api_view(['post'])
@@ -450,7 +535,7 @@ def addingproject(request):
 
        
 
-        return Response({"projectadded":True, "value":True})
+        return Response({"projectadded":{'project_id':new_project_id}, "value":True})
     except Exception as e:
         print (e)
         return Response({"projectdetails":False, "value":False})
@@ -500,40 +585,69 @@ def projectmanager(request):
 
 @api_view(['POST'])
 def uploadattachments(request, *args, **kwargs):
-    if request.method == 'POST':
-        attachments = request.FILES.getlist('attachment')
-        files_count = len(request.FILES)
+    try:
+        # Access project_no from request.data
+        project_no = request.data.get('project_no')
+        
+        # Access username from JSON data (assuming it's included in the FormData)
+        username = request.data.get('useremail')
+        
+        clean_username = ''.join(char for char in username if char.isalnum())
 
-        print(files_count)
-        for attachment in attachments:
-            print(attachment.name)
-            with open('media/' + attachment.name, 'wb') as file:
-                for chunk in attachment.chunks():
-                    file.write(chunk)
+        if request.method == 'POST':
+            attachments = request.FILES.getlist('attachment')
+            for attachment in attachments:
+                folder_path = f'media/{clean_username}/Project/{project_no}/Attachment/'
+                
+                # Check if the folder exists, and create it if not
+                if not os.path.exists(folder_path):
+                    os.makedirs(folder_path)
+                
+                with open(os.path.join(folder_path, attachment.name), 'wb') as file:
+                    for chunk in attachment.chunks():
+                        file.write(chunk)
 
-        return Response({'message': 'File uploaded successfully'})
-    else:
-        return Response({'message': 'Invalid request method'}, status=405)
+            return Response({'message': 'File uploaded successfully', 'value': True})
+        else:
+            return Response({'message': 'Invalid request method'}, status=405)
+    except Exception as e:
+        print(e)
+        return Response({'message': str(e)}, status=500)
+
+
+
 
 
 @api_view(['POST'])
-def uploaddocumentss(request, *args, **kwargs):
-    if request.method == 'POST':
-        attachments = request.FILES.getlist('documents')
-        files_count = len(request.FILES)
+def uploaddocument(request, *args, **kwargs):
+    try:
+        # Access project_no from request.data
+        project_no = request.data.get('project_no')
+        
+        # Access username from JSON data (assuming it's included in the FormData)
+        username = request.data.get('useremail')
+        
+        clean_username = ''.join(char for char in username if char.isalnum())
 
-        print(files_count)
-        for attachment in attachments:
-            print(attachment.name)
-            with open('media/' + attachment.name, 'wb') as file:
-                for chunk in attachment.chunks():
-                    file.write(chunk)
+        if request.method == 'POST':
+            attachments = request.FILES.getlist('attachment')
+            for attachment in attachments:
+                folder_path = f'media/{clean_username}/Project/{project_no}/Document/'
+                
+                # Check if the folder exists, and create it if not
+                if not os.path.exists(folder_path):
+                    os.makedirs(folder_path)
+                
+                with open(os.path.join(folder_path, attachment.name), 'wb') as file:
+                    for chunk in attachment.chunks():
+                        file.write(chunk)
 
-        return Response({'message': 'File uploaded successfully'})
-    else:
-        return Response({'message': 'Invalid request method'}, status=405)
-    
-
+            return Response({'message': 'File uploaded successfully', 'value': True})
+        else:
+            return Response({'message': 'Invalid request method'}, status=405)
+    except Exception as e:
+        print(e)
+        return Response({'message': str(e)}, status=500)
 
 
 #Team  member
@@ -600,7 +714,7 @@ def userinproject(request):
         role = data.get('role')
         if (role==2):
             role=0
-        projectmembers = ProjectMember.objects.filter(email=useremail,role=role)
+        projectmembers = ProjectMember.objects.filter(email=useremail,role=role,removed_on=None)
         allpojectinwhichthisuseris = [projectmember.to_projectuserin_dict() for projectmember in projectmembers]
         print(allpojectinwhichthisuseris)
         return Response({"data":allpojectinwhichthisuseris,"value":True})
@@ -677,7 +791,47 @@ def profileinfo(request):
     except Exception as e:
         print(e)
         return Response({"data":"no data","value":False})
+    
 
+@api_view(['post'])
+def allusers(request):
+    try:
+
+        data = json.loads(request.body)
+        print(data)
+        useremail = data.get('useremail')
+        print('hii',useremail)
+        profiledetails = Profile.objects.all()
+        allprofile = [profile.to_dict() for profile in   profiledetails]
+
+        print(allprofile)
+        return Response({"data":allprofile,"value":True})
+    except Exception as e:
+        print(e)
+        return Response({"data":"no data","value":False})
+
+@api_view(['post'])
+def blockuser(request):
+    try:
+
+        data = json.loads(request.body)
+        print(data)
+        emailtoblock = data.get('email')
+        userstatus = data.get('userstatus')
+
+        # print('hii',useremail)
+        profiledetail = Profile.objects.get(email=emailtoblock)
+        if userstatus==0:
+            profiledetail.user_status=1
+        else:
+            profiledetail.user_status=0
+        profiledetail.save()
+
+        return Response({"data":"Success","value":True})
+    except Exception as e:
+        print(e)
+        return Response({"data":"no data","value":False})
+    
 
 
 #task process
@@ -802,3 +956,93 @@ def taskcompleted(request):
     except Exception as e:
         print(e)
         return Response({"data":"no data","value":False})
+    
+
+
+
+
+
+# payment process
+@api_view(['post'])
+def viewpayment(request):
+    try:
+        data = json.loads(request.body)
+        useremail = data.get('username')  # Assuming 'task_id' is present in the data
+        role=data.get('role')
+        if role==0:
+            allprojects=Project.objects.all()
+            allproject = [project.to_dict() for project in allprojects]
+            print(allproject)
+            allproject1=allproject
+            # allprojectobj=[]
+            for project in allproject:
+                projectobj=get_object_or_404(Project, project_id=project['project_id'])
+                try:
+                    paymentdetails=Payment.objects.get(project=projectobj)
+                    paymentdetail=paymentdetails.to_dict()
+                    print(paymentdetail)
+                    project_id_3 = next(project for project in allproject1 if project['project_id'] == paymentdetail['project']['id'])
+                    # Add a new key-value pair to the dictionary
+                    project_id_3['payment_info'] = paymentdetail
+                except Exception as e:
+                    print("")
+            # print(allproject)
+                   
+        elif role==1:
+
+            inprojects = ProjectMember.objects.filter(email=useremail,role=1)
+            print(useremail)
+            inprojectslist = [inproject.to_project_dict()['project'].project_id for inproject in inprojects]
+            print("hello", inprojectslist)
+
+            # Filter the Project queryset based on the list of project IDs
+            allprojects = Project.objects.filter(project_id__in=inprojectslist)
+
+            
+            allproject = [project.to_dict() for project in allprojects]
+            print(allproject)
+            allproject1=allproject
+            # allprojectobj=[]
+            for project in allproject:
+                projectobj=get_object_or_404(Project, project_id=project['project_id'])
+                try:
+                    paymentdetails=Payment.objects.get(project=projectobj)
+                    paymentdetail=paymentdetails.to_dict()
+                    print(paymentdetail)
+                    project_id_3 = next(project for project in allproject1 if project['project_id'] == paymentdetail['project']['id'])
+                    # Add a new key-value pair to the dictionary
+                    project_id_3['payment_info'] = paymentdetail
+                except Exception as e:
+                    print("")
+            # print(allproject)
+        elif role==3:
+
+            client_obj=get_object_or_404(Profile,email=useremail)
+            
+            allprojects = Project.objects.filter(client=client_obj)
+
+            
+            allproject = [project.to_dict() for project in allprojects]
+            print(allproject)
+            allproject1=allproject
+            # allprojectobj=[]
+            for project in allproject:
+                projectobj=get_object_or_404(Project, project_id=project['project_id'])
+                try:
+                    paymentdetails=Payment.objects.get(project=projectobj)
+                    paymentdetail=paymentdetails.to_dict()
+                    print(paymentdetail)
+                    project_id_3 = next(project for project in allproject1 if project['project_id'] == paymentdetail['project']['id'])
+                    # Add a new key-value pair to the dictionary
+                    project_id_3['payment_info'] = paymentdetail
+                except Exception as e:
+                    print("")
+            # print(allproject)               
+        return Response({"data":allproject,"value":True})
+    except Exception as e:
+        print(e)
+        return Response({"data":"no data","value":False})
+
+
+
+

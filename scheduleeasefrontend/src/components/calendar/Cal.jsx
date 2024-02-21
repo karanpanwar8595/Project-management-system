@@ -5,7 +5,8 @@ import startOfWeek from "date-fns/startOfWeek";
 import React, { useState, useEffect } from "react";
 import { Calendar, dateFnsLocalizer } from "react-big-calendar";
 import "react-big-calendar/lib/css/react-big-calendar.css";
-import DatePicker from "react-datepicker";
+import axios from 'axios';
+
 import "react-datepicker/dist/react-datepicker.css";
 // import "./App.css";
 import './Cal.css'
@@ -27,48 +28,81 @@ function Cal() {
     const [newEvent, setNewEvent] = useState({ title: "", start: "", end: "" });
     const [allEvents, setAllEvents] = useState(events);
 
+
     useEffect(() => {
-        if (JSON.parse(sessionStorage.getItem('loginData')).profile_data.role==1){
-            setAllEvents( [
-                {
-                    title: "Budget Review Meeting",
-                    allDay: true,
-                    start: new Date(2024, 1, 8),
-                    end: new Date(2024, 1, 8),
-                },
-                {
-                    title: "Personal Branding Workshop",
-                    start: new Date(2024, 1, 18),
-                    end: new Date(2024, 1, 21),
-                },
-                {
-                    title: "Health Care Duedate",
-                    start: new Date(2024, 1, 28),
-                    end: new Date(2024, 1, 28),
-                },
-            ])
-        }else if(JSON.parse(sessionStorage.getItem('loginData')).profile_data.role==2){
-            setAllEvents( [
-                { title: "Validation in Edit form",
+        fetchalltaskofme();
+    }, [])
+    const fetchalltaskofme = (event) => {
+
+        axios.post('http://127.0.0.1:8000/api/taskassigntome/', { useremail: JSON.parse(sessionStorage.getItem('loginData')).profile_data.email }).then((response) => {
+            if (response) {
+                console.log('task of me ',response.data.data);
+                setAllEvents(convertDataArray(response.data.data));
+                console.log(allEvents);
+            }
+        }, (error) => {
+            console.log(error);
+        });
+    }
+
+
+    function convertDataArray(dataArray) {
+        return dataArray.map(data => {
+          const { task_title, start_date, completion_date } = data;
+          const startDate = new Date(start_date);
+          const endDate = new Date(completion_date);
+          return {
+            title: task_title,
+            allDay: true,
+            start: startDate,
+            end: endDate,
+          };
+        });
+      }
+
+
+    // useEffect(() => {
+    //     if (JSON.parse(sessionStorage.getItem('loginData')).profile_data.role==1){
+    //         setAllEvents( [
+    //             {
+    //                 title: "Budget Review Meeting",
+    //                 allDay: true,
+    //                 start: new Date(2024, 1, 8),
+    //                 end: new Date(2024, 1, 8),
+    //             },
+    //             {
+    //                 title: "Personal Branding Workshop",
+    //                 start: new Date(2024, 1, 18),
+    //                 end: new Date(2024, 1, 21),
+    //             },
+    //             {
+    //                 title: "Health Care Duedate",
+    //                 start: new Date(2024, 1, 28),
+    //                 end: new Date(2024, 1, 28),
+    //             },
+    //         ])
+    //     }else if(JSON.parse(sessionStorage.getItem('loginData')).profile_data.role==2){
+    //         setAllEvents( [
+    //             { title: "Validation in Edit form",
                    
-                    allDay: true,
-                    start: new Date(2024, 1, 15),
-                    end: new Date(2024, 1, 20),
-                },
-                {
-                    title: "Customer entity front-end design",
-                    start: new Date(2024, 1, 5),
-                    end: new Date(2024, 1 , 10),
+    //                 allDay: true,
+    //                 start: new Date(2024, 1, 15),
+    //                 end: new Date(2024, 1, 20),
+    //             },
+    //             {
+    //                 title: "Customer entity front-end design",
+    //                 start: new Date(2024, 1, 5),
+    //                 end: new Date(2024, 1 , 10),
                
-                },
-                {
-                    title: "Meeting with Manager",
-                    start: new Date(2024, 1, 5),
-                    end: new Date(2024, 1, 5),
-                },
-            ])
-        }
-        }, [])
+    //             },
+    //             {
+    //                 title: "Meeting with Manager",
+    //                 start: new Date(2024, 1, 5),
+    //                 end: new Date(2024, 1, 5),
+    //             },
+    //         ])
+    //     }
+    //     }, [])
 
     function handleAddEvent() {
         
@@ -102,16 +136,7 @@ function Cal() {
 
     return (
         <div className="Cal-con">
-            {/* <h1>Calendar</h1>
-            <h2>Add New Event</h2>
-            <div>
-                <input type="text" placeholder="Add Title" style={{ width: "20%", marginRight: "10px" }} value={newEvent.title} onChange={(e) => setNewEvent({ ...newEvent, title: e.target.value })} />
-                <DatePicker placeholderText="Start Date" style={{ marginRight: "10px" }} selected={newEvent.start} onChange={(start) => setNewEvent({ ...newEvent, start })} />
-                <DatePicker placeholderText="End Date" selected={newEvent.end} onChange={(end) => setNewEvent({ ...newEvent, end })} />
-                <button stlye={{ marginTop: "10px" }} onClick={handleAddEvent}>
-                    Add Event
-                </button>
-            </div> */}
+           
             <Calendar localizer={localizer} events={allEvents} startAccessor="start" endAccessor="end" style={{ height: "77vh" }} 
             
             />

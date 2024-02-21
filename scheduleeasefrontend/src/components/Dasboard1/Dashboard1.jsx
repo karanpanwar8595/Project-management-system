@@ -3,7 +3,7 @@ import './Dashboard.css'
 import ManagerDasboard from '../Dashboard/Dashboard'
 import DasNewComp from '../DasNewComp/DasNewComp'
 const Dashboard1 = () => {
-    const role=JSON.parse(sessionStorage.getItem('loginData')).profile_data.role
+    const role=JSON.parse(sessionStorage.getItem('loginData')).profile_data.role;
 
 if (role===0){
     return (
