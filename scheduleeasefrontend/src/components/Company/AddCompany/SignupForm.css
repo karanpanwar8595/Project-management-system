@@ -1,0 +1,130 @@
+.signup-content {
+    background-color: #ffffff;
+    padding: 20px 50px;
+    border-radius: 12px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    max-width: 1200px;
+    /* margin-right: 100%; */
+    width: 74vw;
+    overflow: auto;
+    overflow-y: auto;
+    overflow-x: auto;
+    max-height: 78vh;
+}
+.signup-input{
+    width: auto;
+  max-width: -webkit-fill-available;
+}
+.signup-title {
+    color: #333;
+    height: max-content;
+}
+
+.signup-form {
+    display: flex;
+    flex-direction: column;
+}
+
+.signup-label {
+    margin-top: 10px;
+    color: #333;
+}
+
+.signup-form input,
+.signup-form select,
+.signup-form button {
+    margin-top: 5px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    /*box ka color ander kai*/
+    border-radius: 4px;
+    width: 100%;
+}
+
+.signup-form input[type="checkbox"] {
+    margin-left: 5px;
+}
+
+.signup-name-column {
+    display: flex;
+
+}
+
+.signup-beside {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+}
+
+.addresslistitem {
+    padding: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.addresslistitem:hover {
+    background-color: #f0f0f0;
+}
+
+.listofaddress {
+    position: relative;
+    margin-bottom: 10px;
+}
+
+.addresslist {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    background-color: #fff;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+    border: 1px solid #ccc;
+    border-top: none;
+    border-radius: 0 0 8px 8px;
+    display: flex;
+    flex-direction: column;
+    max-height: 120px;
+    overflow-y: auto;
+    z-index: 3;
+}
+
+.mgr{
+    margin-right: 40px;
+}
+
+#addressitemlist{display: flex;
+flex-direction: row;
+}
+
+.addressitem{
+    width:30% ;
+    margin-right: 5%;
+    /* padding-right: 5%; */
+
+}
+.buttonsignup{
+    border: 1px solid #007bff;
+    width: 100px;
+    padding: 10px 5px;
+    border-radius: 8px;
+    /* font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; */
+    font-weight: 400;
+    align-items: flex-end;
+    margin-left: auto;
+    background-color: #ffffff;
+    color: #007bff;
+     font-weight: 600;
+     letter-spacing: 1px;
+}
+
+.buttonsignup:hover{
+    background-color: #007bff;
+    color: white;
+    font-weight: 600;
+    letter-spacing: 1px;
+}
+/*isme button ke  gadbad hai*/
+
+
+
+  

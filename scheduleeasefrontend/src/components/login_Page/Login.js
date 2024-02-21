@@ -1,41 +1,54 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import styles from './Login.module.css';
+import './Login.css';
 import axios from 'axios';
 
+// Import FontAwesome CSS
+import '@fortawesome/fontawesome-free/css/all.min.css';
 
 const Login = ({ onDataFromChild }) => {
   const [email, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+  const [isValidEmail, setIsValidEmail] = useState(true);
+  const [showPassword, setShowPassword] = useState(false);
 
   const sendLoginDataToParent = (authenticationcode) => {
     onDataFromChild(authenticationcode);
+  };
+
+  const handleEmailInput = (e) => {
+    const inputValue = e.target.value;
+    setUsername(inputValue);
+    setIsValidEmail(/\S+@\S+\.\S+/.test(inputValue));
   };
 
   const handleLogin = async () => {
     try {
       setLoading(true);
       setError(null);
-      const logincretentials = { loginemail: email, loginpassword: password }
-      axios.post('http://127.0.0.1:8000/api/login/', logincretentials).then((response) => {
-        console.log(response)
-        if (response.data['value']) {
-          sendLoginDataToParent(response.data)
-          console.log('true')
-        }
-        else{
-          sendLoginDataToParent({value : false})
-          setUsername('')
-          setPassword('')
-          console.log('false')
-        }
-      }, (error) => {
-        console.log(error)
-        sendLoginDataToParent({value : false})
-      });
 
+      // Basic validation
+      if (!email || !password || !isValidEmail) {
+        setError('Email and password both field is required');
+        setLoading(false);
+        return;
+      }
+
+      const loginCredentials = { loginemail: email, loginpassword: password };
+      const response = await axios.post('http://127.0.0.1:8000/api/login/', loginCredentials);
+
+      if (response.data['value']) {
+        sendLoginDataToParent(response.data);
+        console.log('true');
+      } else {
+        sendLoginDataToParent({ value: false });
+        setUsername('');
+        setPassword('');
+        console.log('false');
+        setError('User does not exist');
+      }
     } catch (error) {
       console.error('Error during login:', error);
       setError('An unexpected error occurred.');
@@ -45,38 +58,57 @@ const Login = ({ onDataFromChild }) => {
   };
 
   return (
-    <div className={styles.loginFormContainer}>
-      <div className={styles.loginForm}>
-        <h2>Login</h2>
-        <div className={styles.inputGroup}>
+    <div className='loginFOrmContainer'>
+      <div className="loginFOrm">
+        <h2 className="loginName">Login</h2>
+        <div className="inputGRoup">
           <i className="fa fa-user"></i>
           <input
             type="text"
             placeholder="Username"
-            className={styles.inputText}
+            className={"inputTEext"}
             autoComplete="off"
             value={email}
-            onChange={(e) => setUsername(e.target.value)}
+            onChange={handleEmailInput}
           />
         </div>
-        <div className={styles.inputGroup}>
+        {isValidEmail ? (
+          <>
+          </>
+        ) : (
+          <div className='emailnotvalid'>Enter a valid Email</div>
+        )}
+        <div className="inputGRoup password-input">
           <i className="fa fa-unlock-alt"></i>
           <input
-            type="password"
+            type={showPassword ? 'text' : 'password'}
             placeholder="Password"
-            className={styles.inputText}
+            className="inputTEext"
             autoComplete="off"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
+            
           />
+          <i className={`fa ${showPassword ? 'fa fa-eye-slash' : 'fa fa-eye'}`}
+            onClick={() => setShowPassword(!showPassword)}
+          ></i>
         </div>
-        <div className={styles.buttonGroup} id="loginButton">
-          <button onClick={handleLogin} disabled={loading}>
-            {loading ? 'Logging in...' : 'Submit'}
+        
+        <br />
+        <div className="buttonGroup">
+          <button
+            className="loginButton"
+            onClick={handleLogin}
+            disabled={loading}
+          >
+            {loading ? 'Logging in...' : 'Login'}
           </button>
         </div>
-        {error && <div className={styles.error}>{error}</div>}
-        <div className={styles.footer}>
+        <br />
+        <br />
+
+        {error && <div className="error">{error}</div>}
+        <div className="footer">
           <Link to="/forgotpassword">Forgot Password?</Link>
         </div>
       </div>

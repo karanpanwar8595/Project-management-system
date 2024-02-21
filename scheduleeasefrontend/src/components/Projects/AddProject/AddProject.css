@@ -1,0 +1,158 @@
+/* ---------------------------- FORM CSS ------------------------------ */
+
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    /* flex container
+  its children becomes the flex items */
+    align-items: center;
+    justify-content: center;
+}
+
+.modal {
+    background: white;
+    padding: 20px;
+    width: 1000px;
+    max-height: 80vh;
+    /* viewport height */
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+    /* position: relative; */
+    overflow: auto;
+    /* Add both horizontal and vertical scrollbars when content exceeds the height or width */
+    /* scrollbar-width: thin; */
+    /* For Firefox */
+    /* scrollbar-color: transparent transparent; */
+    /* For Firefox */
+    /* -ms-overflow-style: none; */
+    /* For IE and Edge */
+}
+
+.modal::-webkit-scrollbar {
+    width: 5px;
+    /* Width of the scrollbar */
+}
+
+.modal::-webkit-scrollbar-thumb {
+    background-color: transparent;
+    /* Color of the thumb */
+}
+
+.form-header {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 15px;
+}
+
+.form-header span {
+    cursor: pointer;
+    color: #3a3aeb;
+}
+
+.form-row {
+    margin-bottom: 15px;
+    font-weight: 500;
+}
+
+label {
+    display: block;
+    margin-bottom: 5px;
+}
+.clientlist{
+    overflow: hidden;
+    overflow-y: auto;
+    max-height: 20vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.in-txtarea {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+}
+
+.add-form-btn {
+    background-color: #007bff;
+    font-weight: 600;
+    color: #fff;
+    border: none;
+    width: 100px;
+    padding: 10px 5px;
+    border-radius: 8px;
+    cursor: pointer;
+    display: block;
+    margin: auto;
+}
+
+.remove-icon {
+    margin-left: 10px;
+    cursor: pointer;
+    color: red;
+    font-weight: bold;
+}
+
+.file-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 5px;
+}
+
+.error-message {
+    color: red;
+    font-size: 0.8em;
+    margin-top: 2px;
+}
+
+.no-match-message {
+    color: red;
+    margin-top: 10px;
+}
+
+/* -------------------------------------------CSS for client search--------------------------------------------- */
+
+.client-search-row input[type="text"] {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.client-search-row input[type="text"]:focus+.client-search-results,
+.client-search-row input[type="text"]:active+.client-search-results {
+    display: block;
+    /* Show when input is focused */
+}
+
+.client-result {
+    padding: 2px;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.client-result:hover {
+    background-color: #c4c2c2;
+}
+
+.selected-client {
+    margin-top: 3px;
+    margin-bottom: 30px;
+    padding: 10px;
+    background-color: #f9f9f9;
+    border: 2px solid #686666;
+    border-radius: 4px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+

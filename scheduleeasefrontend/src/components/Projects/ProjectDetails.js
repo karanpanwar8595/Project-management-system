@@ -1,41 +1,203 @@
 import React from 'react';
 import './ProjectDetails.css';
+import { useLocation } from 'react-router-dom';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faPencilAlt } from '@fortawesome/free-solid-svg-icons';
+import { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 
-const ProjectDetails = ({ project, onClose, progressBar }) => {
+
+const ProjectDetails = () => {
+    const location = useLocation();
+    const [isAdmin, setIsAdmin] = useState(false);
+    const [isManager, setIsManger] = useState(false);
+
+    const [isTeamMember, setIsTeamMember] = useState(false);
+
+    const [isClient, setIsClient] = useState(false);
+
+
+    // const project1 = JSON.stringify(location.state.project1);
+    useEffect(() => {
+        // Fetch the login data from sessionStorage
+        const loginData = JSON.parse(sessionStorage.getItem('loginData'));
+
+
+        if (loginData && loginData.profile_data && loginData.profile_data.role === 0) {
+            setIsAdmin(true);
+        }
+        if (loginData && loginData.profile_data && loginData.profile_data.role === 1) {
+            setIsManger(true);
+        }
+        if (loginData && loginData.profile_data && loginData.profile_data.role === 2) {
+            setIsTeamMember(true);
+        }
+        if (loginData && loginData.profile_data && loginData.profile_data.role === 3) {
+            setIsClient(true);
+        }
+
+    }, []);
+
+    // const project = JSON.parse(project1).project
+
+    const project = location.state.projects;
+
+
+
+
+
+    console.log(13, project);
+
+    const attachments = ['diagrams.jpg', 'project-plan.pdf'];
+    const documents = ['agreements.pdf'];
 
     const handleDocumentClick = (path) => {
         window.open(path, '_blank');
+    };
+
+    const getProgressClass = (percentage) => {
+        if (percentage < 25) return 'low';
+        if (percentage < 50) return 'medium';
+        if (percentage < 75) return 'high';
+        return 'very-high';
     };
 
     if (!project) return null;
 
     return (
         <div className="project-details-container">
-            <div className="back-arrow" onClick={onClose}>&larr;</div>
-            <h2>{project.name}</h2>
+            <div className="project-header-container">
+                <h2 className="proj-header">{project.name}</h2>
+                {isManager ? (
+                    <>
+                        <Link to="/editproject"
+                            state={{ projects: project }}
+                        >
+                            <button className="edit-button">
+                                <FontAwesomeIcon icon={faPencilAlt} /> Edit
+                            </button>
+
+                        </Link>
+
+                    </>
+
+                ) : (<>
+
+
+                </>
+
+
+                )}
+
+            </div>
             <p className="project-description">{project.projectDescription}</p>
+            <span style={{ fontSize: '20px' }}> Progress </span>
             <div className="progress-cont">
                 <div
-                    className={`progress-filler ${progressBar(project.completion)}`}
+                    className={`progress-filler ${getProgressClass(project.completion)}`}
                     style={{ width: `${project.completion}%` }}>
                     <span className="progress-label">{`${project.completion}%`}</span>
                 </div>
             </div>
-            <div className="dates">StartDate - {project.startDate}</div>
-            <div className="dates">DueDate - {project.dueDate}</div>
-            <div className="budget">Budget: {project.budget}</div>
-            <div className="attachments">
-                Attachments: {project.attachments.map((attachment, index) => (
-                    <a key={index} href={attachment} onClick={() => handleDocumentClick(attachment)} target="_blank" rel="noopener noreferrer">{attachment}</a>
-                ))}
+            <div className="section">
+                <div className="section-title">Project Timeline</div>
+                <div className="section-content">
+                    <div className="start">
+                        <div className="dates">Starting Date</div>
+                        <div className="dates">{project.startDate}</div>
+                    </div>
+                    <div className="start">
+                        <div className="dates">Deadline</div>
+                        <div className="dates">{project.dueDate}</div>
+                    </div>
+                </div>
             </div>
-            <div className="documents">
-                Documents: {project.documents.map((document, index) => (
-                    <a key={index} href={document} onClick={() => handleDocumentClick(document)} target="_blank" rel="noopener noreferrer">{document}</a>
-                ))}
+            {isManager|| isAdmin||isClient ? (
+                <>
+<div className="section">
+                        <div className="section-title">Company Details</div>
+                        <div className="section-content">
+                            <div className="start">
+                                <div className="company-name">Company Name</div>
+                                <div className="client-name">{project.client.gst_no.name}</div>
+                            </div>
+                            <div className="start">
+                                <div className="client-name">Client Name</div>
+                                <div className="client-name">{project.client.name}</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div className="section">
+                        <div className="section-title">Financial Details</div>
+                        <div className="start ">
+                            <div className="client-name">Budget</div>
+                            <div className="client-name">{project.budget}</div>
+                        </div>
+                    </div>
+{!isClient?(
+
+    <>
+    <div className="section">
+                        <div className="section-title">Documents</div>
+                        <div className="documents">
+                            {documents.map((document, index) => (
+                                <a key={index} href={document} onClick={() => handleDocumentClick(document)} target="_blank" rel="noopener noreferrer">{document}</a>
+                            ))}
+                        </div>
+                    </div>
+    </>
+):(<></>)}
+                    
+
+                </>
+
+            ) : (
+
+
+                <>
+                    
+
+                </>
+
+
+            )}
+
+            {/* {isAdmin ? (
+                       <>
+                       <div className="section">
+                                    <div className="section-title">Company Details</div>
+                                    <div className="section-content">
+                                        <div className="start">
+                                            <div className="company-name">Company Name</div>
+                                            <div className="client-name">{project.client.gst_no.name}</div>
+                                        </div>
+                                        <div className="start">
+                                            <div className="client-name">Client Name</div>
+                                            <div className="client-name">{project.client.name}</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div className="budget">Budget  {project.budget}</div>
+                    
+                                    </>
+    
+                    ) :(<></>)} */}
+
+{!isClient?(
+
+<>
+<div className="section">
+                <div className="section-title">Attachments</div>
+                <div className="attachments">
+                    {attachments.map((attachment, index) => (
+                        <a key={index} href={attachment} onClick={() => handleDocumentClick(attachment)} target="_blank" rel="noopener noreferrer">{attachment}</a>
+                    ))}
+                </div>
             </div>
-            <div className="company-name">Company: {project.companyName}</div>
-            <div className="client-name">Client: {project.clientName}</div>
+</>
+):(<></>)}
+            
         </div>
     );
 };

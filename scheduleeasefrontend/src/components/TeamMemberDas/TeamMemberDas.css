@@ -1,0 +1,113 @@
+.Dashboard-container {
+    border-radius: 6px;
+    background-color: #ffffff;
+    position: fixed;
+    height: 83vh;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+    min-width: 82%; 
+     margin-top: 80px; 
+  } 
+ 
+  /* .dashboard-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+  } */
+  
+  .welcome-section {
+    background-color: #006edc;
+    color: #fff;
+    padding: 2px;
+    margin-bottom: 8px;
+    text-align: center;
+  }
+  
+  .main-content {
+    display: flex;
+  }
+  
+  .das-task-section,
+  .project-snapshot-section,
+  .team-calendar-section,
+  .notifications-section {
+    background-color: #fff;
+    /* border: 1px solid #ddd; */
+    padding: 20px;
+    margin-bottom: 20px;
+    flex-grow: 1;
+    border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+
+  }
+  .project-snapshot-section{
+    max-height: 15vh;
+  }
+  
+  .side-column {
+    width: 30%;
+    margin-left: 20px;
+  }
+  
+  .das-task-list {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .das-task-item {
+    /* margin-bottom: 20px; */
+    border-bottom: 1px solid #ddd;
+    /* padding-bottom: 10px; */
+  }
+  
+  .das-task-name {
+    font-weight: bold;
+  }
+  
+  .pie-chart-container {
+    text-align: center;
+  }
+  
+/* das-task status kai liye */
+.das-task-list {
+  list-style-type: none;
+  padding: 0;
+}
+
+.das-task-item {
+  border: 1px solid #ddd;
+  padding: 10px;
+  margin-bottom: 10px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.das-task-status {
+  font-weight: bold;
+}
+
+.completed {
+  color: green;
+}
+
+.not-completed {
+  color: red;
+}
+.bold {
+  font-weight: bold;
+}
+
+/* 
+  progress bar */
+  .progress-bar-container {
+    height: 10px;
+    background-color: #eee;
+    border-radius: 5px;
+    margin-top: 5px;
+  }
+  
+  .progress-bar {
+    height: 100%;
+    border-radius: 5px;
+    background-color: #4caf50; /* Green color for progress */
+  }
+  

@@ -1,23 +1,31 @@
 .side-navbar {
-    border-radius: 10px;
-    /* Adjust the value to control the roundness of the corners */
-    box-shadow: 0px 2px 4px  rgba(0, 0, 0, 0.2);
-    /* Customize the box shadow as per your preference */
-    padding: 20px;
-    /* Adjust the padding according to your content */
+    border-radius: 8px;
+    background-color: #ffffff;
+    padding: 10px;
     margin: 20px;
     position: fixed;
     top: 0;
     left: 0;
-    height: 80vh;
-    /* Use 100% viewport height */
-    width: 180px;
-    background-color: #f0f0f0;
-    /* z-index: 400; */
-    /* Ensure the side navbar appears above the content */
-    margin-top: 80px;
+    height: 93vh;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 200px;
+
+  }
+  .sidenavitem:hover{
+    background-color: #f0f0f0ff;
+  }
+  .sidenavitem.active {
+    background-color:     #f0f0f0ff;  /* Replace with your desired color */
+    color: black;
+    font-weight: 580;
   }
   
+  .sidenavitem{
+    padding: 6px 15px;
+    border-radius: 4px;
+    margin-top: 5px;
+    font-family: 'Segoe UI',SegoeUI,"Helvetica Neue",Helvetica,Arial,sans-serif;
+  }
   .side-navbar ul {
     list-style: none;
     padding: 0;
@@ -29,10 +37,51 @@
   }
   
   .side-navbar a {
+    /* font-weight: bold; */
     text-decoration: none;
-    color: #333;
+    color: black;
+    /* color: #C5C6C7; */
+    /* color: #333; */
   }
   
-  .side-navbar a:hover {
-    color: #555;
+ 
+
+
+  .sidenavlist{
+    display: flex;
+    flex-direction: column;
+    margin-top:20%;
+  }
+  .navbar-logo{
+    min-width: 80%;
+    margin:12px;
+    align-items: center;
+    display: flex;
+    justify-content: space-around
+
+
+  }
+  .navbar-logo img {
+    height: 30px;
+    width: auto;
+  }
+
+  .dropdown{
+    padding-left: 25px;
+    font-size:medium;
+  margin-left: 25px;
+
+  }
+
+
+  .task-dropdown-toggle{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding-right: 30px;
+    align-items: center;
+  }
+
+  .arrow-icon{
+    font-size: medium;
   }

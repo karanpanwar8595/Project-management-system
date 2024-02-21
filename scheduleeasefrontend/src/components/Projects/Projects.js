@@ -1,323 +1,463 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
+import axios from 'axios';
 import './Projects.css'
 import plus from './plus.png'
-import ProjectDetails from './ProjectDetails.js'
+// import ProjectDetails from './ProjectDetails.js'
+import { Link } from 'react-router-dom';
 
-const Projects = () => {
-    const ongoingProjects = [
-        {
-            id: 1,
-            name: 'InnovateHub',
-            dueDate: '2024-08-18',
-            startDate: '2024-01-12',
-            completion: 72,
-            projectDescription: 'InnovateHub is focused on developing innovative solutions...',
-            budget: '80000',
-            companyName: 'Innovate Inc.',
-            clientName: 'karan Panwar',
-            attachments: ['/project-plan.pdf'],
-            documents: ['/Aadhar.jpg', '/4th sem result.pdf']
-        },
-        {
-            id: 2,
-            name: 'TechMinds Initiative',
-            dueDate: '2024-05-12',
-            startDate: '2024-01-12',
-            completion: 45,
-            projectDescription: 'TechMinds Initiative is developed for technical solutions...',
-            budget: '120000',
-            companyName: 'TechMind Pvt. Ltd.',
-            clientName: 'Ujjwal bhansali',
-            attachments: ['/project-plan.pdf'],
-            documents: ['/Aadhar.jpg', '/4th sem result.pdf']
-        },
-        { id: 3, name: 'GreenScape Solutions', dueDate: '2025-01-28', completion: 23 },
-        { id: 4, name: 'DataCrafters Project', dueDate: '2024-12-20', completion: 100 },
-    ];
-
-    const assignedProjects = [
-        { id: 1, name: 'SmartCity Blueprint', dueDate: '2023-12-18', man: 'Alex Reynolds' },
-        { id: 2, name: 'Zoho Projects', dueDate: '2021-01-12', man: 'Sarah Mitchell' },
-        { id: 3, name: 'Project BlueSky', dueDate: '2021-01-28', man: 'Dakshay Sharma' },
-        { id: 4, name: 'RenewaTech Ventures', dueDate: '2023-12-18', man: 'Nathan Walter' },
-    ];
-
-    const clients = [
-        { name: 'Mitul Pipaliya', email: 'mitulpipaliya@gmail.com' },
-        { name: 'Ujjwal Bhansali', email: 'ujjwalbhansali@gmail.com' },
-        { name: 'Karan Panwar', email: 'karanpanwar@gmail.com' },
-    ];
-    //------------------------------------------------------------------------------------------------------------------------
-
-    const [showForm, setShowForm] = useState(false);
-
-    // Form Project start date and due date
-    const [startDate, setStartDate] = useState('');
-    const [dueDate, setDueDate] = useState('');
-
-    // Form Client searching and adding
-    const [clientSearch, setClientSearch] = useState('');
-    const [selectedClient, setSelectedClient] = useState(null);
-    const [clientResults, setClientResults] = useState([]);
-
-    // New project addition
-    const [newProjects, setNewProjects] = useState([]);
-
-    // Multiple attachment and document
-    const [selectedAttachments, setSelectedAttachments] = useState([]);
-    const [selectedDocuments, setSelectedDocuments] = useState([]);
-
-    // For projects detailed view
-    const [selectedProject, setSelectedProject] = useState(null);
-    //------------------------------------------------------------------------------------------------------------------------
-
-    const toggleForm = () => {
-        setShowForm(!showForm);
-        if (showForm) {
-            // Reset selected client when closing the form
-            setSelectedClient(null);
-        }
-    };
-
-    const handleClientSearchChange = (e) => {
-        setClientSearch(e.target.value);
-        if (selectedClient) {
-            alert('client is already selected')
-            return
-        }
-        if (e.target.value) {
-            const searchResults = clients.filter(client =>
-                client.name.toLowerCase().includes(e.target.value.toLowerCase())
-            );
-            setClientResults(searchResults);
-        } else {
-            setClientResults([]);
-        }
-    };
-
-    const handleAddClient = (client) => {
-        setSelectedClient(client);
-        setClientResults([]);
-        setClientSearch('');
-    };
-
-    const handleRemoveClient = () => {
-        setSelectedClient(null);
-    };
-
-    const handleFileChange = (e, type) => {
-        const newFiles = Array.from(e.target.files);
-        if (type === 'attachment') {
-            setSelectedAttachments(old => [...old, ...newFiles]);
-        } else {
-            setSelectedDocuments(old => [...old, ...newFiles]);
-        }
-    };
-
+const ProjectCard = ({ project }) => {
+    const [projects, setProjects] = useState(project);
+    const [completion, SetCompletion] = useState(0);
+    useEffect(() => {
+        ProjectCompletion(project.id);
+    }, []);
     const getProgressClass = (percentage) => {
         if (percentage < 25) return 'low';
         if (percentage < 50) return 'medium';
         if (percentage < 75) return 'high';
         return 'very-high';
     };
+    const ProjectCompletion = async (projectNo) => {
 
-    const openProjectDetails = (project) => {
-        setSelectedProject(project);
-    };
+        try {
+            const ProjectDetails = { projectno: projectNo }
+            const response = await axios.post('http://127.0.0.1:8000/api/projectcompletion/', ProjectDetails);
+            // ye data request me jayega in views.py
 
-    const closeProjectDetails = () => {
-        setSelectedProject(null);
-    };
+            if (response.data['value']) {
+                if (response.data.data.totaltask == 0) {
+                    SetCompletion(0);
+                    // console.log(completion);
+                    const updatedProject = {
+                        ...projects,
+                        completion: 0,
+                    };
+                    setProjects(updatedProject);
 
-    const handleFormSubmit = (event) => {
-        event.preventDefault();
-        const projectName = event.target.projectName.value;
-        const today = new Date().toISOString().split('T')[0];
-        if (startDate < today) {
-            alert('Start date must be today or a future date.');
-            return;
+
+                }
+                else {
+                    const percentage = response.data.data.taskdone / response.data.data.totaltask * 100
+                    console.log(percentage)
+                    SetCompletion(Math.floor(percentage));
+                    const updatedProject = {
+                        ...projects,
+                        completion: Math.floor(percentage),
+                    };
+                    setProjects(updatedProject);
+
+                }
+            } else {
+                console.log("error")
+            }
+        } catch (error) {
+            console.error('Error during login:', error);
         }
-        if (dueDate <= startDate) {
-            alert('Due date must be greater than the start date.');
-            return;
-        }
-        const newProject = {
-            id: newProjects.length + 1, // Simple id assignment, consider using a more robust method
-            name: projectName,
-            dueDate: dueDate,
-            completion: 0
-        };
-
-        // Add the new project to the newProjects state
-        setNewProjects([...newProjects, newProject]);
-
-        alert('Project has been added successfully');
-        setShowForm(false);
-        setSelectedClient(null);
     };
+    return (
+        <Link
+            to='/ProjectDetails'
+            state={{ projects, isManager: true }}
+            style={{ textDecoration: 'none', color: 'black' }}
+        >
+            <div key={project.id} className="project-card">
+                <div className="project-details">
+                    <div className="detail-item">{project.name}</div>
+                    <div className="detail-item">{project.dueDate}</div>
+                    <div className="detail-item">
+                        <div className="progress-container">
+                            <div
+                                className={`progress-filler ${getProgressClass(completion)}`}
+                                style={{ width: `${completion}%` }}
+                            >
+                                <span className="progress-label">{`${completion}%`}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </Link>
+    );
+};
+
+
+
+
+const ProjectCardToMe = ({ project }) => {
+    const [managername, setManagername] = useState(" ")
+    const [projects, setProjects] = useState(project);
+    const [completion, SetCompletion] = useState(0);
+    useEffect(() => {
+        ProjectCompletion(project.id);
+        ProjectManager(project.id);
+    }, []);
+
+    const ProjectCompletion = async (projectNo) => {
+
+        try {
+            const ProjectDetails = { projectno: projectNo }
+            const response = await axios.post('http://127.0.0.1:8000/api/projectcompletion/', ProjectDetails);
+            // ye data request me jayega in views.py
+
+            if (response.data['value']) {
+                if (response.data.data.totaltask == 0) {
+                    SetCompletion(0);
+                    // console.log(completion);
+                    const updatedProject = {
+                        ...projects,
+                        completion: 0,
+                    };
+                    setProjects(updatedProject);
+
+
+                }
+                else {
+                    const percentage = response.data.data.taskdone / response.data.data.totaltask * 100
+                    SetCompletion(Math.floor(percentage));
+                    const updatedProject = {
+                        ...projects,
+                        completion: (Math.floor(percentage)),
+                    };
+                    setProjects(updatedProject);
+
+                }
+            } else {
+                console.log("error")
+            }
+        } catch (error) {
+            console.error('Error during login:', error);
+        }
+    };
+
+    const ProjectManager = async (projectNo) => {
+
+        try {
+            const ProjectDetails = { projectno: projectNo }
+            const response = await axios.post('http://127.0.0.1:8000/api/projectmanager/', ProjectDetails);
+            // ye data request me jayega in views.py
+
+            if (response.data['value']) {
+                setManagername(response.data.data.data.member.name);
+            } else {
+                console.log("server response false error")
+            }
+        } catch (error) {
+            console.error('Error during login:', error);
+        }
+    };
+    return (
+        <Link
+            to='/ProjectDetails'
+            state={{ projects, isManager: false }}
+            style={{ textDecoration: 'none', color: 'black' }}
+        >
+            <div key={project.id} className="project-card">
+                <div className="project-details">
+                    <div className="detail-item">{project.name}</div>
+                    <div className="detail-item">{project.dueDate}</div>
+                    <div className="detail-item">{managername}</div>
+                </div>
+            </div>
+        </Link>
+    );
+};
+
+const Projects = () => {
+    const data = [{
+        'budget': 50000,
+        'client': {
+            'name': 'Tech Mahindra',
+            'email': 'akash@gmail.com',
+            'phone': '2109876547',
+            'address': '678 Maple Road, Downtown',
+            'gst_no': 3210987653
+        },
+
+        'id': 5,
+        'name': 'Health Care',
+        'projectDescription': 'Health Care: Your comprehensive mobile solution for managing personal wellness and accessing medical resources on the go',
+        'startDate': '2024-05-20',
+        'dueDate': '2024-11-30',
+
+        'email': {
+            'email': {
+                'id': 5,
+                'email': 'pravatik@gmail.com',
+                'photo': 'photo',
+                'lname': 'Pandaya',
+                'fname': 'Pravatik',
+                'mname': ''
+            }
+
+        }
+    }];
+
+
+    const [isManager, setIsManager] = useState(false);
+    const [isAdmin, setIsAdmin] = useState(false);
+    const [isTeamMember, setIsTeamMember] = useState(false);
+    const [isClient, setIsClient] = useState(false)
+    const [ongoingProjects, setOngoingProjects] = useState([
+        {
+            id: 1,
+            name: 'InnovateHub',
+            dueDate: '2024-08-18',
+            startDate: '2024-01-12',
+            completion: 72,
+            projectDescription: 'InnovateHub is focused on developing innovative solutions.',
+            budget: '80000',
+            companyName: 'Innovate Inc.',
+            clientName: 'karan Panwar',
+            attachments: ['/project-plan.pdf'],
+            documents: ['/Aadhar.jpg', '/4th sem result.pdf']
+        },
+    ]);
+
+    const [assignedProjects, setAssignProjects] = useState([
+
+    ]);
+
+
+
+
+    const ProjectDetails = async () => {
+
+        if (JSON.parse(sessionStorage.getItem('loginData')).profile_data.role == 0) {
+            try {
+                console.log("admin login connection ");
+                const response = await axios.post('http://127.0.0.1:8000/api/projectdetailsadmin/');
+                // ye data request me jayega in views.py
+                if (response.data['value']) {
+                    console.log(response.data.projectdetails);
+                    setOngoingProjects(response.data.projectdetails);
+                    console.log('Project component connected');
+                } else {
+                    console.log("error")
+                }
+            } catch (error) {
+                console.error('Error during login:', error);
+            }
+
+        }
+        else if (JSON.parse(sessionStorage.getItem('loginData')).profile_data.role == 1) {
+            try {
+                console.log("manager login connection ");
+
+                const ProjectDetails = { useremail: JSON.parse(sessionStorage.getItem('loginData')).profile_data.email, role: JSON.parse(sessionStorage.getItem('loginData')).profile_data.role };
+                const response = await axios.post('http://127.0.0.1:8000/api/projectdetailsmanager/', ProjectDetails);
+                // ye data request me jayega in views.py
+                if (response.data['value']) {
+                    console.log(response.data.projectdetails);
+                    setOngoingProjects(response.data.projectdetails)
+                    console.log('Project component connected');
+                } else {
+                    console.log("error")
+                }
+            } catch (error) {
+                console.error('Error during login:', error);
+            }
+
+
+            try {
+                console.log("project assigned to Manager connection ");
+
+                const ProjectDetails = { useremail: JSON.parse(sessionStorage.getItem('loginData')).profile_data.email, role: JSON.parse(sessionStorage.getItem('loginData')).profile_data.role };
+                const response = await axios.post('http://127.0.0.1:8000/api/projectdetailsteam/', ProjectDetails);
+                // ye data request me jayega in views.py
+                if (response.data['value']) {
+                    console.log(response.data.projectdetails);
+                    setAssignProjects(response.data.projectdetails);
+                    // console.log(response.data.projectdetails[1].email);
+                    console.log('Project to me component connected', assignedProjects);
+                } else {
+                    console.log("error")
+                }
+            } catch (error) {
+                console.error('Error during login:', error);
+            }
+
+        }
+        else if (JSON.parse(sessionStorage.getItem('loginData')).profile_data.role == 2) {
+            try {
+                console.log("Team Member login connection ");
+
+                const ProjectDetails = { useremail: JSON.parse(sessionStorage.getItem('loginData')).profile_data.email, role: JSON.parse(sessionStorage.getItem('loginData')).profile_data.role };
+                const response = await axios.post('http://127.0.0.1:8000/api/projectdetailsteam/', ProjectDetails);
+                // ye data request me jayega in views.py
+                if (response.data['value']) {
+                    console.log(response.data.projectdetails);
+                    setAssignProjects(response.data.projectdetails);
+                    // console.log(response.data.projectdetails[1].email);
+                    console.log('Project to me component connected', assignedProjects);
+                } else {
+                    console.log("error")
+                }
+            } catch (error) {
+                console.error('Error during login:', error);
+            }
+
+        }
+        else if (JSON.parse(sessionStorage.getItem('loginData')).profile_data.role == 3) {
+            try {
+                console.log("Client login connection ");
+
+                const ProjectDetails = { useremail: JSON.parse(sessionStorage.getItem('loginData')).profile_data.email, role: JSON.parse(sessionStorage.getItem('loginData')).profile_data.role };
+                const response = await axios.post('http://127.0.0.1:8000/api/projectdetailsclient/', ProjectDetails);
+                // ye data request me jayega in views.py
+                if (response.data['value']) {
+                    console.log(response.data.projectdetails);
+                    setAssignProjects(response.data.projectdetails);
+                    // console.log(response.data.projectdetails[1].email);
+                    console.log('Project to me component connected', assignedProjects);
+                } else {
+                    console.log("error")
+                }
+            } catch (error) {
+                console.error('Error during login:', error);
+            }
+        }
+
+
+    };
+
+    useEffect(() => {//this help in seting authentication to false when we relode
+
+        try {
+            const role_id = JSON.parse(sessionStorage.getItem('loginData')).profile_data.role;
+
+
+
+
+            if (role_id == "1") {
+                setIsManager(true);
+                setIsTeamMember(false);
+
+                setIsAdmin(false);
+                setIsClient(false);
+            }
+            else if (role_id == "0") {
+                setIsManager(false);
+                setIsTeamMember(false);
+
+                setIsAdmin(true);
+                setIsClient(false);
+
+            }
+            else if (role_id == "2") {
+                setIsTeamMember(true);
+                setIsManager(false);
+                setIsAdmin(false);
+                setIsClient(false)
+            } else if (role_id == "3") {
+                setIsTeamMember(false);
+                setIsManager(false);
+                setIsAdmin(false);
+                setIsClient(true)
+            }
+
+
+        } catch (error) {
+            console.log(error);
+        }
+
+        ProjectDetails();
+
+    }, []);
+
+
+
 
     //------------------------------------------------------------------------------------------------------------------------
 
     return (
         <div className="projects-container">
-            <h3 style={{ textAlign: 'left' }}>Managed by me</h3>
-            <div className="project-header">
-                <div className="header-item">Project Name</div>
-                <div className="header-item">Due Date</div>
-                <div className="header-item">Progress</div>
-            </div>
-            {[...ongoingProjects, ...newProjects].map((project) => (
-                <div key={project.id} className="project-card" onClick={() => openProjectDetails(project)}>
-                    <div className="project-details">
-                        <div className="detail-item">{project.name}</div>
-                        <div className="detail-item">{project.dueDate}</div>
-                        <div className="detail-item">
-                            <div className="progress-container">
-                                <div
-                                    className={`progress-filler ${getProgressClass(project.completion)}`}
-                                    style={{ width: `${project.completion}%` }}>
-                                    <span className="progress-label">{`${project.completion}%`}</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            ))}
 
-            {/* Project Details View */}
-            {selectedProject &&
-                <ProjectDetails project={selectedProject} onClose={closeProjectDetails} progressBar={getProgressClass} />
+            {isManager ? (
+                // code for manager 
+                <>
+                    <h3 style={{ textAlign: 'left', fontFamily: 'Calibri light' }}>Manage by me</h3>
+                    <div className="project-header">
+                        <div className="header-item">Project Name</div>
+                        <div className="header-item">Due Date</div>
+                        <div className="header-item">Progress</div>
+                    </div>
+                    {ongoingProjects.map((project) => (
+                        <ProjectCard key={project.id} project={project} />
+                    ))}
+
+                    <h3 style={{ textAlign: 'left', fontFamily: 'Calibri light' }}>Assign to me</h3>
+                    <div className="project-header">
+                        <div className="header-item">Project Name</div>
+                        <div className="header-item">Due Date</div>
+                        <div className="header-item">Project Manager</div>
+                    </div>
+                    {assignedProjects.map((project) => (
+                        <ProjectCardToMe key={project.id} project={project} />
+
+                    ))}
+                    <Link to='/addproject'>
+                        <img src={plus} className='plus-symbol' alt='not found' />
+                    </Link>
+                </>
+            ) : (<>
+                {isAdmin ? (
+                    // code for Admin 
+                    <>
+                        <h3 style={{ textAlign: 'left', fontFamily: 'Calibri light' }}>Project</h3>
+                        <div className="project-header">
+                            <div className="header-item">Project Name</div>
+                            <div className="header-item">Due Date</div>
+                            <div className="header-item">Progress</div>
+                        </div>
+                        {ongoingProjects.map((project) => (
+                            <ProjectCard key={project.id} project={project} />
+                        ))}
+                    </>
+                ) : (<>
+                    {isTeamMember ? (
+                        // code for teammember
+                        <>
+                            <h3 style={{ textAlign: 'left', fontFamily: 'Calibri light' }}>Projects</h3>
+                            <div className="project-header">
+                                <div className="header-item">Project Name</div>
+                                <div className="header-item">Due Date</div>
+                                <div className="header-item">Project Manager</div>
+                            </div>
+                            {assignedProjects.map((project) => (
+                                <ProjectCardToMe key={project.id} project={project} />
+
+                            ))}
+                        </>
+                    ) : (
+                        // condition for client
+                        <>
+                            <h3 style={{ textAlign: 'left', fontFamily: 'Calibri light' }}>Projects</h3>
+                            <div className="project-header">
+                                <div className="header-item">Project Name</div>
+                                <div className="header-item">Due Date</div>
+                                <div className="header-item">Project Manager</div>
+                            </div>
+                            {assignedProjects.length > 0 && assignedProjects.map((project) => (
+    <ProjectCardToMe key={project.id} project={project} />
+))}
+
+                        </>
+                    )}
+                </>
+                )}
+            </>
+
+
+            )
+
+
             }
 
-            <h3 style={{ textAlign: 'left' }}>Assigned to me</h3>
-            <div className="project-header">
-                <div className="header-item">Project Name</div>
-                <div className="header-item">Due Date</div>
-                <div className="header-item">Project Manager</div>
-            </div>
-            {assignedProjects.map((project) => (
-                <div key={project.id} className="project-card">
-                    <div className="project-details">
-                        <div className="detail-item">{project.name}</div>
-                        <div className="detail-item">{project.dueDate}</div>
-                        <div className="detail-item">{project.man}</div>
-                    </div>
-                </div>
-            ))}
-            {/* <button className="add-project-button">Add New Project</button> */}
-            <img src={plus} class='plus-symbol' alt='not found' onClick={toggleForm} />
 
-            {/* ---------------------------------------------Add New Project Form------------------------------------------------ */}
-            {showForm && (
-                <div className="modal-overlay">
-                    <div className="modal">
-                        <div className="form-header">
-                            <span onClick={toggleForm}>Close</span>
-                        </div>
-                        <form onSubmit={handleFormSubmit}>
-                            <div className="form-row">
-                                <label htmlFor="projectName">Project Name:</label>
-                                <input className="in-txtarea" type="text" id="projectName" name="projectName" required />
-                            </div>
-                            <div className="form-row">
-                                <label htmlFor="startDate">Start Date:</label>
-                                <input
-                                    className="in-txtarea"
-                                    type="date"
-                                    id="startDate"
-                                    name="startDate"
-                                    value={startDate}
-                                    onChange={(e) => setStartDate(e.target.value)}
-                                    required
-                                />
-                            </div>
-                            <div className="form-row">
-                                <label htmlFor="dueDate">Due Date:</label>
-                                <input
-                                    className="in-txtarea"
-                                    type="date"
-                                    id="dueDate"
-                                    name="dueDate"
-                                    value={dueDate}
-                                    onChange={(e) => setDueDate(e.target.value)}
-                                    required
-                                />
-                            </div>
-                            <div className="form-row">
-                                <label htmlFor="projectDescription">Project Description:</label>
-                                <textarea className="in-txtarea" id="projectDescription" name="projectDescription" />
-                            </div>
-                            <div className="form-row">
-                                <label htmlFor="budget">Budget:</label>
-                                <input className="in-txtarea" type="number" id="budget" name="budget" required />
-                            </div>
-                            <div className="form-row">
-                                <label htmlFor="companyName">Company Name:</label>
-                                <input className="in-txtarea" type="text" id="companyName" name="companyName" required />
-                            </div>
-                            <div className="form-row">
-                                <label htmlFor="attachment">Attachment:</label>
-                                <input
-                                    className="in-txtarea"
-                                    type="file"
-                                    id="attachment"
-                                    name="attachment"
-                                    onChange={(e) => handleFileChange(e, 'attachment')}
-                                />
-                                <div>
-                                    {selectedAttachments.map((file, index) => (
-                                        <div key={index}>{file.name}</div>
-                                    ))}
-                                </div>
-                            </div>
 
-                            <div className="form-row">
-                                <label htmlFor="document">Document:</label>
-                                <input
-                                    className="in-txtarea"
-                                    type="file"
-                                    id="document"
-                                    name="document"
-                                    onChange={(e) => handleFileChange(e, 'document')}
-                                />
-                                <div>
-                                    {selectedDocuments.map((file, index) => (
-                                        <div key={index}>{file.name}</div>
-                                    ))}
-                                </div>
-                            </div>
-                            <div className="form-row client-search-row">
-                                <label htmlFor="Add client">Add Client:</label>
-                                <input
-                                    className="in-txtarea"
-                                    type="text"
-                                    id="clientSearch"
-                                    value={clientSearch}
-                                    placeholder='Search Here...'
-                                    onChange={handleClientSearchChange}
-                                    required={!selectedClient}
-                                />
-                                {clientResults.map(client => (
-                                    <div key={client.email} className="client-result">
-                                        {client.name} ({client.email})
-                                        <button className="add-form-btn" type="button" onClick={() => handleAddClient(client)}>Add</button>
-                                    </div>
-                                ))}
-                            </div>
-                            {selectedClient && (
-                                <div className="selected-client">
-                                    {selectedClient.name} ({selectedClient.email})
-                                    <button className="add-form-btn" type="button" onClick={handleRemoveClient}>Remove</button>
-                                </div>
-                            )}
-                            <div className="form-row">
-                                <button className="add-form-btn" type="submit">Submit</button>
-                            </div>
-                        </form>
-                    </div>
-                </div >
-            )}
-        </div >
+
+        </div>
+
     );
 };
 

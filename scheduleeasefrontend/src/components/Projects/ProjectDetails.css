@@ -1,62 +1,167 @@
 .project-details-container {
-    background: white;
-    padding: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    border-radius: 8px;
+    /* padding: 35px; */
+    padding-top: 10px;
+    padding-left: 30px;
+    padding-right: 30px;
+    padding-bottom: 25px;
+    background: #fff;
+    /* max-width: 600px; */
+    /* margin: 20px auto; */
     position: relative;
+    overflow: auto;
+    max-height: 81vh;
+    font-family: 'Arial', sans-serif;
 }
 
-.back-arrow {
-    cursor: pointer;
-    font-size: 20px;
-    position: absolute;
-    top: 20px;
-    left: 20px;
+.section {
+    background-color: #f2f2f2;
+    /* padding: 15px; */
+    padding-top: 25px;
+    padding-left: 30px;
+    padding-right: 30px;
+    padding-bottom: 20px;
+    border-radius: 8px;
+    margin-bottom: 25px;
+}
+
+.section-title {
+    font-size: 18px;
+    color: #333;
+    margin-bottom: 23px;
+    font-weight: bold;
+    border-bottom: 3px solid #9a9999;
+}
+
+.section-content {
+    font-size: 15px;
+    color: #444;
+}
+
+.start{
+    display: flex;
+    flex-direction: space-between;
+    width: 400px;
+}
+
+.proj-header{
+    font-size: 30px;
+    color: #333;
+    margin-bottom: 30px;
+    text-align: left;
 }
 
 .project-description {
-    font-size: 14px;
-    color: grey;
+    font-size: 17px;
+    color: #666; 
+    margin-bottom: 20px;
+    background-color: #f2f2f2;
+    padding: 25px;
+    margin-top: 8px;
+    /* margin-bottom: 8px; */
+    border-radius: 10px;
 }
 
-.dates {
-    display: flex;
-    justify-content: space-between;
+.dates, .company-name, .client-name {
+    font-size: 18px;
+    color: #333;
     margin: 10px 0;
+    /* align-items: flex-start; */
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 500px;
+}
+
+.budget{
+    font-size: 18px;
+    color: #666; 
+    margin-bottom: 20px;
+    background-color: #f2f2f2;
+    padding: 25px;
+    margin-top: 8px;
+    /* margin-bottom: 8px; */
+    border-radius: 10px;
+}
+
+.attachments {
+    font-size: 18px;
+}
+
+.documents {
+    font-size: 18px;
 }
 
 .attachments a, .documents a {
-    display: block;
-    margin: 5px 0;
+    font-size: 18px;
+    display: block; 
+    margin: 10px 0;
+    color: #1a73e8;
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+.attachments a:hover, .documents a:hover {
+    color: #0b5cd1;
+}
+
+.project-header-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0px;
+}
+
+.edit-button {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    padding: 8px 18px;
+    font-size: 600;
+    display: flex;
+    align-items: center;
+    border-radius: 8px;
+}
+
+.edit-button .fa-pencil-alt {
+    margin-right: 5px;
 }
 
 /* -------------------------------PROGRESS BAR CSS-------------------------------- */
 .progress-cont {
+    display: inline-block;
     position: relative;
-    height: 17px;
-    width: 300px;
+    height: 28px;
+    width: 900px;
     background-color: #e0e0de;
     border-radius: 50px;
-    margin: 20px 0px;
+    margin: 20px 15px;
+    margin-bottom: 33px;
     box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.3);
-  }
-  
-  .progress-filler {
+}
+
+.progress-filler {
     height: 100%;
     background-color: #4caf50;
     border-radius: inherit;
     transition: width 1s ease-in-out;
     display: flex;
     align-items: center;
-    min-width: 30px; /* 0% - visible */
-  }
-  
-  .progress-label {
+    min-width: 30px;
+    /* 0% - visible */
+}
+
+.progress-label {
     margin-left: auto;
     color: white;
     font-weight: bold;
     padding-right: 5px;
-  }
-  
-  .progress-filler.low { background-color: #ff4b4b; }
-  .progress-filler.medium { background-color: #ff9636; }
-  .progress-filler.high { background-color: #f9d71c; }
-  .progress-filler.very-high { background-color: #4caf50; }
+}
+
+.progress-filler.low { background-color: #ff4b4b; }
+.progress-filler.medium { background-color: #ff9636; }
+.progress-filler.high { background-color: #f9d71c; }
+.progress-filler.very-high { background-color: #4caf50; }

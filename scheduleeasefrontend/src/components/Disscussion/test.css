@@ -11,7 +11,7 @@
   }
   
   #sendbuttonformessage {
-    background-color: #4CAF50; /* Green color, you can change it */
+    background-color: #187aeb; /* Green color, you can change it */
     color: white;
     border: none;
     border-radius: 5px; /* Adjust the border-radius to match the input */
@@ -20,7 +20,7 @@
   }
   
   #sendbuttonformessage:hover {
-    background-color: #45a049; /* Darker green color for hover effect */
+    background-color: #284aa0; /* Darker green color for hover effect */
   }
 
 
@@ -33,8 +33,9 @@
 
 
   .writingandviewingarea {
-    background-color: #f9f9f9; /* Set your desired background color */
+    background-color: #ffffff; /* Set your desired background color */
     padding: 10px;
+    
     
    }
 

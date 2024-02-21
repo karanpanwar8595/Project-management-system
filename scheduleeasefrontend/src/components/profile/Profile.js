@@ -1,121 +1,199 @@
-import React, { useState } from 'react';
-import './pstyle.css'; // Import  CSS file
+import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
+import './pstyle.css';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faPencilAlt } from '@fortawesome/free-solid-svg-icons';
+// import { useEffect } from 'react';
+import axios from 'axios';
 
+
+
+  
 const Profile = () => {
-  const [uploadedImage, setUploadedImage] = useState('');
+  const [showCompanyInfo, setShowCompanyInfo] = useState(null);
+  const [role, setRole] = useState('');
+  const [gender, setGender] = useState('');
+  useEffect(() => {
+    fetchProfileData()
+  }, []);
+  const [profiledetails, setProfileDetails] = useState({});
 
-  const displayImage = (input) => {
-    const file = input.files[0];
+  const fetchProfileData = async () => {
+    try {
+      const Useremail = { useremail: JSON.parse(sessionStorage.getItem('loginData')).profile_data.email }
+      const response = await axios.post('http://127.0.0.1:8000/api/profileinfo/', Useremail);
 
-    if (file) {
-      const reader = new FileReader();
-
-      reader.onload = function (e) {
-        setUploadedImage(e.target.result);
-      };
-
-      reader.readAsDataURL(file);
+      if (response.data.value) {
+        setProfileDetails(response.data.data);
+        variableassign();
+        // console.log(clients);
+        console.log(response.data.data);
+      } else {
+        console.log('profile failed');
+      }
+    } catch (error) {
+      console.error(error);
     }
   };
+  const variableassign=()=>{
+    if (profiledetails.role === 0) {
+      setRole("Admin");
+    } else if (profiledetails.role === 1) {
+      setRole("Manager");
+
+    } else if (profiledetails.role === 2) {
+      setRole("Team Member");
+
+    } else if (profiledetails.role === 3) {
+      setRole("Client");
+
+    }
+    else{
+      setRole("Undefine");
+    }
+    
+    if (profiledetails.gender === 0) {
+      setGender("Male");
+    } else if (profiledetails.gender === 1) {
+      setGender("Female");
+    }else{
+      setRole("Undefine");
+    }
+    
+    if (profiledetails.role === 3 ){
+      setShowCompanyInfo("");
+    }
+    
+  }
+
 
   return (
-    <div>
+    <div className="profile">
       {/* Navbar top */}
-      <div className="navbar-top">
-        <div className="title">
-          <h1>Profile</h1>
-        </div>
-
-        {/* Navbar */}
-        <ul>
-          <li>
-            <a href="#sign-out">
-              <i className="fa fa-sign-out-alt fa-2x"></i>
-            </a>
-          </li>
-        </ul>
-        {/* End */}
-      </div>
-      {/* End */}
-
-      <div className="sidenav">
-        <div className="profile">
-          <div className="photo-upload">
-            <input
-              type="file"
-              id="image"
-              style={{ display: 'none' }}
-              onChange={(e) => displayImage(e.target)}
-            />
-            <label htmlFor="image">
-              <i className="fa fa-camera fa-2x"></i>
-            </label>
-            {uploadedImage && (
-              <img
-                id="uploaded-image"
-                src={uploadedImage}
-                alt="Uploaded Photo"
-              />
-            )}
+      <div className="profile-navbar-top">
+        <Link to="/updateProfile" 
+            state={{ profiledetails }}
+            >
+          <div id='profile-edit-button'>
+            <FontAwesomeIcon icon={faPencilAlt} className="edit-icon" />
+            EDIT
           </div>
-        </div>
-        <div className="job"></div>
+        </Link>
+
+        <Link to="/changepassword">
+          <div id='profile-change-password-button'>
+            <FontAwesomeIcon icon={faPencilAlt} className="edit-icon" />
+            Change Password
+          </div>
+        </Link>
       </div>
 
-      <div className="main">
-        <h2>IDENTITY</h2>
-        <div className="card">
-          <div className="card-body">
-            <i className="fa fa-pen fa-xs edit"></i>
+      {/* End Navbar top */}
+
+      {/* Personal Information */}
+      <div className="profile-profile-main">
+        <h2 id="profile-headingg">PERSONAL INFORMATION</h2>
+        <div className="profile-card">
+          <div className="profile-car-body">
+            {/* Personal information table */}
             <table>
               <tbody>
                 <tr>
                   <td>Full name</td>
                   <td>:</td>
-                  <td>Karan panwar</td>
+                  <td>{profiledetails.fname}  {profiledetails.mname} {profiledetails.lname} </td>
+                </tr>
+                <tr>
+                  <td>Email</td>
+                  <td>:</td>
+                  <td>{profiledetails.email}</td>
                 </tr>
                 <tr>
                   <td>Role</td>
                   <td>:</td>
-                  <td>Admin</td>
+                  <td>{role}</td>
                 </tr>
                 <tr>
                   <td>Gender</td>
                   <td>:</td>
-                  <td>Male</td>
+                  <td>{gender}</td>
                 </tr>
                 <tr>
                   <td>Date of birth</td>
                   <td>:</td>
-                  <td>23-11-2002</td>
+                  <td>{profiledetails.dob}</td>
                 </tr>
                 <tr>
-                  <td>City id</td>
+                  <td>Address</td>
                   <td>:</td>
-                  <td>12345</td>
+                  <td>401,abc motera</td>
                 </tr>
                 <tr>
-                  <td>User status</td>
+                  <td>City</td>
                   <td>:</td>
-                  <td>Y</td>
+                  <td>{profiledetails.city ? profiledetails.city.name : ''}</td>
                 </tr>
                 <tr>
-                  <td>Profile status</td>
+                  <td>State</td>
                   <td>:</td>
-                  <td>Unblocked</td>
+                  <td>{profiledetails.city ? profiledetails.city.state_id.name : ''}</td>
+
                 </tr>
                 <tr>
-                  <td>Gst number</td>
+                  <td>Country</td>
                   <td>:</td>
-                  <td>Kar1australia</td>
+                  <td>{profiledetails.city ? profiledetails.city.state_id.country_id.name : ''}</td>
                 </tr>
               </tbody>
             </table>
           </div>
         </div>
       </div>
+      {/* End Personal Information */}
+      {showCompanyInfo !== null ? (
+  /* Company Information */
+  <div className="profile-profile-main">
+    <h2>COMPANY INFORMATION</h2>
+    <div className="profile-card">
+      <div className="profile-car-body">
+        {/* Company information table */}
+        <table>
+          <tbody>
+            <tr>
+              <td>Company Name</td>
+              <td>:</td>
+              <td>{profiledetails.gst_no ? profiledetails.gst_no.name : ''}</td>
+            </tr>
+            <tr>
+              <td>GST Number</td>
+              <td>:</td>
+              <td>{profiledetails.gst_no ? profiledetails.gst_no.gst_no: ''}</td>
+            </tr>
+            <tr>
+              <td>Company Address</td>
+              <td>:</td>
+              <td>{profiledetails.gst_no ? profiledetails.gst_no.address : ''}</td>
+            </tr>
+            <tr>
+              <td>Company Phone</td>
+              <td>:</td>
+              <td>{profiledetails.gst_no ? profiledetails.gst_no.phone : ''}</td>
+            </tr>
+            {/* Add other company information rows as needed */}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+) : null}
+
+
+      {/* End Company Information */}
     </div>
   );
 };
 
 export default Profile;
+
+
+
