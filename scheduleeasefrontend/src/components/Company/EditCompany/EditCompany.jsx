@@ -1,18 +1,20 @@
 import React, { useState } from 'react';
 import './EditCompany.css'
-import { useLocation } from 'react-router-dom';
-const AddCompany = () => {
+import { useLocation,useNavigate } from 'react-router-dom';
+import axios from 'axios';
+
+const EditCompany = () => {
 
 
 const location = useLocation();
-
+const navigate=useNavigate();
     const companydetails = location.state.companydetails
     console.log('company',companydetails);
   // State variables for each input field
   const [companyName, setCompanyName] = useState(companydetails.name);
-  const [gstNumber, setGstNumber] = useState(companydetails.gstnumber);
+  const [gstNumber, setGstNumber] = useState(companydetails.gst_no);
   const [companyAddress, setCompanyAddress] = useState(companydetails.address);
-  const [companyPhone, setCompanyPhone] = useState(companydetails.phonenumber);
+  const [companyPhone, setCompanyPhone] = useState(companydetails.phone);
   // State variables for validation
   const [isCompanyNameValid, setCompanyNameValid] = useState(true);
   const [isGstNumberValid, setGstNumberValid] = useState(true);
@@ -87,20 +89,35 @@ const location = useLocation();
     }
     if (isCompanyNameValid && isGstNumberValid && isCompanyAddressValid && isCompanyPhoneValid) {
       // Submit logic here
-      console.log('Form submitted:', {
-        companyName,
+      EditCompany(companyName,
         gstNumber,
         companyAddress,
-        companyPhone,
-      });
+        companyPhone)
+
     } else {
       // Display an error message or handle invalid form submission
       console.error('Form is not valid. Please check the fields.');
     }
 
-    alert("Company information has been updated successfully")
   };
 
+  const EditCompany = (companyName,
+    gstNumber,
+    companyAddress,
+    companyPhone) => {
+    axios.post('http://127.0.0.1:8000/api/editcompany/', { useremail: JSON.parse(sessionStorage.getItem('loginData')).profile_data.email ,companyname:companyName,
+    gstno:gstNumber,
+    companyaddress:companyAddress,
+    companyphone:companyPhone}).then((response) => {
+        if (response.data.value) {
+            console.log(response.data);
+           alert('Details Successfull update');
+           navigate('/viewcompany')
+        }
+    }, (error) => {
+        console.log(error);
+    });
+  }
   return (
     <div className='company-container'>
       <label className="signup-label">
@@ -184,4 +201,4 @@ const location = useLocation();
   );
 };
 
-export default AddCompany;
+export default EditCompany;

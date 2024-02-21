@@ -194,7 +194,7 @@ def login(request):
 
 
 
-# Forgot password process
+# password process
 def generate_random_password(length=12):
     characters = string.ascii_letters + string.digits
     password = ''.join(secrets.choice(characters) for _ in range(length))
@@ -255,6 +255,28 @@ def forgetpassword(request):
     except Exception as e:
         print(e)
         return Response({"message":"Email not found" ,'processcompleted':False })
+    
+
+
+@api_view(['post'])
+def changepassword(request):
+    try:
+        data = json.loads(request.body)
+        inputemail = data.get('useremail')
+        oldpass = data.get('oldpassword')
+        newpass = data.get('newpassword')
+
+        user_profile = Profile.objects.get(email = inputemail,password=oldpass)
+        user_profile.password=newpass
+        user_profile.save()
+        return Response({"message":"Password Change Successful to Email",'value':True})
+        
+    except Profile.DoesNotExist:
+        return Response({"message":"Old Password Does Not Match",'value':False })
+                         
+    except Exception as e:
+        print(e)
+        return Response({"message":"Email not found" ,'value':False })
 
 
 
@@ -1044,5 +1066,42 @@ def viewpayment(request):
         return Response({"data":"no data","value":False})
 
 
+# Company Details 
 
 
+
+
+@api_view(['post'])
+def editcompany(request):
+    try:
+        data = json.loads(request.body)
+        # data=request.data
+        gstno=data.get('gstno')
+        companyname=data.get('companyname')
+        companyaddress=data.get('companyaddress')
+        companyphone=data.get('companyphone')
+        company = CompanyDetails.objects.get(gst_no=gstno)
+        company.name=companyname
+        company.address=companyaddress
+        company.phone=companyphone
+        company.save()
+        return Response({"value":True})
+    except Exception as e:
+        print(e)
+        return Response({"data":"no data","value":False})
+    
+@api_view(['post'])
+def addcompany(request):
+    try:
+        data = json.loads(request.body)
+        # data=request.data
+        gstno=data.get('gstno')
+        companyname=data.get('companyname')
+        companyaddress=data.get('companyaddress')
+        companyphone=data.get('companyphone')
+        company = CompanyDetails.objects.create(gst_no=gstno,  company_name=companyname, address=companyaddress, phone=companyphone,)
+        
+        return Response({"value":True})
+    except Exception as e:
+        print(e)
+        return Response({"data":"no data","value":False})

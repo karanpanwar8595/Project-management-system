@@ -1,8 +1,12 @@
 // ChangePassword.js
 import React, { useState } from 'react';
 import './changepassword.css';
+import axios from 'axios';
+import { useNavigate} from 'react-router-dom'; // Assuming you are using React Router for navigation
+
 
 const ChangePassword = () => {
+  const navigate=useNavigate();
   const [currentPassword, setCurrentPassword] = useState('');
   const [newPassword, setNewPassword] = useState('');
   const [confirmNewPassword, setConfirmNewPassword] = useState('');
@@ -44,9 +48,33 @@ const ChangePassword = () => {
     setNewPassword('');
     setConfirmNewPassword('');
     setError('');
-    setSuccess(true);
+    ChangePassword();
   };
+  const ChangePassword = () => {
+    axios.post('http://127.0.0.1:8000/api/changepassword/', {
+      useremail: JSON.parse(sessionStorage.getItem('loginData')).profile_data.email,
+      oldpassword: currentPassword, newpassword: newPassword
+    }).then((response) => {
+      if (response.data.value) {
+        console.log(response.data);
+        setShowConfirmNewPassword(true);
+        const delay = 5000;
 
+        // Use setTimeout to navigate after the specified delay
+        const timeoutId = setTimeout(() => {
+          // Replace '/your-target-path' with the path you want to navigate to
+          navigate('/profile')
+        }, delay);
+    // setSuccess(true);
+
+      }
+      else {
+        setError(response.data.message);
+      }
+    }, (error) => {
+      console.log(error);
+    });
+  }
   return (
     <div className="changePasswordContainer">
       <h2 className="changePasswordHeader">Change Password</h2>

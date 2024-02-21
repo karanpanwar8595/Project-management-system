@@ -1,7 +1,10 @@
 import React, { useState } from 'react';
-
+import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 const AddCompany = () => {
   // State variables for each input field
+const navigate=useNavigate();
+
   const [companyName, setCompanyName] = useState('');
   const [gstNumber, setGstNumber] = useState('');
   const [companyAddress, setCompanyAddress] = useState('');
@@ -73,12 +76,10 @@ const AddCompany = () => {
     }
     if (isCompanyNameValid && isGstNumberValid && isCompanyAddressValid && isCompanyPhoneValid) {
       // Submit logic here
-      console.log('Form submitted:', {
-        companyName,
+      AddCompany(companyName,
         gstNumber,
         companyAddress,
-        companyPhone,
-      });
+        companyPhone)
     } else {
       // Display an error message or handle invalid form submission
       console.error('Form is not valid. Please check the fields.');
@@ -87,6 +88,24 @@ const AddCompany = () => {
     alert("Company information is added successfully")
   };
 
+
+  const AddCompany = (companyName,
+    gstNumber,
+    companyAddress,
+    companyPhone) => {
+    axios.post('http://127.0.0.1:8000/api/addcompany/', { useremail: JSON.parse(sessionStorage.getItem('loginData')).profile_data.email ,companyname:companyName,
+    gstno:gstNumber,
+    companyaddress:companyAddress,
+    companyphone:companyPhone}).then((response) => {
+        if (response.data.value) {
+            console.log(response.data);
+           alert('Details Successfull update');
+           navigate('/viewcompany')
+        }
+    }, (error) => {
+        console.log(error);
+    });
+  }
   return (
     <div className='company-container'>
       <label className="signup-label">

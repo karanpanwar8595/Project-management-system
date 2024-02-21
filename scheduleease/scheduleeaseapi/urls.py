@@ -18,13 +18,16 @@ urlpatterns = [
     # Login process
     path('login/', views.login, name='loginauthentication'),
 
-    #forgotpassword process
+    #password process
     path('forgetpassword/', views.forgetpassword, name='forgetpassword'),
+    path('changepassword/', views.changepassword, name='changepassword'),
+
 
 #profile process
     path('profileinfo/', views.profileinfo, name='profileinfo'),
     path('allusers/', views.allusers, name='allusers'),
     path('blockuser/', views.blockuser, name='blockuser'),
+
 
 
 
@@ -86,6 +89,11 @@ urlpatterns = [
     path('viewpayment/', views.viewpayment, name='viewpayment'),
 
 
+
+#Company Details
+
+    path('editcompany/', views.editcompany, name='editcompany'),
+    path('addcompany/', views.addcompany, name='addcompany'),
 
 
 

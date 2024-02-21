@@ -67,9 +67,6 @@ class Project(models.Model):
     project_des = models.CharField(max_length=1000, null=True)
     budget = models.DecimalField(max_digits=10, decimal_places=2, null=True)
     client = models.ForeignKey(Profile, on_delete=models.CASCADE)
-    
-
-
     def to_dict(self):
         return {
             'project_id': self.project_id,
@@ -339,7 +336,7 @@ class City(models.Model):
 class CompanyDetails(models.Model):
     class Meta:
         db_table = 'CompanyDetails'
-    gst_no = models.BigIntegerField(primary_key=True)
+    gst_no = models.CharField(max_length=15, primary_key=True)
     company_name = models.CharField(max_length=50)
     address = models.CharField(max_length=100)
     phone = models.CharField(max_length=10)

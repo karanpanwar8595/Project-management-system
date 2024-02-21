@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react'
 import axios from 'axios';
 import './AddProject.css'
-
+import { useNavigate} from 'react-router-dom';
 
 
 const AddProject = () => {
+  const navigate=useNavigate();
+
     useEffect(() => {//this help in seting authentication to false when we relode
         console.log("add project clicked");
         FetchClient();
@@ -73,6 +75,7 @@ const AddProject = () => {
                 console.log('Project component connected');
                 handleAttachmentUpload(response.data.projectadded.project_id);
                 handleDocumentUpload(response.data.projectadded.project_id);
+                navigate('/project')
             } else {
                 console.log("error")
             }
@@ -302,13 +305,10 @@ const AddProject = () => {
         if (budget === '') return 'Budget is required.';
         if (isNaN(budget) || budget <= 0) return 'Please enter a valid budget amount.';
         if (budget < 5000) return `The budget must be at least ₹5000.`;
+        if (budget > 10000000) return `The budget must be not more than ₹10000000.`;
+
         return '';
     };
-
-    // not used : const validateCompanyName = (name) => {
-    //     if (!name.trim()) return 'Company name is required.';
-    //     return '';
-    // };
 
     const validateStartDate = (date) => {
         const today = new Date().toISOString().split('T')[0];

@@ -1,13 +1,16 @@
-import React from 'react';
+import React, { useState ,useEffect} from 'react';
 import { Link } from 'react-router-dom'; // Assuming you are using React Router for navigation
 import plus from './plus.png'
 import './ViewCompany.css'
+import axios from 'axios';
 
 
 const CompanyList = ({  }) => {
+useEffect(() => {
+AllCompany();
+}, [])
 
-
-    const CompanyDetails = [
+    const [CompanyDetails,setCompanyDetails] =useState( [
         {
           id: 1,
           name: 'Wipro Technologies limited',
@@ -30,8 +33,17 @@ const CompanyList = ({  }) => {
           phonenumber: '9023126728',
         },
         // Add more sample company details as needed
-      ];
-
+      ]);
+      const AllCompany = () => {
+        axios.post('http://127.0.0.1:8000/api/allcompanydata/', { useremail: JSON.parse(sessionStorage.getItem('loginData')).profile_data.email }).then((response) => {
+            if (response.data.value) {
+                console.log(response.data);
+                setCompanyDetails(response.data.data);
+            }
+        }, (error) => {
+            console.log(error);
+        });
+    };
   return (
     <div className='companydetailss-container'>
       <h3 style={{ textAlign: 'left', fontFamily: 'Calibri light' }}>Company</h3>
@@ -46,9 +58,9 @@ const CompanyList = ({  }) => {
         <div key={companydetails.gstnumber} className="companydetails-card">
           <div className="companydetails-details">
             <div className="detail-item">{companydetails.name}</div>
-            <div className="detail-item">{companydetails.gstnumber}</div>
+            <div className="detail-item">{companydetails.gst_no}</div>
             <div className="detail-item">{companydetails.address}</div>
-            <div className="detail-item">{companydetails.phonenumber}</div>
+            <div className="detail-item">{companydetails.phone}</div>
             <div className="detail-item">
             <Link to='/editcompany'
             state={{companydetails}}
